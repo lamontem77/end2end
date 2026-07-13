@@ -26,15 +26,38 @@ Explicitly stubbed (no external credentials in this environment):
 - **Claude API** (`src/lib/agent.ts`) — generates the same draft content shape (subject/body/recipients/cc) that a real `POST /v1/messages` call would return, using the PRD's system prompt as a comment for reference. Swap `generateDraftContent` for a real fetch once a backend + API key exist.
 - **Google/Outlook Calendar, Webex, HackerRank, e-signature, Checkr, Resend/SMTP** — represented as inert config in Settings → Integrations, and as placeholder links/labels in agent drafts (e.g. a fake Webex URL is generated so the UI has something to show).
 - Steps that depend on an external reply (candidate replying to an email, candidate picking a self-schedule slot, candidate completing a HackerRank assessment) are exposed as explicit "Simulate: …" buttons in the ticket drawer, since there's no real inbox to parse.
+- **Slack bot** — see the "Chat assistant / Slack bot" section below. The request→draft pipeline is fully real and testable in-app; the actual Slack webhook server lives in `server/` and is untested (no Slack app credentials or shared database were available here).
 
 ## Where things live
 
 - `src/types` — the PRD's data model (`Candidate`, `AgentDraft`, `NewHireTracker`, etc).
 - `src/lib/stageEngine.ts` — the stage → auto-assign/SLA/agent-trigger table from PRD §7.
 - `src/lib/agent.ts` — mock draft generator (PRD §19).
-- `src/store/useStore.ts` — single source of truth: candidates, agent drafts, new-hire trackers, notifications, and every action that moves the system forward (stage moves, draft approve/decline, scorecards, BGC/DT, tech setup, digest inputs).
+- `src/lib/botIntent.ts` — natural-language request parser for the chat assistant / Slack bot.
+- `src/store/useStore.ts` — single source of truth: candidates, agent drafts, new-hire trackers, notifications, chat messages, and every action that moves the system forward (stage moves, draft approve/decline, scorecards, BGC/DT, tech setup, digest inputs).
 - `src/pages` — one file per route in the PRD's IA (`/tickets/*`, `/new-hires*`, `/scheduling/*`, `/reports`, `/settings`).
-- `src/components` — sidebar, command palette, kanban board/cards, ticket drawer, scheduling approval cards, new-hire checklist.
+- `src/components` — sidebar, command palette, kanban board/cards, ticket drawer, scheduling approval cards, new-hire checklist, assistant chat panel.
+- `server/` — standalone Node backend for the real Slack app (separate `package.json`, not part of the Vite build). See `server/README.md`.
+
+## Chat assistant / Slack bot
+
+The bottom-right chat bubble opens an assistant that parses plain-English requests — "schedule
+an interview with Jordan Rivera," "self-schedule a call with Taylor Kim," "nudge the interviewer
+on Jordan Rivera," "what's the status of Casey Liu?" — and, for actionable requests, creates the
+exact same `AgentDraft` the UI would if you'd clicked through it by hand (`requestScheduling` /
+`createAgentDraft` in the store). The draft lands in My Queue → Approvals like anything else —
+**the bot never sends anything to a candidate on its own**, matching the PRD's "agent never
+sends without human approval" rule. Status questions are read-only lookups.
+
+This panel is explicitly framed as "a preview of the Slack bot": the parsing logic
+(`src/lib/botIntent.ts`) and the dispatch logic (`sendChatMessage` in `src/store/useStore.ts`)
+are the same code a real Slack integration needs — only the transport differs (an in-app text
+box vs. a Slack DM). `server/` has a from-scratch Express backend that receives Slack's Events
+API webhooks, verifies Slack's request signature, and reuses a ported copy of the same intent
+parser. It compiles and its signature verification/health-check endpoints were smoke-tested, but
+it has **not** been connected to a live Slack workspace (no app credentials available in this
+environment) and its candidate store is an in-memory placeholder rather than the app's real
+data — see `server/README.md` for exactly what's left to wire up before it's production-ready.
 
 ## Try the end-to-end scenario
 

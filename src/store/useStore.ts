@@ -9,13 +9,15 @@ import type {
   AgentDraft,
   AppNotification,
   Candidate,
+  ChatMessage,
   NewHireTracker,
   Stage,
   SubTicket,
   User,
 } from '../types'
-import { agentTriggerFor, assigneeRoleFor, slaDeadlineFor, STAGES } from '../lib/stageEngine'
+import { agentTriggerFor, assigneeRoleFor, formatSlaLabel, slaDeadlineFor, STAGES } from '../lib/stageEngine'
 import { generateDraftContent } from '../lib/agent'
+import { parseIntent } from '../lib/botIntent'
 
 interface PendingCandidateAction {
   kind: 'availability_reply' | 'self_schedule_pick'
@@ -32,6 +34,7 @@ interface AppState {
   newHireTrackers: Record<string, NewHireTracker>
   notifications: AppNotification[]
   pendingCandidateActions: Record<string, PendingCandidateAction>
+  chatMessages: ChatMessage[]
   selectedCandidateId: string | null
   commandPaletteOpen: boolean
 
@@ -73,6 +76,8 @@ interface AppState {
 
   markNotificationRead: (id: string) => void
   markAllNotificationsRead: () => void
+
+  sendChatMessage: (text: string) => void
 
   resetDemoData: () => void
 }
@@ -128,6 +133,7 @@ export const useStore = create<AppState>()(
       newHireTrackers: SEED_NEW_HIRE_TRACKERS,
       notifications: [],
       pendingCandidateActions: {},
+      chatMessages: [],
       selectedCandidateId: null,
       commandPaletteOpen: false,
 
@@ -584,6 +590,64 @@ export const useStore = create<AppState>()(
       markNotificationRead: (id) => set((s) => ({ notifications: s.notifications.map((n) => (n.id === id ? { ...n, read: true } : n)) })),
       markAllNotificationsRead: () => set((s) => ({ notifications: s.notifications.map((n) => ({ ...n, read: true })) })),
 
+      sendChatMessage: (text) => {
+        const state = get()
+        const userMsg: ChatMessage = { id: nanoid(), role: 'user', text, createdAt: new Date().toISOString() }
+        set((s) => ({ chatMessages: [...s.chatMessages, userMsg] }))
+
+        const intent = parseIntent(text, state.candidates)
+        let reply: string
+        let candidateId: string | undefined
+
+        switch (intent.type) {
+          case 'schedule': {
+            candidateId = intent.candidate.id
+            get().requestScheduling(intent.candidate.id, intent.mode)
+            reply =
+              intent.mode === 'self_schedule'
+                ? `Done — I've drafted a self-scheduling link for ${intent.candidate.name}. It's waiting for your approval in My Queue → Approvals.`
+                : `Done — I've drafted an availability request for ${intent.candidate.name}. It's waiting for your approval in My Queue → Approvals.`
+            break
+          }
+          case 'send_assessment': {
+            candidateId = intent.candidate.id
+            get().createAgentDraft(intent.candidate.id, 'assessment_send')
+            reply = `Drafted the assessment email for ${intent.candidate.name} — approve it in My Queue → Approvals.`
+            break
+          }
+          case 'nudge_interviewer': {
+            candidateId = intent.candidate.id
+            const round = intent.candidate.interviewRounds[intent.candidate.interviewRounds.length - 1]
+            if (!round) {
+              reply = `${intent.candidate.name} doesn't have an interview on file yet, so there's no one to nudge.`
+            } else {
+              get().createAgentDraft(intent.candidate.id, 'interviewer_nudge', { interviewerId: round.interviewerId })
+              reply = `Drafted a nudge for ${round.interviewerName} to submit their scorecard on ${intent.candidate.name} — approve it in My Queue → Approvals.`
+            }
+            break
+          }
+          case 'status': {
+            candidateId = intent.candidate.id
+            const assignee = state.userById(intent.candidate.currentAssigneeId)
+            // Comma (not a period) after the name — names like "Alex T." already end in one.
+            reply = `${intent.candidate.name} is at "${intent.candidate.currentStage}", owned by ${assignee?.name ?? 'unassigned'}, SLA: ${formatSlaLabel(intent.candidate.slaDeadline)}.`
+            break
+          }
+          case 'ambiguous':
+            reply = `I found a few matches for "${intent.raw}": ${intent.matches.map((m) => m.name).join(', ')} — could you use their full name?`
+            break
+          case 'not_found':
+            reply = `I couldn't find a candidate matching "${intent.raw}". Try their full name?`
+            break
+          case 'unrecognized':
+            reply = `I can help with: scheduling interviews ("schedule an interview with Jordan Rivera"), self-schedule links, sending assessments, nudging interviewers for feedback, and status checks ("what's the status of Jordan Rivera").`
+            break
+        }
+
+        const botMsg: ChatMessage = { id: nanoid(), role: 'bot', text: reply, candidateId, createdAt: new Date().toISOString() }
+        set((s) => ({ chatMessages: [...s.chatMessages, botMsg] }))
+      },
+
       resetDemoData: () =>
         set({
           candidates: SEED_CANDIDATES,
@@ -591,6 +655,7 @@ export const useStore = create<AppState>()(
           newHireTrackers: SEED_NEW_HIRE_TRACKERS,
           notifications: [],
           pendingCandidateActions: {},
+          chatMessages: [],
           selectedCandidateId: null,
         }),
     }),
@@ -602,6 +667,7 @@ export const useStore = create<AppState>()(
         newHireTrackers: s.newHireTrackers,
         notifications: s.notifications,
         pendingCandidateActions: s.pendingCandidateActions,
+        chatMessages: s.chatMessages,
         currentUserId: s.currentUserId,
       }),
     },

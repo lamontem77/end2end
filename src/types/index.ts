@@ -223,3 +223,11 @@ export interface AppNotification {
   read: boolean
   createdAt: string
 }
+
+export interface ChatMessage {
+  id: string
+  role: 'user' | 'bot'
+  text: string
+  candidateId?: string
+  createdAt: string
+}
