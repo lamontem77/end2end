@@ -1,0 +1,70 @@
+import { Draggable } from '@hello-pangea/dnd'
+import { Zap } from 'lucide-react'
+import type { Candidate } from '../../types'
+import { slaState } from '../../lib/stageEngine'
+import { useStore } from '../../store/useStore'
+import { Avatar } from '../ui/Avatar'
+import { PriorityTag } from '../ui/PriorityTag'
+import { SlaBadge } from '../ui/SlaBadge'
+import { nextActionFor } from '../../lib/nextAction'
+
+const BORDER: Record<string, string> = {
+  ok: 'border-l-border',
+  warning: 'border-l-warning',
+  breach: 'border-l-danger',
+  at_risk: 'border-l-danger',
+}
+
+function daysInStage(stageEnteredAt: string) {
+  return Math.max(0, Math.floor((Date.now() - new Date(stageEnteredAt).getTime()) / (1000 * 60 * 60 * 24)))
+}
+
+export function CandidateCard({ candidate, index }: { candidate: Candidate; index: number }) {
+  const setSelectedCandidate = useStore((s) => s.setSelectedCandidate)
+  const agentDrafts = useStore((s) => s.agentDrafts)
+  const assignee = useStore((s) => s.userById(candidate.currentAssigneeId))
+  const state = slaState(candidate.slaDeadline, candidate.stageEnteredAt)
+  const hasPendingDraft = agentDrafts.some((d) => d.candidateId === candidate.id && d.status === 'pending')
+  const borderClass = hasPendingDraft ? 'border-l-accent' : BORDER[state]
+  const tint = state === 'breach' || state === 'at_risk' ? 'bg-danger/[0.04]' : ''
+  const action = nextActionFor(candidate)
+
+  return (
+    <Draggable draggableId={candidate.id} index={index}>
+      {(provided, snapshot) => (
+        <div
+          ref={provided.innerRef}
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+          onClick={() => setSelectedCandidate(candidate.id)}
+          className={`mb-2 cursor-pointer rounded-card border border-border border-l-[3px] ${borderClass} ${tint} bg-surface p-3 shadow-card transition-all duration-micro hover:-translate-y-px hover:border-text-muted hover:shadow-card-hover ${
+            snapshot.isDragging ? 'rotate-1 shadow-card-hover' : ''
+          }`}
+        >
+          <div className="mb-2 flex items-center justify-between">
+            <PriorityTag priority={candidate.priority} />
+            <span className="text-caption text-text-secondary">{daysInStage(candidate.stageEnteredAt)}d in stage</span>
+          </div>
+
+          <div className="text-label font-semibold text-text-primary">{candidate.name}</div>
+          <div className="text-meta text-text-secondary">{candidate.role}</div>
+
+          {action && (
+            <div className="mt-2 inline-flex items-center gap-1 rounded-tag bg-accent/10 px-1.5 py-1 text-caption font-medium text-accent">
+              <Zap className="h-3 w-3" />
+              {action}
+            </div>
+          )}
+
+          <div className="mt-3 flex items-center justify-between">
+            <div className="flex items-center gap-1.5">
+              <Avatar userId={candidate.currentAssigneeId} size={20} />
+              <span className="text-caption text-text-secondary">{assignee?.name}</span>
+            </div>
+            <SlaBadge deadline={candidate.slaDeadline} stageEnteredAt={candidate.stageEnteredAt} />
+          </div>
+        </div>
+      )}
+    </Draggable>
+  )
+}
