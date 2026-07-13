@@ -24,6 +24,11 @@ export interface DraftContext {
   extra?: Record<string, string>
 }
 
+// Avoids "Devon K.." when a name already ends in an abbreviation period.
+function withPeriod(text: string) {
+  return text.endsWith('.') ? text : `${text}.`
+}
+
 function greet(name: string) {
   return `Hi ${name.split(' ')[0]},`
 }
@@ -52,7 +57,7 @@ export async function generateDraftContent(
     case 'self_schedule':
       return {
         subject: `Pick a time — ${candidate.role} interview`,
-        body: `${greet(candidate.name)}\n\nPlease grab a time that works for you here: ${extra?.schedulingLink ?? '[self-schedule link]'}\n\nThe interview will be ${extra?.length ?? '45 min'}, ${extra?.format ?? 'virtual via Webex'}, with ${interviewer?.name ?? 'our interviewer'}.\n\nBest,\n${rc.name}`,
+        body: `${greet(candidate.name)}\n\nPlease grab a time that works for you here: ${extra?.schedulingLink ?? '[self-schedule link]'}\n\nThe interview will be ${extra?.length ?? '45 min'}, ${extra?.format ?? 'virtual via Webex'}, with ${withPeriod(interviewer?.name ?? 'our interviewer')}\n\nBest,\n${rc.name}`,
       }
     case 'assessment_send':
       return {

@@ -260,14 +260,14 @@ export const useStore = create<AppState>()(
         const rc = state.userById(candidate.rcId)!
         const hiringManager = state.userById(candidate.hiringManagerId)
         const interviewer = extra.interviewerId ? state.userById(extra.interviewerId) : undefined
-        const approverRole: User['role'] =
-          type === 'offer_letter' || type === 'rejection_email'
-            ? 'recruiter'
-            : type === 'interviewer_nudge'
-              ? 'ta_lead'
-              : type === 'start_date_confirmation'
-                ? 'hr'
-                : 'rc'
+        const sentByRecruiter = type === 'offer_letter' || type === 'rejection_email'
+        const approverRole: User['role'] = sentByRecruiter
+          ? 'recruiter'
+          : type === 'interviewer_nudge'
+            ? 'ta_lead'
+            : type === 'start_date_confirmation'
+              ? 'hr'
+              : 'rc'
 
         generateDraftContent(type, { candidate, recruiter, rc, interviewer, hiringManager, extra }).then(({ subject, body, internalBody }) => {
           const draft: AgentDraft = {
@@ -279,7 +279,9 @@ export const useStore = create<AppState>()(
             subject,
             content: body,
             recipients: [candidate.email],
-            ccRecipients: [recruiter.email],
+            // The email is signed by whichever role sends it (recruiter for
+            // offer/rejection, RC otherwise) — CC the other one, not yourself.
+            ccRecipients: [sentByRecruiter ? rc.email : recruiter.email],
             meta: extra,
             status: 'pending',
             createdAt: new Date().toISOString(),
