@@ -1,0 +1,178 @@
+[
+  {
+    "id": "fb9220d9-b0fd-4322-8486-492457c38909",
+    "name": "Senior Backend Engineer",
+    "department": "Engineering",
+    "status": "open",
+    "hiring_manager": {
+      "id": "u-sarah",
+      "name": "Sarah M.",
+      "email": "sarah.m@recruiteros.dev"
+    },
+    "recruiter": {
+      "id": "u-taylor",
+      "name": "Taylor R.",
+      "email": "taylor.r@recruiteros.dev"
+    },
+    "coordinator": {
+      "id": "u-taylor",
+      "name": "Taylor R.",
+      "email": "taylor.r@recruiteros.dev"
+    },
+    "created_at": "2026-05-07T02:52:40.075Z"
+  },
+  {
+    "id": "1a7170e4-a488-42fc-bfe9-e130564d5482",
+    "name": "Product Manager",
+    "department": "Product",
+    "status": "open",
+    "hiring_manager": {
+      "id": "u-sarah",
+      "name": "Sarah M.",
+      "email": "sarah.m@recruiteros.dev"
+    },
+    "recruiter": {
+      "id": "u-taylor",
+      "name": "Taylor R.",
+      "email": "taylor.r@recruiteros.dev"
+    },
+    "coordinator": {
+      "id": "u-noor",
+      "name": "Noor H.",
+      "email": "noor.h@recruiteros.dev"
+    },
+    "created_at": "2025-09-26T14:03:59.647Z"
+  },
+  {
+    "id": "dbbc151d-9514-45ba-ae71-bc8c786010a5",
+    "name": "Product Designer",
+    "department": "Design",
+    "status": "open",
+    "hiring_manager": {
+      "id": "u-taylor",
+      "name": "Taylor R.",
+      "email": "taylor.r@recruiteros.dev"
+    },
+    "recruiter": {
+      "id": "u-marcus",
+      "name": "Marcus T.",
+      "email": "marcus.t@recruiteros.dev"
+    },
+    "coordinator": {
+      "id": "u-alex",
+      "name": "Alex T.",
+      "email": "alex.t@recruiteros.dev"
+    },
+    "created_at": "2026-04-17T19:56:42.063Z"
+  },
+  {
+    "id": "142ecadc-2e8c-4e51-b36d-d086315f58b5",
+    "name": "Data Analyst",
+    "department": "Data",
+    "status": "open",
+    "hiring_manager": {
+      "id": "u-taylor",
+      "name": "Taylor R.",
+      "email": "taylor.r@recruiteros.dev"
+    },
+    "recruiter": {
+      "id": "u-priya",
+      "name": "Priya R.",
+      "email": "priya.r@recruiteros.dev"
+    },
+    "coordinator": {
+      "id": "u-alex",
+      "name": "Alex T.",
+      "email": "alex.t@recruiteros.dev"
+    },
+    "created_at": "2025-11-02T21:00:40.190Z"
+  },
+  {
+    "id": "09804e32-7f3a-4c3b-85aa-81d5209a083a",
+    "name": "Account Executive",
+    "department": "Sales",
+    "status": "open",
+    "hiring_manager": {
+      "id": "u-jamie",
+      "name": "Jamie L.",
+      "email": "jamie.l@recruiteros.dev"
+    },
+    "recruiter": {
+      "id": "u-alex",
+      "name": "Alex T.",
+      "email": "alex.t@recruiteros.dev"
+    },
+    "coordinator": {
+      "id": "u-taylor",
+      "name": "Taylor R.",
+      "email": "taylor.r@recruiteros.dev"
+    },
+    "created_at": "2025-09-04T06:00:02.470Z"
+  },
+  {
+    "id": "1ee4ad88-31ee-4a55-abee-ca12e901a028",
+    "name": "Content Strategist",
+    "department": "Marketing",
+    "status": "open",
+    "hiring_manager": {
+      "id": "u-jamie",
+      "name": "Jamie L.",
+      "email": "jamie.l@recruiteros.dev"
+    },
+    "recruiter": {
+      "id": "u-marcus",
+      "name": "Marcus T.",
+      "email": "marcus.t@recruiteros.dev"
+    },
+    "coordinator": {
+      "id": "u-jamie",
+      "name": "Jamie L.",
+      "email": "jamie.l@recruiteros.dev"
+    },
+    "created_at": "2025-10-10T15:37:09.099Z"
+  },
+  {
+    "id": "bada9154-3f6e-4ac8-b973-b40a2ffe50e6",
+    "name": "Recruiting Coordinator",
+    "department": "People",
+    "status": "open",
+    "hiring_manager": {
+      "id": "u-taylor",
+      "name": "Taylor R.",
+      "email": "taylor.r@recruiteros.dev"
+    },
+    "recruiter": {
+      "id": "u-noor",
+      "name": "Noor H.",
+      "email": "noor.h@recruiteros.dev"
+    },
+    "coordinator": {
+      "id": "u-priya",
+      "name": "Priya R.",
+      "email": "priya.r@recruiteros.dev"
+    },
+    "created_at": "2025-12-03T14:46:23.697Z"
+  },
+  {
+    "id": "528eb919-f28e-4bbb-854c-cde88cabce56",
+    "name": "Systems Administrator",
+    "department": "IT",
+    "status": "open",
+    "hiring_manager": {
+      "id": "u-devon",
+      "name": "Devon K.",
+      "email": "devon.k@recruiteros.dev"
+    },
+    "recruiter": {
+      "id": "u-sarah",
+      "name": "Sarah M.",
+      "email": "sarah.m@recruiteros.dev"
+    },
+    "coordinator": {
+      "id": "u-alex",
+      "name": "Alex T.",
+      "email": "alex.t@recruiteros.dev"
+    },
+    "created_at": "2026-01-30T02:53:02.771Z"
+  }
+]

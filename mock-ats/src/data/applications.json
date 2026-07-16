@@ -1,0 +1,3968 @@
+[
+  {
+    "id": "ccf65c5e-d6cc-41e8-ad5e-60e15ff9a745",
+    "candidate_id": "528c3910-88ab-4f85-9c47-10fdb62248ba",
+    "job_id": "fb9220d9-b0fd-4322-8486-492457c38909",
+    "status": "rejected",
+    "current_stage": "Screening Scheduled",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-07-04T06:19:46.455Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-07-07T10:19:16.381Z",
+        "actor": "Taylor R."
+      }
+    ],
+    "applied_at": "2026-07-04T06:19:46.455Z",
+    "rejected_at": "2026-07-10T23:58:40.764Z",
+    "rejected_reason": "Not enough experience"
+  },
+  {
+    "id": "232242e1-86f1-46fd-ad42-ae894c256831",
+    "candidate_id": "05966e58-c69d-4f2e-9747-f75a312222a2",
+    "job_id": "1a7170e4-a488-42fc-bfe9-e130564d5482",
+    "status": "rejected",
+    "current_stage": "Screening Scheduled",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-06-22T09:37:58.174Z",
+        "actor": "Noor H."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-06-23T13:31:56.558Z",
+        "actor": "Noor H."
+      }
+    ],
+    "applied_at": "2026-06-22T09:37:58.174Z",
+    "rejected_at": "2026-07-11T09:08:18.853Z",
+    "rejected_reason": "Not enough experience"
+  },
+  {
+    "id": "ecaddbdb-a9c2-4ed0-ad25-b2dd8049fa4a",
+    "candidate_id": "e930d0d8-fcf5-4c67-badf-c66b31544300",
+    "job_id": "dbbc151d-9514-45ba-ae71-bc8c786010a5",
+    "status": "active",
+    "current_stage": "Assessment Pending",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-06-26T17:39:37.174Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-06-27T03:55:50.575Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Phone Screen",
+        "entered_at": "2026-06-29T07:53:32.763Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Assessment to Send",
+        "entered_at": "2026-06-30T16:42:44.442Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Assessment Pending",
+        "entered_at": "2026-07-03T11:49:06.195Z",
+        "actor": "Alex T."
+      }
+    ],
+    "applied_at": "2026-06-26T17:39:37.174Z"
+  },
+  {
+    "id": "39ab2be2-3f2d-473d-8785-926f4a5c2f73",
+    "candidate_id": "4c470167-94bd-4c07-913f-279b80581501",
+    "job_id": "fb9220d9-b0fd-4322-8486-492457c38909",
+    "status": "active",
+    "current_stage": "Assessment Pending",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-06-02T15:56:57.141Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-06-03T04:25:26.090Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Phone Screen",
+        "entered_at": "2026-06-04T20:12:37.307Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Assessment to Send",
+        "entered_at": "2026-06-05T08:08:55.884Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Assessment Pending",
+        "entered_at": "2026-06-07T11:02:12.832Z",
+        "actor": "Taylor R."
+      }
+    ],
+    "applied_at": "2026-06-02T15:56:57.141Z"
+  },
+  {
+    "id": "62b5fad2-de79-4c28-8625-102f8f64871a",
+    "candidate_id": "3697f2b6-6bbf-421b-b941-1e3535181c38",
+    "job_id": "09804e32-7f3a-4c3b-85aa-81d5209a083a",
+    "status": "rejected",
+    "current_stage": "Screening Scheduled",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-07-03T10:57:39.110Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-07-05T09:46:31.583Z",
+        "actor": "Taylor R."
+      }
+    ],
+    "applied_at": "2026-07-03T10:57:39.110Z",
+    "rejected_at": "2026-07-13T20:41:59.348Z",
+    "rejected_reason": "Went with another candidate"
+  },
+  {
+    "id": "2fda76a8-08c7-40c3-9425-c83eed37fc01",
+    "candidate_id": "a6ac16d6-9925-4500-ad48-4f46dd2c7721",
+    "job_id": "528eb919-f28e-4bbb-854c-cde88cabce56",
+    "status": "active",
+    "current_stage": "Assessment to Send",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-05-21T23:00:06.229Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-05-24T02:43:02.032Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Phone Screen",
+        "entered_at": "2026-05-24T07:46:48.781Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Assessment to Send",
+        "entered_at": "2026-05-26T18:58:18.098Z",
+        "actor": "Alex T."
+      }
+    ],
+    "applied_at": "2026-05-21T23:00:06.229Z"
+  },
+  {
+    "id": "9b38167a-f9b8-4a14-8570-24f573943800",
+    "candidate_id": "fa2a5a12-d3d4-4ab8-9430-4afdcca4ea81",
+    "job_id": "bada9154-3f6e-4ac8-b973-b40a2ffe50e6",
+    "status": "active",
+    "current_stage": "Assessment Review",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-06-12T15:47:03.670Z",
+        "actor": "Priya R."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-06-12T18:22:37.987Z",
+        "actor": "Priya R."
+      },
+      {
+        "stage": "Phone Screen",
+        "entered_at": "2026-06-14T08:54:04.990Z",
+        "actor": "Priya R."
+      },
+      {
+        "stage": "Assessment to Send",
+        "entered_at": "2026-06-15T21:48:48.952Z",
+        "actor": "Priya R."
+      },
+      {
+        "stage": "Assessment Pending",
+        "entered_at": "2026-06-17T18:32:16.063Z",
+        "actor": "Priya R."
+      },
+      {
+        "stage": "Assessment Review",
+        "entered_at": "2026-06-17T22:43:06.606Z",
+        "actor": "Priya R."
+      }
+    ],
+    "applied_at": "2026-06-12T15:47:03.670Z"
+  },
+  {
+    "id": "27f7d964-3c68-479d-af6d-c9f31d7de0e7",
+    "candidate_id": "65959bb5-262e-4520-8aa5-164a953f7b27",
+    "job_id": "bada9154-3f6e-4ac8-b973-b40a2ffe50e6",
+    "status": "active",
+    "current_stage": "Debrief / Decision",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-06-02T14:25:20.917Z",
+        "actor": "Priya R."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-06-05T09:07:19.363Z",
+        "actor": "Priya R."
+      },
+      {
+        "stage": "Phone Screen",
+        "entered_at": "2026-06-05T20:33:59.162Z",
+        "actor": "Priya R."
+      },
+      {
+        "stage": "Assessment to Send",
+        "entered_at": "2026-06-08T00:36:05.083Z",
+        "actor": "Priya R."
+      },
+      {
+        "stage": "Assessment Pending",
+        "entered_at": "2026-06-08T10:16:51.534Z",
+        "actor": "Priya R."
+      },
+      {
+        "stage": "Assessment Review",
+        "entered_at": "2026-06-09T03:29:58.218Z",
+        "actor": "Priya R."
+      },
+      {
+        "stage": "Round N Scheduling",
+        "entered_at": "2026-06-10T06:15:38.351Z",
+        "actor": "Priya R."
+      },
+      {
+        "stage": "Round N In Progress",
+        "entered_at": "2026-06-11T05:14:21.903Z",
+        "actor": "Priya R."
+      },
+      {
+        "stage": "Pending Feedback",
+        "entered_at": "2026-06-12T05:11:13.628Z",
+        "actor": "Priya R."
+      },
+      {
+        "stage": "Debrief / Decision",
+        "entered_at": "2026-06-14T16:50:13.042Z",
+        "actor": "Priya R."
+      }
+    ],
+    "applied_at": "2026-06-02T14:25:20.917Z"
+  },
+  {
+    "id": "b020a72f-838a-414c-b786-02730dfcd3f3",
+    "candidate_id": "e3a942ab-5a6b-43e4-a501-84d065016768",
+    "job_id": "1ee4ad88-31ee-4a55-abee-ca12e901a028",
+    "status": "active",
+    "current_stage": "Assessment to Send",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-06-03T11:38:37.187Z",
+        "actor": "Jamie L."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-06-06T07:58:08.877Z",
+        "actor": "Jamie L."
+      },
+      {
+        "stage": "Phone Screen",
+        "entered_at": "2026-06-08T14:38:42.255Z",
+        "actor": "Jamie L."
+      },
+      {
+        "stage": "Assessment to Send",
+        "entered_at": "2026-06-09T11:37:15.707Z",
+        "actor": "Jamie L."
+      }
+    ],
+    "applied_at": "2026-06-03T11:38:37.187Z"
+  },
+  {
+    "id": "b60d0bf7-3bd8-4f08-abd2-c862d244dac4",
+    "candidate_id": "fe6c7739-25d3-411f-b86c-d5bca2e84602",
+    "job_id": "dbbc151d-9514-45ba-ae71-bc8c786010a5",
+    "status": "active",
+    "current_stage": "Applied",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-06-08T21:15:45.547Z",
+        "actor": "Alex T."
+      }
+    ],
+    "applied_at": "2026-06-08T21:15:45.547Z"
+  },
+  {
+    "id": "ddb792a2-b312-40bb-8821-02e351389306",
+    "candidate_id": "a3b13eb0-3343-417b-99a1-fdcde839bb81",
+    "job_id": "09804e32-7f3a-4c3b-85aa-81d5209a083a",
+    "status": "active",
+    "current_stage": "Pending Feedback",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-05-28T16:28:48.071Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-05-29T15:31:00.258Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Phone Screen",
+        "entered_at": "2026-05-31T07:36:43.594Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Assessment to Send",
+        "entered_at": "2026-06-01T04:12:05.746Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Assessment Pending",
+        "entered_at": "2026-06-03T06:20:40.656Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Assessment Review",
+        "entered_at": "2026-06-03T18:42:24.545Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Round N Scheduling",
+        "entered_at": "2026-06-05T00:22:04.671Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Round N In Progress",
+        "entered_at": "2026-06-07T12:59:03.419Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Pending Feedback",
+        "entered_at": "2026-06-07T21:17:34.594Z",
+        "actor": "Taylor R."
+      }
+    ],
+    "applied_at": "2026-05-28T16:28:48.071Z"
+  },
+  {
+    "id": "6294e995-0061-49ee-8a3d-e3b4cf0e9f7d",
+    "candidate_id": "56040e38-0a5e-4e5e-9fdd-3911f5bcdf30",
+    "job_id": "fb9220d9-b0fd-4322-8486-492457c38909",
+    "status": "active",
+    "current_stage": "Assessment Pending",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-07-13T17:02:31.202Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-07-13T20:15:32.592Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Phone Screen",
+        "entered_at": "2026-07-17T02:41:18.958Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Assessment to Send",
+        "entered_at": "2026-07-20T20:43:59.804Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Assessment Pending",
+        "entered_at": "2026-07-21T05:59:16.050Z",
+        "actor": "Taylor R."
+      }
+    ],
+    "applied_at": "2026-07-13T17:02:31.202Z"
+  },
+  {
+    "id": "1294fdf4-f650-40b7-9394-95dd755c5317",
+    "candidate_id": "49a5dfeb-44f0-4bb9-af45-1745de25e012",
+    "job_id": "1ee4ad88-31ee-4a55-abee-ca12e901a028",
+    "status": "active",
+    "current_stage": "Assessment Review",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-05-19T00:02:08.913Z",
+        "actor": "Jamie L."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-05-19T21:16:29.785Z",
+        "actor": "Jamie L."
+      },
+      {
+        "stage": "Phone Screen",
+        "entered_at": "2026-05-21T12:04:42.489Z",
+        "actor": "Jamie L."
+      },
+      {
+        "stage": "Assessment to Send",
+        "entered_at": "2026-05-23T01:00:04.692Z",
+        "actor": "Jamie L."
+      },
+      {
+        "stage": "Assessment Pending",
+        "entered_at": "2026-05-23T15:33:33.190Z",
+        "actor": "Jamie L."
+      },
+      {
+        "stage": "Assessment Review",
+        "entered_at": "2026-05-24T02:56:57.356Z",
+        "actor": "Jamie L."
+      }
+    ],
+    "applied_at": "2026-05-19T00:02:08.913Z"
+  },
+  {
+    "id": "07b449ec-9b5a-473b-985e-050cb5a6c76e",
+    "candidate_id": "2b48beca-af40-443a-aa90-b5a8521dea16",
+    "job_id": "528eb919-f28e-4bbb-854c-cde88cabce56",
+    "status": "active",
+    "current_stage": "Assessment Review",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-05-31T01:54:14.155Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-05-31T15:55:59.096Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Phone Screen",
+        "entered_at": "2026-06-02T04:12:20.950Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Assessment to Send",
+        "entered_at": "2026-06-02T12:20:57.586Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Assessment Pending",
+        "entered_at": "2026-06-03T00:00:28.867Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Assessment Review",
+        "entered_at": "2026-06-05T23:50:45.511Z",
+        "actor": "Alex T."
+      }
+    ],
+    "applied_at": "2026-05-31T01:54:14.155Z"
+  },
+  {
+    "id": "ca87e145-cf3d-4d36-a6f2-c5b69dcd0b26",
+    "candidate_id": "a609e637-0dd9-45c8-adac-96f893a9209c",
+    "job_id": "1a7170e4-a488-42fc-bfe9-e130564d5482",
+    "status": "rejected",
+    "current_stage": "Applied",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-05-31T06:29:15.871Z",
+        "actor": "Noor H."
+      }
+    ],
+    "applied_at": "2026-05-31T06:29:15.871Z",
+    "rejected_at": "2026-07-16T00:28:59.859Z",
+    "rejected_reason": "Not enough experience"
+  },
+  {
+    "id": "6e0faa43-f4c6-4208-9f55-587e882f31a9",
+    "candidate_id": "cc563fae-4ccb-4f62-9ab9-3846ab3643ce",
+    "job_id": "1ee4ad88-31ee-4a55-abee-ca12e901a028",
+    "status": "rejected",
+    "current_stage": "Round N Scheduling",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-07-08T19:28:46.464Z",
+        "actor": "Jamie L."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-07-10T09:09:45.725Z",
+        "actor": "Jamie L."
+      },
+      {
+        "stage": "Phone Screen",
+        "entered_at": "2026-07-11T04:50:55.792Z",
+        "actor": "Jamie L."
+      },
+      {
+        "stage": "Assessment to Send",
+        "entered_at": "2026-07-12T11:00:53.338Z",
+        "actor": "Jamie L."
+      },
+      {
+        "stage": "Assessment Pending",
+        "entered_at": "2026-07-12T23:20:02.719Z",
+        "actor": "Jamie L."
+      },
+      {
+        "stage": "Assessment Review",
+        "entered_at": "2026-07-15T00:34:12.717Z",
+        "actor": "Jamie L."
+      },
+      {
+        "stage": "Round N Scheduling",
+        "entered_at": "2026-07-16T05:10:50.581Z",
+        "actor": "Jamie L."
+      }
+    ],
+    "applied_at": "2026-07-08T19:28:46.464Z",
+    "rejected_at": "2026-07-15T06:16:58.574Z",
+    "rejected_reason": "Went with another candidate"
+  },
+  {
+    "id": "7d5d1cd2-62b8-4a33-a058-da6fbe840b14",
+    "candidate_id": "714e2f3b-8e88-432e-955c-5fb9e0473be6",
+    "job_id": "528eb919-f28e-4bbb-854c-cde88cabce56",
+    "status": "active",
+    "current_stage": "Assessment Pending",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-07-04T23:59:25.362Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-07-06T19:13:56.926Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Phone Screen",
+        "entered_at": "2026-07-07T04:20:46.858Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Assessment to Send",
+        "entered_at": "2026-07-10T02:10:23.938Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Assessment Pending",
+        "entered_at": "2026-07-12T20:36:02.910Z",
+        "actor": "Alex T."
+      }
+    ],
+    "applied_at": "2026-07-04T23:59:25.362Z"
+  },
+  {
+    "id": "697b3047-2560-49e2-a9a6-b680ba05f68e",
+    "candidate_id": "77c45e07-e983-45d8-a810-f691ae929c6e",
+    "job_id": "dbbc151d-9514-45ba-ae71-bc8c786010a5",
+    "status": "active",
+    "current_stage": "Screening Scheduled",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-05-30T04:20:54.441Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-06-01T13:47:25.617Z",
+        "actor": "Alex T."
+      }
+    ],
+    "applied_at": "2026-05-30T04:20:54.441Z"
+  },
+  {
+    "id": "29d9b517-6d3f-4f35-8ef7-58b4b0065575",
+    "candidate_id": "b4200c27-960c-40ce-a687-6ee59ef874f2",
+    "job_id": "fb9220d9-b0fd-4322-8486-492457c38909",
+    "status": "active",
+    "current_stage": "Assessment Pending",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-07-14T01:45:05.938Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-07-16T00:32:49.422Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Phone Screen",
+        "entered_at": "2026-07-16T21:53:36.345Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Assessment to Send",
+        "entered_at": "2026-07-19T20:41:38.289Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Assessment Pending",
+        "entered_at": "2026-07-20T13:02:41.382Z",
+        "actor": "Taylor R."
+      }
+    ],
+    "applied_at": "2026-07-14T01:45:05.938Z"
+  },
+  {
+    "id": "9de771ad-36de-4383-81ed-c0d7581c9232",
+    "candidate_id": "285472ed-b1cc-4c1a-8d9a-780a16482bc2",
+    "job_id": "142ecadc-2e8c-4e51-b36d-d086315f58b5",
+    "status": "rejected",
+    "current_stage": "Assessment Review",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-05-24T13:40:44.381Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-05-27T02:11:02.789Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Phone Screen",
+        "entered_at": "2026-05-27T03:21:37.741Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Assessment to Send",
+        "entered_at": "2026-05-29T14:21:51.203Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Assessment Pending",
+        "entered_at": "2026-05-30T07:08:45.221Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Assessment Review",
+        "entered_at": "2026-05-31T02:53:21.927Z",
+        "actor": "Alex T."
+      }
+    ],
+    "applied_at": "2026-05-24T13:40:44.381Z",
+    "rejected_at": "2026-07-12T07:28:23.024Z",
+    "rejected_reason": "Failed assessment"
+  },
+  {
+    "id": "7bb25a15-8f7d-46c9-be69-a6210d33b582",
+    "candidate_id": "2a312ed5-a8aa-4a40-b7e9-df2baffa3c1c",
+    "job_id": "bada9154-3f6e-4ac8-b973-b40a2ffe50e6",
+    "status": "active",
+    "current_stage": "Assessment to Send",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-07-11T18:44:10.772Z",
+        "actor": "Priya R."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-07-15T05:39:36.602Z",
+        "actor": "Priya R."
+      },
+      {
+        "stage": "Phone Screen",
+        "entered_at": "2026-07-16T18:15:12.858Z",
+        "actor": "Priya R."
+      },
+      {
+        "stage": "Assessment to Send",
+        "entered_at": "2026-07-16T18:27:38.531Z",
+        "actor": "Priya R."
+      }
+    ],
+    "applied_at": "2026-07-11T18:44:10.772Z"
+  },
+  {
+    "id": "a3bd2d92-62bc-418d-8e8f-86d777dd6579",
+    "candidate_id": "6ba33463-0ef5-450a-9d22-c90945cc6f6c",
+    "job_id": "1a7170e4-a488-42fc-bfe9-e130564d5482",
+    "status": "active",
+    "current_stage": "Round N In Progress",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-06-07T10:03:14.647Z",
+        "actor": "Noor H."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-06-09T08:45:23.604Z",
+        "actor": "Noor H."
+      },
+      {
+        "stage": "Phone Screen",
+        "entered_at": "2026-06-09T13:53:03.164Z",
+        "actor": "Noor H."
+      },
+      {
+        "stage": "Assessment to Send",
+        "entered_at": "2026-06-10T12:40:01.108Z",
+        "actor": "Noor H."
+      },
+      {
+        "stage": "Assessment Pending",
+        "entered_at": "2026-06-10T20:46:20.824Z",
+        "actor": "Noor H."
+      },
+      {
+        "stage": "Assessment Review",
+        "entered_at": "2026-06-11T11:30:46.279Z",
+        "actor": "Noor H."
+      },
+      {
+        "stage": "Round N Scheduling",
+        "entered_at": "2026-06-11T19:16:06.702Z",
+        "actor": "Noor H."
+      },
+      {
+        "stage": "Round N In Progress",
+        "entered_at": "2026-06-13T10:59:30.997Z",
+        "actor": "Noor H."
+      }
+    ],
+    "applied_at": "2026-06-07T10:03:14.647Z"
+  },
+  {
+    "id": "689ad31d-2fd8-4f14-8a5e-189a45d3d9cb",
+    "candidate_id": "0bb2d243-5476-4f02-b0a0-d888235931f0",
+    "job_id": "fb9220d9-b0fd-4322-8486-492457c38909",
+    "status": "rejected",
+    "current_stage": "Screening Scheduled",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-05-27T11:50:40.790Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-05-30T02:19:14.764Z",
+        "actor": "Taylor R."
+      }
+    ],
+    "applied_at": "2026-05-27T11:50:40.790Z",
+    "rejected_at": "2026-07-10T13:50:55.519Z",
+    "rejected_reason": "Not enough experience"
+  },
+  {
+    "id": "fe8c8812-840b-4098-af71-8df65e396054",
+    "candidate_id": "b883b237-43aa-4d61-94f9-b0809ef87fa1",
+    "job_id": "fb9220d9-b0fd-4322-8486-492457c38909",
+    "status": "active",
+    "current_stage": "Assessment Pending",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-06-02T03:39:02.705Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-06-03T05:23:00.545Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Phone Screen",
+        "entered_at": "2026-06-03T10:41:53.842Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Assessment to Send",
+        "entered_at": "2026-06-03T15:46:41.348Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Assessment Pending",
+        "entered_at": "2026-06-06T17:20:52.584Z",
+        "actor": "Taylor R."
+      }
+    ],
+    "applied_at": "2026-06-02T03:39:02.705Z"
+  },
+  {
+    "id": "6eead1d5-2364-4524-b975-bec5b225c312",
+    "candidate_id": "8275890c-b50c-4f35-9292-5b866801e1be",
+    "job_id": "fb9220d9-b0fd-4322-8486-492457c38909",
+    "status": "active",
+    "current_stage": "Debrief / Decision",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-06-15T17:32:12.754Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-06-16T11:46:03.242Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Phone Screen",
+        "entered_at": "2026-06-18T01:45:12.353Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Assessment to Send",
+        "entered_at": "2026-06-18T18:32:35.334Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Assessment Pending",
+        "entered_at": "2026-06-20T00:14:33.799Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Assessment Review",
+        "entered_at": "2026-06-20T01:24:14.291Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Round N Scheduling",
+        "entered_at": "2026-06-20T18:17:10.396Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Round N In Progress",
+        "entered_at": "2026-06-20T23:31:24.562Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Pending Feedback",
+        "entered_at": "2026-06-21T20:25:50.389Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Debrief / Decision",
+        "entered_at": "2026-06-24T06:15:43.168Z",
+        "actor": "Taylor R."
+      }
+    ],
+    "applied_at": "2026-06-15T17:32:12.754Z"
+  },
+  {
+    "id": "3426e96e-0399-406a-8ba5-162f75c74cda",
+    "candidate_id": "c723edb7-8ff3-4c33-8a6e-18ee2592fe21",
+    "job_id": "fb9220d9-b0fd-4322-8486-492457c38909",
+    "status": "active",
+    "current_stage": "Offer Extended",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-06-11T00:27:32.067Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-06-13T07:24:58.345Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Phone Screen",
+        "entered_at": "2026-06-13T12:54:16.269Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Assessment to Send",
+        "entered_at": "2026-06-13T14:50:11.315Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Assessment Pending",
+        "entered_at": "2026-06-15T12:19:07.891Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Assessment Review",
+        "entered_at": "2026-06-15T12:39:35.164Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Round N Scheduling",
+        "entered_at": "2026-06-16T23:12:11.290Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Round N In Progress",
+        "entered_at": "2026-06-18T23:58:07.951Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Pending Feedback",
+        "entered_at": "2026-06-21T20:47:58.027Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Debrief / Decision",
+        "entered_at": "2026-06-23T01:34:45.935Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Offer Prep",
+        "entered_at": "2026-06-25T15:13:19.590Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Offer Pending Approval",
+        "entered_at": "2026-06-25T21:17:33.485Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Offer Extended",
+        "entered_at": "2026-06-27T08:03:44.085Z",
+        "actor": "Taylor R."
+      }
+    ],
+    "applied_at": "2026-06-11T00:27:32.067Z"
+  },
+  {
+    "id": "2d82cef5-281e-4246-96c7-248299bfef32",
+    "candidate_id": "b259d03e-03f9-4410-a3e6-be638ec1b9e1",
+    "job_id": "fb9220d9-b0fd-4322-8486-492457c38909",
+    "status": "active",
+    "current_stage": "Assessment to Send",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-06-19T15:33:34.085Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-06-23T12:52:35.794Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Phone Screen",
+        "entered_at": "2026-06-23T23:26:18.808Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Assessment to Send",
+        "entered_at": "2026-06-25T16:04:51.919Z",
+        "actor": "Taylor R."
+      }
+    ],
+    "applied_at": "2026-06-19T15:33:34.085Z"
+  },
+  {
+    "id": "3af29674-d784-421b-b3b6-67514aa47330",
+    "candidate_id": "d4c0f845-1f0a-47f3-887b-133b393df853",
+    "job_id": "fb9220d9-b0fd-4322-8486-492457c38909",
+    "status": "active",
+    "current_stage": "Phone Screen",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-06-20T09:35:03.207Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-06-20T15:02:42.906Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Phone Screen",
+        "entered_at": "2026-06-20T21:09:39.893Z",
+        "actor": "Taylor R."
+      }
+    ],
+    "applied_at": "2026-06-20T09:35:03.207Z"
+  },
+  {
+    "id": "371f3e6f-8e0b-4e21-a6e8-820c1ae3a192",
+    "candidate_id": "75bf7d92-b8ae-47ec-a795-fa0590075742",
+    "job_id": "142ecadc-2e8c-4e51-b36d-d086315f58b5",
+    "status": "active",
+    "current_stage": "Applied",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-07-06T12:02:51.100Z",
+        "actor": "Alex T."
+      }
+    ],
+    "applied_at": "2026-07-06T12:02:51.100Z"
+  },
+  {
+    "id": "9d7104bc-4766-4323-a030-a5f3550d0fe8",
+    "candidate_id": "2b263b4e-e391-46ba-9946-1b8b35505ce8",
+    "job_id": "dbbc151d-9514-45ba-ae71-bc8c786010a5",
+    "status": "active",
+    "current_stage": "Assessment to Send",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-05-21T02:08:37.507Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-05-22T06:00:41.483Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Phone Screen",
+        "entered_at": "2026-05-22T09:14:06.404Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Assessment to Send",
+        "entered_at": "2026-05-22T20:12:31.655Z",
+        "actor": "Alex T."
+      }
+    ],
+    "applied_at": "2026-05-21T02:08:37.507Z"
+  },
+  {
+    "id": "a4f2f075-7966-4bad-b399-575231aafb0e",
+    "candidate_id": "20e52790-406e-4fa2-be82-ecbb33b37cc7",
+    "job_id": "1ee4ad88-31ee-4a55-abee-ca12e901a028",
+    "status": "active",
+    "current_stage": "Assessment to Send",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-05-31T02:58:26.984Z",
+        "actor": "Jamie L."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-06-01T07:05:44.533Z",
+        "actor": "Jamie L."
+      },
+      {
+        "stage": "Phone Screen",
+        "entered_at": "2026-06-03T10:11:49.389Z",
+        "actor": "Jamie L."
+      },
+      {
+        "stage": "Assessment to Send",
+        "entered_at": "2026-06-03T18:10:08.500Z",
+        "actor": "Jamie L."
+      }
+    ],
+    "applied_at": "2026-05-31T02:58:26.984Z"
+  },
+  {
+    "id": "91266b96-2396-482a-bd47-f59191fbcb97",
+    "candidate_id": "1198b866-05fd-459d-9701-8fb13cd9a0dc",
+    "job_id": "1ee4ad88-31ee-4a55-abee-ca12e901a028",
+    "status": "active",
+    "current_stage": "Assessment to Send",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-07-01T20:54:58.091Z",
+        "actor": "Jamie L."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-07-03T20:49:25.493Z",
+        "actor": "Jamie L."
+      },
+      {
+        "stage": "Phone Screen",
+        "entered_at": "2026-07-06T04:49:25.763Z",
+        "actor": "Jamie L."
+      },
+      {
+        "stage": "Assessment to Send",
+        "entered_at": "2026-07-07T13:32:48.233Z",
+        "actor": "Jamie L."
+      }
+    ],
+    "applied_at": "2026-07-01T20:54:58.091Z"
+  },
+  {
+    "id": "504ce377-dc8a-4d06-aeb8-858a6bd276a3",
+    "candidate_id": "3eebc183-2c27-4f2f-af82-5644f2b09e42",
+    "job_id": "528eb919-f28e-4bbb-854c-cde88cabce56",
+    "status": "rejected",
+    "current_stage": "Round N Scheduling",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-05-21T05:55:06.256Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-05-22T22:03:33.119Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Phone Screen",
+        "entered_at": "2026-05-26T21:24:10.515Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Assessment to Send",
+        "entered_at": "2026-05-27T02:59:47.077Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Assessment Pending",
+        "entered_at": "2026-05-30T22:59:45.168Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Assessment Review",
+        "entered_at": "2026-05-30T23:21:22.023Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Round N Scheduling",
+        "entered_at": "2026-05-31T23:15:37.532Z",
+        "actor": "Alex T."
+      }
+    ],
+    "applied_at": "2026-05-21T05:55:06.256Z",
+    "rejected_at": "2026-07-14T12:56:14.197Z",
+    "rejected_reason": "Not enough experience"
+  },
+  {
+    "id": "2591f5ec-c9aa-4a8f-abcd-3178d79809d2",
+    "candidate_id": "827c47fa-d6c0-4136-9d5a-b95951f21e4a",
+    "job_id": "142ecadc-2e8c-4e51-b36d-d086315f58b5",
+    "status": "rejected",
+    "current_stage": "Assessment to Send",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-07-14T21:11:41.765Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-07-15T09:00:59.343Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Phone Screen",
+        "entered_at": "2026-07-16T08:32:15.851Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Assessment to Send",
+        "entered_at": "2026-07-16T19:27:15.098Z",
+        "actor": "Alex T."
+      }
+    ],
+    "applied_at": "2026-07-14T21:11:41.765Z",
+    "rejected_at": "2026-07-12T03:35:02.257Z",
+    "rejected_reason": "Failed assessment"
+  },
+  {
+    "id": "6058ed21-984e-4e6e-a6b7-1e7b5017b5bb",
+    "candidate_id": "887579ff-de7a-4e6f-869b-f3b84c8a5796",
+    "job_id": "1ee4ad88-31ee-4a55-abee-ca12e901a028",
+    "status": "rejected",
+    "current_stage": "Offer Pending Approval",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-07-10T14:09:30.806Z",
+        "actor": "Jamie L."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-07-12T10:04:23.218Z",
+        "actor": "Jamie L."
+      },
+      {
+        "stage": "Phone Screen",
+        "entered_at": "2026-07-13T07:41:09.593Z",
+        "actor": "Jamie L."
+      },
+      {
+        "stage": "Assessment to Send",
+        "entered_at": "2026-07-13T15:04:11.685Z",
+        "actor": "Jamie L."
+      },
+      {
+        "stage": "Assessment Pending",
+        "entered_at": "2026-07-14T06:16:29.501Z",
+        "actor": "Jamie L."
+      },
+      {
+        "stage": "Assessment Review",
+        "entered_at": "2026-07-14T13:34:29.211Z",
+        "actor": "Jamie L."
+      },
+      {
+        "stage": "Round N Scheduling",
+        "entered_at": "2026-07-15T20:59:17.525Z",
+        "actor": "Jamie L."
+      },
+      {
+        "stage": "Round N In Progress",
+        "entered_at": "2026-07-16T01:02:44.945Z",
+        "actor": "Jamie L."
+      },
+      {
+        "stage": "Pending Feedback",
+        "entered_at": "2026-07-16T13:29:52.298Z",
+        "actor": "Jamie L."
+      },
+      {
+        "stage": "Debrief / Decision",
+        "entered_at": "2026-07-17T13:49:50.315Z",
+        "actor": "Jamie L."
+      },
+      {
+        "stage": "Offer Prep",
+        "entered_at": "2026-07-19T11:25:37.760Z",
+        "actor": "Jamie L."
+      },
+      {
+        "stage": "Offer Pending Approval",
+        "entered_at": "2026-07-19T15:43:24.810Z",
+        "actor": "Jamie L."
+      }
+    ],
+    "applied_at": "2026-07-10T14:09:30.806Z",
+    "rejected_at": "2026-07-07T12:21:40.589Z",
+    "rejected_reason": "Went with another candidate"
+  },
+  {
+    "id": "a776f38b-8e67-4194-8288-1b937b8659fa",
+    "candidate_id": "f3b60077-0a48-4426-a383-82ac1719488e",
+    "job_id": "09804e32-7f3a-4c3b-85aa-81d5209a083a",
+    "status": "rejected",
+    "current_stage": "Phone Screen",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-05-19T15:48:33.059Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-05-21T10:34:07.578Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Phone Screen",
+        "entered_at": "2026-05-22T10:18:06.451Z",
+        "actor": "Taylor R."
+      }
+    ],
+    "applied_at": "2026-05-19T15:48:33.059Z",
+    "rejected_at": "2026-07-15T09:20:10.305Z",
+    "rejected_reason": "Went with another candidate"
+  },
+  {
+    "id": "5207583d-4377-4342-abc7-bb2fd3222b7c",
+    "candidate_id": "73bb3e1f-dbfb-4371-86b6-59d062b1a43e",
+    "job_id": "bada9154-3f6e-4ac8-b973-b40a2ffe50e6",
+    "status": "active",
+    "current_stage": "Round N Scheduling",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-05-29T22:55:26.632Z",
+        "actor": "Priya R."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-06-01T00:20:33.170Z",
+        "actor": "Priya R."
+      },
+      {
+        "stage": "Phone Screen",
+        "entered_at": "2026-06-01T07:49:31.447Z",
+        "actor": "Priya R."
+      },
+      {
+        "stage": "Assessment to Send",
+        "entered_at": "2026-06-01T08:29:54.649Z",
+        "actor": "Priya R."
+      },
+      {
+        "stage": "Assessment Pending",
+        "entered_at": "2026-06-02T04:56:37.919Z",
+        "actor": "Priya R."
+      },
+      {
+        "stage": "Assessment Review",
+        "entered_at": "2026-06-03T00:03:02.488Z",
+        "actor": "Priya R."
+      },
+      {
+        "stage": "Round N Scheduling",
+        "entered_at": "2026-06-05T09:06:27.464Z",
+        "actor": "Priya R."
+      }
+    ],
+    "applied_at": "2026-05-29T22:55:26.632Z"
+  },
+  {
+    "id": "7d9af397-001a-4980-87e6-9cc8d6e340c6",
+    "candidate_id": "eaa0feea-5e49-41e2-b38c-930cfc7e6877",
+    "job_id": "1a7170e4-a488-42fc-bfe9-e130564d5482",
+    "status": "active",
+    "current_stage": "Applied",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-06-29T04:00:07.764Z",
+        "actor": "Noor H."
+      }
+    ],
+    "applied_at": "2026-06-29T04:00:07.764Z"
+  },
+  {
+    "id": "aaafd076-4766-4f1e-a79d-5665ed116192",
+    "candidate_id": "e2657782-8321-4c6a-8ba7-66a7dd22a40e",
+    "job_id": "142ecadc-2e8c-4e51-b36d-d086315f58b5",
+    "status": "rejected",
+    "current_stage": "Debrief / Decision",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-06-16T03:19:40.973Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-06-16T10:55:35.581Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Phone Screen",
+        "entered_at": "2026-06-17T21:46:38.990Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Assessment to Send",
+        "entered_at": "2026-06-21T09:41:29.388Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Assessment Pending",
+        "entered_at": "2026-06-21T11:52:30.416Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Assessment Review",
+        "entered_at": "2026-06-25T03:21:13.083Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Round N Scheduling",
+        "entered_at": "2026-06-25T15:38:13.454Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Round N In Progress",
+        "entered_at": "2026-06-26T16:27:40.902Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Pending Feedback",
+        "entered_at": "2026-06-29T09:50:23.634Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Debrief / Decision",
+        "entered_at": "2026-06-30T07:38:17.265Z",
+        "actor": "Alex T."
+      }
+    ],
+    "applied_at": "2026-06-16T03:19:40.973Z",
+    "rejected_at": "2026-07-08T20:49:10.505Z",
+    "rejected_reason": "Compensation mismatch"
+  },
+  {
+    "id": "e7f31edf-aedd-496e-8687-970e79203b1e",
+    "candidate_id": "719bce6f-d426-4699-ab81-d4f1f130bd6e",
+    "job_id": "fb9220d9-b0fd-4322-8486-492457c38909",
+    "status": "active",
+    "current_stage": "Screening Scheduled",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-07-01T02:29:07.580Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-07-01T06:50:30.686Z",
+        "actor": "Taylor R."
+      }
+    ],
+    "applied_at": "2026-07-01T02:29:07.580Z"
+  },
+  {
+    "id": "b9eb3670-f2b8-40ed-8831-548f9ea7d7d4",
+    "candidate_id": "4303a38e-b657-42a5-bdc9-53c7332c3879",
+    "job_id": "528eb919-f28e-4bbb-854c-cde88cabce56",
+    "status": "active",
+    "current_stage": "Applied",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-07-01T12:07:52.294Z",
+        "actor": "Alex T."
+      }
+    ],
+    "applied_at": "2026-07-01T12:07:52.294Z"
+  },
+  {
+    "id": "6d4f2aa4-5dc5-4803-a71d-bfbf89fa0bec",
+    "candidate_id": "e2bc1dd0-1058-484e-a504-8642df569b6e",
+    "job_id": "dbbc151d-9514-45ba-ae71-bc8c786010a5",
+    "status": "active",
+    "current_stage": "Assessment Review",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-05-18T09:25:54.146Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-05-21T08:43:31.868Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Phone Screen",
+        "entered_at": "2026-05-22T00:44:22.154Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Assessment to Send",
+        "entered_at": "2026-05-23T07:27:50.135Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Assessment Pending",
+        "entered_at": "2026-05-23T18:30:46.992Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Assessment Review",
+        "entered_at": "2026-05-24T09:25:56.166Z",
+        "actor": "Alex T."
+      }
+    ],
+    "applied_at": "2026-05-18T09:25:54.146Z"
+  },
+  {
+    "id": "3f6b29b5-d968-4926-b56c-7f46c88064f4",
+    "candidate_id": "e3c6e7b7-336c-49b4-870d-f602a9c4cb58",
+    "job_id": "dbbc151d-9514-45ba-ae71-bc8c786010a5",
+    "status": "rejected",
+    "current_stage": "Pending Feedback",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-05-29T19:07:51.396Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-05-30T19:40:37.588Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Phone Screen",
+        "entered_at": "2026-06-02T08:11:44.648Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Assessment to Send",
+        "entered_at": "2026-06-02T23:35:37.610Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Assessment Pending",
+        "entered_at": "2026-06-03T15:41:04.840Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Assessment Review",
+        "entered_at": "2026-06-04T06:02:32.984Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Round N Scheduling",
+        "entered_at": "2026-06-05T18:40:25.711Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Round N In Progress",
+        "entered_at": "2026-06-07T15:52:06.031Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Pending Feedback",
+        "entered_at": "2026-06-07T22:38:22.023Z",
+        "actor": "Alex T."
+      }
+    ],
+    "applied_at": "2026-05-29T19:07:51.396Z",
+    "rejected_at": "2026-07-12T21:55:19.728Z",
+    "rejected_reason": "Not enough experience"
+  },
+  {
+    "id": "ab4574fd-2003-418d-8b36-8cde8b1936a4",
+    "candidate_id": "fd6b4156-0d59-412e-99ff-54dfacc59db0",
+    "job_id": "142ecadc-2e8c-4e51-b36d-d086315f58b5",
+    "status": "active",
+    "current_stage": "Round N Scheduling",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-06-13T00:22:58.909Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-06-13T00:54:54.470Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Phone Screen",
+        "entered_at": "2026-06-13T03:33:50.036Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Assessment to Send",
+        "entered_at": "2026-06-13T08:52:24.353Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Assessment Pending",
+        "entered_at": "2026-06-14T14:15:00.757Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Assessment Review",
+        "entered_at": "2026-06-15T03:20:37.815Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Round N Scheduling",
+        "entered_at": "2026-06-17T20:26:15.803Z",
+        "actor": "Alex T."
+      }
+    ],
+    "applied_at": "2026-06-13T00:22:58.909Z"
+  },
+  {
+    "id": "c619fc9a-e65f-4d57-a62f-6e380c9a0314",
+    "candidate_id": "8efd4387-e14c-4156-b92d-7e7420816942",
+    "job_id": "1ee4ad88-31ee-4a55-abee-ca12e901a028",
+    "status": "active",
+    "current_stage": "Round N In Progress",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-07-01T11:23:22.209Z",
+        "actor": "Jamie L."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-07-03T07:27:51.831Z",
+        "actor": "Jamie L."
+      },
+      {
+        "stage": "Phone Screen",
+        "entered_at": "2026-07-04T03:07:21.622Z",
+        "actor": "Jamie L."
+      },
+      {
+        "stage": "Assessment to Send",
+        "entered_at": "2026-07-04T06:24:44.441Z",
+        "actor": "Jamie L."
+      },
+      {
+        "stage": "Assessment Pending",
+        "entered_at": "2026-07-06T17:35:40.091Z",
+        "actor": "Jamie L."
+      },
+      {
+        "stage": "Assessment Review",
+        "entered_at": "2026-07-06T21:50:51.804Z",
+        "actor": "Jamie L."
+      },
+      {
+        "stage": "Round N Scheduling",
+        "entered_at": "2026-07-09T21:08:59.848Z",
+        "actor": "Jamie L."
+      },
+      {
+        "stage": "Round N In Progress",
+        "entered_at": "2026-07-11T02:26:39.618Z",
+        "actor": "Jamie L."
+      }
+    ],
+    "applied_at": "2026-07-01T11:23:22.209Z"
+  },
+  {
+    "id": "c1b8e598-773c-47f4-8afa-dd59283b864f",
+    "candidate_id": "6b9a67f3-64cc-4410-966f-74e7916f95ae",
+    "job_id": "1ee4ad88-31ee-4a55-abee-ca12e901a028",
+    "status": "active",
+    "current_stage": "Screening Scheduled",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-06-08T06:07:20.117Z",
+        "actor": "Jamie L."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-06-08T11:20:11.939Z",
+        "actor": "Jamie L."
+      }
+    ],
+    "applied_at": "2026-06-08T06:07:20.117Z"
+  },
+  {
+    "id": "a98aae9c-3ae6-4cb0-b92f-c11950861cec",
+    "candidate_id": "ec0d4237-642c-4fc4-b332-89ba45a53541",
+    "job_id": "1ee4ad88-31ee-4a55-abee-ca12e901a028",
+    "status": "active",
+    "current_stage": "Applied",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-06-15T05:46:13.176Z",
+        "actor": "Jamie L."
+      }
+    ],
+    "applied_at": "2026-06-15T05:46:13.176Z"
+  },
+  {
+    "id": "69b8db92-de27-44cb-82e2-c7522a8111bb",
+    "candidate_id": "a6610b78-8477-46d7-b9ed-e4044ea122ab",
+    "job_id": "1ee4ad88-31ee-4a55-abee-ca12e901a028",
+    "status": "active",
+    "current_stage": "Applied",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-06-24T10:21:54.635Z",
+        "actor": "Jamie L."
+      }
+    ],
+    "applied_at": "2026-06-24T10:21:54.635Z"
+  },
+  {
+    "id": "ac7d85ab-8024-44a0-9c44-83e17d946bfe",
+    "candidate_id": "c0615256-4ae6-434d-b972-74fe1836e853",
+    "job_id": "528eb919-f28e-4bbb-854c-cde88cabce56",
+    "status": "active",
+    "current_stage": "Assessment to Send",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-06-07T13:21:59.582Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-06-07T13:42:11.790Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Phone Screen",
+        "entered_at": "2026-06-08T09:28:31.787Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Assessment to Send",
+        "entered_at": "2026-06-08T10:56:03.191Z",
+        "actor": "Alex T."
+      }
+    ],
+    "applied_at": "2026-06-07T13:21:59.582Z"
+  },
+  {
+    "id": "12bba529-7b75-4434-9150-2b5ab9f0bfd2",
+    "candidate_id": "bf9bc400-5302-41e2-a898-150638b866d3",
+    "job_id": "fb9220d9-b0fd-4322-8486-492457c38909",
+    "status": "active",
+    "current_stage": "Offer Extended",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-07-14T13:27:49.416Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-07-15T03:53:42.857Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Phone Screen",
+        "entered_at": "2026-07-16T02:43:29.061Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Assessment to Send",
+        "entered_at": "2026-07-18T04:28:15.982Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Assessment Pending",
+        "entered_at": "2026-07-19T21:27:50.012Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Assessment Review",
+        "entered_at": "2026-07-20T03:40:19.359Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Round N Scheduling",
+        "entered_at": "2026-07-20T20:36:56.506Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Round N In Progress",
+        "entered_at": "2026-07-23T17:30:42.034Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Pending Feedback",
+        "entered_at": "2026-07-25T08:20:43.498Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Debrief / Decision",
+        "entered_at": "2026-07-25T19:35:49.576Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Offer Prep",
+        "entered_at": "2026-07-26T03:49:23.660Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Offer Pending Approval",
+        "entered_at": "2026-07-26T03:55:10.338Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Offer Extended",
+        "entered_at": "2026-07-26T14:28:35.767Z",
+        "actor": "Taylor R."
+      }
+    ],
+    "applied_at": "2026-07-14T13:27:49.416Z"
+  },
+  {
+    "id": "3355fcb2-ed2d-441a-8a15-fab31433395d",
+    "candidate_id": "0ef212aa-dc79-4b87-9a8a-9ba8a73089f5",
+    "job_id": "142ecadc-2e8c-4e51-b36d-d086315f58b5",
+    "status": "hired",
+    "current_stage": "Offer Accepted",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-07-13T07:17:54.103Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-07-13T07:57:15.163Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Phone Screen",
+        "entered_at": "2026-07-13T10:38:04.951Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Assessment to Send",
+        "entered_at": "2026-07-16T14:31:53.800Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Assessment Pending",
+        "entered_at": "2026-07-16T18:41:17.008Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Assessment Review",
+        "entered_at": "2026-07-19T01:19:08.814Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Round N Scheduling",
+        "entered_at": "2026-07-19T14:57:22.447Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Round N In Progress",
+        "entered_at": "2026-07-22T16:42:29.111Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Pending Feedback",
+        "entered_at": "2026-07-26T05:07:23.408Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Debrief / Decision",
+        "entered_at": "2026-07-27T20:03:12.114Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Offer Prep",
+        "entered_at": "2026-07-30T04:58:51.273Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Offer Pending Approval",
+        "entered_at": "2026-08-02T04:39:30.121Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Offer Extended",
+        "entered_at": "2026-08-02T13:10:54.276Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Offer Accepted",
+        "entered_at": "2026-08-03T01:46:23.192Z",
+        "actor": "Alex T."
+      }
+    ],
+    "applied_at": "2026-07-13T07:17:54.103Z",
+    "hired_at": "2026-07-11T11:29:18.142Z"
+  },
+  {
+    "id": "43f0f2d4-5395-4a01-816d-e39c468202a1",
+    "candidate_id": "9e7bcbe7-2032-4820-80d9-5e1f92ac6d24",
+    "job_id": "bada9154-3f6e-4ac8-b973-b40a2ffe50e6",
+    "status": "active",
+    "current_stage": "Screening Scheduled",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-07-10T18:13:09.503Z",
+        "actor": "Priya R."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-07-10T21:57:26.372Z",
+        "actor": "Priya R."
+      }
+    ],
+    "applied_at": "2026-07-10T18:13:09.503Z"
+  },
+  {
+    "id": "07d112cb-97ec-4cda-b7de-00f4d611237b",
+    "candidate_id": "8f66fbb9-fbeb-4b44-8c49-3d1d9284551f",
+    "job_id": "dbbc151d-9514-45ba-ae71-bc8c786010a5",
+    "status": "active",
+    "current_stage": "Assessment Review",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-06-03T19:46:46.602Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-06-04T20:39:09.442Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Phone Screen",
+        "entered_at": "2026-06-06T11:29:31.288Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Assessment to Send",
+        "entered_at": "2026-06-06T12:07:26.695Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Assessment Pending",
+        "entered_at": "2026-06-06T14:28:05.967Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Assessment Review",
+        "entered_at": "2026-06-07T07:23:09.355Z",
+        "actor": "Alex T."
+      }
+    ],
+    "applied_at": "2026-06-03T19:46:46.602Z"
+  },
+  {
+    "id": "aec13627-7f6c-4fe3-9756-5d78f07c293d",
+    "candidate_id": "939ab9f3-f8a1-46cb-8081-fe0de5b7a556",
+    "job_id": "09804e32-7f3a-4c3b-85aa-81d5209a083a",
+    "status": "active",
+    "current_stage": "Phone Screen",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-07-09T04:07:27.436Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-07-10T08:50:15.740Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Phone Screen",
+        "entered_at": "2026-07-10T15:40:30.833Z",
+        "actor": "Taylor R."
+      }
+    ],
+    "applied_at": "2026-07-09T04:07:27.436Z"
+  },
+  {
+    "id": "ee359154-ed98-4eef-922a-800ed5e9c616",
+    "candidate_id": "e55e7854-a1ec-43b9-8246-ba8cc9c5e9d8",
+    "job_id": "bada9154-3f6e-4ac8-b973-b40a2ffe50e6",
+    "status": "rejected",
+    "current_stage": "Assessment Pending",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-06-04T11:49:12.074Z",
+        "actor": "Priya R."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-06-04T19:25:20.007Z",
+        "actor": "Priya R."
+      },
+      {
+        "stage": "Phone Screen",
+        "entered_at": "2026-06-05T18:51:34.448Z",
+        "actor": "Priya R."
+      },
+      {
+        "stage": "Assessment to Send",
+        "entered_at": "2026-06-06T07:30:10.693Z",
+        "actor": "Priya R."
+      },
+      {
+        "stage": "Assessment Pending",
+        "entered_at": "2026-06-07T15:10:12.788Z",
+        "actor": "Priya R."
+      }
+    ],
+    "applied_at": "2026-06-04T11:49:12.074Z",
+    "rejected_at": "2026-07-12T03:38:38.399Z",
+    "rejected_reason": "Failed assessment"
+  },
+  {
+    "id": "d5c73152-f077-4492-9c59-bed968ce16c6",
+    "candidate_id": "6b66c253-539c-4c5f-a96d-bb37d8a9d491",
+    "job_id": "09804e32-7f3a-4c3b-85aa-81d5209a083a",
+    "status": "active",
+    "current_stage": "Offer Pending Approval",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-05-21T08:29:38.848Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-05-22T13:25:50.818Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Phone Screen",
+        "entered_at": "2026-05-24T12:45:29.508Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Assessment to Send",
+        "entered_at": "2026-05-24T16:40:00.289Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Assessment Pending",
+        "entered_at": "2026-05-25T06:04:42.539Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Assessment Review",
+        "entered_at": "2026-05-25T20:51:19.967Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Round N Scheduling",
+        "entered_at": "2026-05-28T02:12:55.171Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Round N In Progress",
+        "entered_at": "2026-05-28T18:43:56.266Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Pending Feedback",
+        "entered_at": "2026-05-30T06:39:42.692Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Debrief / Decision",
+        "entered_at": "2026-06-01T02:07:25.147Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Offer Prep",
+        "entered_at": "2026-06-04T03:56:59.810Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Offer Pending Approval",
+        "entered_at": "2026-06-06T17:29:38.503Z",
+        "actor": "Taylor R."
+      }
+    ],
+    "applied_at": "2026-05-21T08:29:38.848Z"
+  },
+  {
+    "id": "1e8d088d-136d-4fff-8002-5de29e717697",
+    "candidate_id": "03dae099-0893-44a7-9d54-fe0c1044dbfb",
+    "job_id": "1ee4ad88-31ee-4a55-abee-ca12e901a028",
+    "status": "rejected",
+    "current_stage": "Round N In Progress",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-07-03T18:55:41.812Z",
+        "actor": "Jamie L."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-07-05T23:06:29.775Z",
+        "actor": "Jamie L."
+      },
+      {
+        "stage": "Phone Screen",
+        "entered_at": "2026-07-07T20:55:47.703Z",
+        "actor": "Jamie L."
+      },
+      {
+        "stage": "Assessment to Send",
+        "entered_at": "2026-07-08T01:28:18.642Z",
+        "actor": "Jamie L."
+      },
+      {
+        "stage": "Assessment Pending",
+        "entered_at": "2026-07-09T02:30:42.602Z",
+        "actor": "Jamie L."
+      },
+      {
+        "stage": "Assessment Review",
+        "entered_at": "2026-07-10T04:34:45.302Z",
+        "actor": "Jamie L."
+      },
+      {
+        "stage": "Round N Scheduling",
+        "entered_at": "2026-07-10T16:59:15.857Z",
+        "actor": "Jamie L."
+      },
+      {
+        "stage": "Round N In Progress",
+        "entered_at": "2026-07-11T11:10:34.019Z",
+        "actor": "Jamie L."
+      }
+    ],
+    "applied_at": "2026-07-03T18:55:41.812Z",
+    "rejected_at": "2026-07-13T21:14:03.294Z",
+    "rejected_reason": "Not enough experience"
+  },
+  {
+    "id": "9b70c0b0-d289-4757-9475-93f837d0a82d",
+    "candidate_id": "b8d0471b-640b-4d69-8390-7ae6c9e65e02",
+    "job_id": "528eb919-f28e-4bbb-854c-cde88cabce56",
+    "status": "active",
+    "current_stage": "Assessment Review",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-06-03T04:21:43.179Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-06-04T20:06:43.384Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Phone Screen",
+        "entered_at": "2026-06-07T12:47:12.241Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Assessment to Send",
+        "entered_at": "2026-06-09T18:07:32.437Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Assessment Pending",
+        "entered_at": "2026-06-09T23:22:51.400Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Assessment Review",
+        "entered_at": "2026-06-12T10:17:48.747Z",
+        "actor": "Alex T."
+      }
+    ],
+    "applied_at": "2026-06-03T04:21:43.179Z"
+  },
+  {
+    "id": "03c3b46f-3641-476b-bd80-909a3ded49e5",
+    "candidate_id": "c74115ce-eee8-43c3-b438-527d9e3297ac",
+    "job_id": "1a7170e4-a488-42fc-bfe9-e130564d5482",
+    "status": "rejected",
+    "current_stage": "Applied",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-07-05T07:01:04.390Z",
+        "actor": "Noor H."
+      }
+    ],
+    "applied_at": "2026-07-05T07:01:04.390Z",
+    "rejected_at": "2026-07-13T15:38:52.251Z",
+    "rejected_reason": "Compensation mismatch"
+  },
+  {
+    "id": "3c235e21-7497-4612-bde3-109b5abe131d",
+    "candidate_id": "2a8148db-9741-4603-9660-981f1d0e0c5b",
+    "job_id": "1a7170e4-a488-42fc-bfe9-e130564d5482",
+    "status": "active",
+    "current_stage": "Round N In Progress",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-07-13T14:44:36.298Z",
+        "actor": "Noor H."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-07-13T20:46:02.770Z",
+        "actor": "Noor H."
+      },
+      {
+        "stage": "Phone Screen",
+        "entered_at": "2026-07-14T11:03:29.462Z",
+        "actor": "Noor H."
+      },
+      {
+        "stage": "Assessment to Send",
+        "entered_at": "2026-07-15T05:38:15.181Z",
+        "actor": "Noor H."
+      },
+      {
+        "stage": "Assessment Pending",
+        "entered_at": "2026-07-15T23:10:33.313Z",
+        "actor": "Noor H."
+      },
+      {
+        "stage": "Assessment Review",
+        "entered_at": "2026-07-16T20:53:24.118Z",
+        "actor": "Noor H."
+      },
+      {
+        "stage": "Round N Scheduling",
+        "entered_at": "2026-07-17T16:09:04.489Z",
+        "actor": "Noor H."
+      },
+      {
+        "stage": "Round N In Progress",
+        "entered_at": "2026-07-20T09:03:55.582Z",
+        "actor": "Noor H."
+      }
+    ],
+    "applied_at": "2026-07-13T14:44:36.298Z"
+  },
+  {
+    "id": "6f38fcff-7b17-4c8b-8b4e-73d6c86c961e",
+    "candidate_id": "1d649dce-e360-4e2d-8550-5e060524e649",
+    "job_id": "bada9154-3f6e-4ac8-b973-b40a2ffe50e6",
+    "status": "active",
+    "current_stage": "Applied",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-06-08T20:27:14.309Z",
+        "actor": "Priya R."
+      }
+    ],
+    "applied_at": "2026-06-08T20:27:14.309Z"
+  },
+  {
+    "id": "5ef89497-4143-4899-a66d-7f7a0adff497",
+    "candidate_id": "c89cdc5f-6052-4140-ab13-1149fee241c1",
+    "job_id": "09804e32-7f3a-4c3b-85aa-81d5209a083a",
+    "status": "active",
+    "current_stage": "Round N In Progress",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-05-23T07:05:31.415Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-05-24T03:38:22.882Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Phone Screen",
+        "entered_at": "2026-05-25T22:48:26.503Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Assessment to Send",
+        "entered_at": "2026-05-26T05:34:03.378Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Assessment Pending",
+        "entered_at": "2026-05-27T04:02:54.558Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Assessment Review",
+        "entered_at": "2026-05-29T20:27:56.798Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Round N Scheduling",
+        "entered_at": "2026-05-31T12:44:34.267Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Round N In Progress",
+        "entered_at": "2026-06-01T11:06:32.434Z",
+        "actor": "Taylor R."
+      }
+    ],
+    "applied_at": "2026-05-23T07:05:31.415Z"
+  },
+  {
+    "id": "6613278f-1988-4d30-9a50-4492677f0f9c",
+    "candidate_id": "56beac23-82a4-4cc7-a2af-90053dd453e8",
+    "job_id": "09804e32-7f3a-4c3b-85aa-81d5209a083a",
+    "status": "active",
+    "current_stage": "Assessment Pending",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-05-20T10:59:13.356Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-05-22T05:11:41.096Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Phone Screen",
+        "entered_at": "2026-05-23T04:06:32.734Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Assessment to Send",
+        "entered_at": "2026-05-23T16:01:07.957Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Assessment Pending",
+        "entered_at": "2026-05-24T22:57:54.555Z",
+        "actor": "Taylor R."
+      }
+    ],
+    "applied_at": "2026-05-20T10:59:13.356Z"
+  },
+  {
+    "id": "d24056ca-6a02-4aac-96ba-f389f3858309",
+    "candidate_id": "8f402651-6514-4e4b-b963-59531e7a7d87",
+    "job_id": "1ee4ad88-31ee-4a55-abee-ca12e901a028",
+    "status": "active",
+    "current_stage": "Pending Feedback",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-06-26T01:17:21.932Z",
+        "actor": "Jamie L."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-06-26T09:03:50.641Z",
+        "actor": "Jamie L."
+      },
+      {
+        "stage": "Phone Screen",
+        "entered_at": "2026-06-27T07:52:28.900Z",
+        "actor": "Jamie L."
+      },
+      {
+        "stage": "Assessment to Send",
+        "entered_at": "2026-06-29T18:32:17.128Z",
+        "actor": "Jamie L."
+      },
+      {
+        "stage": "Assessment Pending",
+        "entered_at": "2026-07-01T13:53:50.000Z",
+        "actor": "Jamie L."
+      },
+      {
+        "stage": "Assessment Review",
+        "entered_at": "2026-07-02T17:26:48.178Z",
+        "actor": "Jamie L."
+      },
+      {
+        "stage": "Round N Scheduling",
+        "entered_at": "2026-07-04T04:38:38.934Z",
+        "actor": "Jamie L."
+      },
+      {
+        "stage": "Round N In Progress",
+        "entered_at": "2026-07-05T00:11:58.103Z",
+        "actor": "Jamie L."
+      },
+      {
+        "stage": "Pending Feedback",
+        "entered_at": "2026-07-05T14:44:47.644Z",
+        "actor": "Jamie L."
+      }
+    ],
+    "applied_at": "2026-06-26T01:17:21.932Z"
+  },
+  {
+    "id": "e0bfbfb0-d474-4466-aad4-3aae0d891634",
+    "candidate_id": "a6e880e2-8c38-43c9-adea-b86ae6566177",
+    "job_id": "142ecadc-2e8c-4e51-b36d-d086315f58b5",
+    "status": "active",
+    "current_stage": "Screening Scheduled",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-06-25T19:18:53.482Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-06-28T18:43:04.428Z",
+        "actor": "Alex T."
+      }
+    ],
+    "applied_at": "2026-06-25T19:18:53.482Z"
+  },
+  {
+    "id": "9c8199bc-ca36-4cf1-8853-890cdf29659c",
+    "candidate_id": "9256cc39-3ff9-4bcb-9bf9-adab35287f9c",
+    "job_id": "bada9154-3f6e-4ac8-b973-b40a2ffe50e6",
+    "status": "rejected",
+    "current_stage": "Offer Extended",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-06-21T20:06:14.593Z",
+        "actor": "Priya R."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-06-25T01:51:09.859Z",
+        "actor": "Priya R."
+      },
+      {
+        "stage": "Phone Screen",
+        "entered_at": "2026-06-28T02:50:59.978Z",
+        "actor": "Priya R."
+      },
+      {
+        "stage": "Assessment to Send",
+        "entered_at": "2026-06-29T14:55:40.258Z",
+        "actor": "Priya R."
+      },
+      {
+        "stage": "Assessment Pending",
+        "entered_at": "2026-07-01T10:03:56.900Z",
+        "actor": "Priya R."
+      },
+      {
+        "stage": "Assessment Review",
+        "entered_at": "2026-07-01T17:04:56.425Z",
+        "actor": "Priya R."
+      },
+      {
+        "stage": "Round N Scheduling",
+        "entered_at": "2026-07-02T16:03:56.606Z",
+        "actor": "Priya R."
+      },
+      {
+        "stage": "Round N In Progress",
+        "entered_at": "2026-07-03T15:42:07.754Z",
+        "actor": "Priya R."
+      },
+      {
+        "stage": "Pending Feedback",
+        "entered_at": "2026-07-05T17:55:43.474Z",
+        "actor": "Priya R."
+      },
+      {
+        "stage": "Debrief / Decision",
+        "entered_at": "2026-07-06T05:49:13.035Z",
+        "actor": "Priya R."
+      },
+      {
+        "stage": "Offer Prep",
+        "entered_at": "2026-07-07T06:34:32.718Z",
+        "actor": "Priya R."
+      },
+      {
+        "stage": "Offer Pending Approval",
+        "entered_at": "2026-07-07T15:17:29.439Z",
+        "actor": "Priya R."
+      },
+      {
+        "stage": "Offer Extended",
+        "entered_at": "2026-07-08T00:24:12.166Z",
+        "actor": "Priya R."
+      }
+    ],
+    "applied_at": "2026-06-21T20:06:14.593Z",
+    "rejected_at": "2026-07-13T23:45:43.716Z",
+    "rejected_reason": "Went with another candidate"
+  },
+  {
+    "id": "19a8b2d2-618a-4fb8-be78-96d28bee8a67",
+    "candidate_id": "71735231-e868-4ae2-a4f5-020f4ef90176",
+    "job_id": "1ee4ad88-31ee-4a55-abee-ca12e901a028",
+    "status": "active",
+    "current_stage": "Screening Scheduled",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-05-31T11:42:27.125Z",
+        "actor": "Jamie L."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-06-04T01:40:02.328Z",
+        "actor": "Jamie L."
+      }
+    ],
+    "applied_at": "2026-05-31T11:42:27.125Z"
+  },
+  {
+    "id": "a48cb19f-2dbc-444e-b519-1cadc16c6fb0",
+    "candidate_id": "1b851b54-a85a-44c3-92cb-21dc5a180617",
+    "job_id": "fb9220d9-b0fd-4322-8486-492457c38909",
+    "status": "rejected",
+    "current_stage": "Round N Scheduling",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-06-20T03:45:25.938Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-06-20T07:07:48.047Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Phone Screen",
+        "entered_at": "2026-06-22T21:24:28.033Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Assessment to Send",
+        "entered_at": "2026-06-23T18:13:10.435Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Assessment Pending",
+        "entered_at": "2026-06-24T10:40:42.368Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Assessment Review",
+        "entered_at": "2026-06-24T22:20:17.916Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Round N Scheduling",
+        "entered_at": "2026-06-27T15:10:03.075Z",
+        "actor": "Taylor R."
+      }
+    ],
+    "applied_at": "2026-06-20T03:45:25.938Z",
+    "rejected_at": "2026-07-14T10:34:32.403Z",
+    "rejected_reason": "Failed assessment"
+  },
+  {
+    "id": "07e66972-09e1-435c-84e0-f8a5c206dc89",
+    "candidate_id": "cff43f73-b44e-4214-a917-ad3d3a61b325",
+    "job_id": "09804e32-7f3a-4c3b-85aa-81d5209a083a",
+    "status": "active",
+    "current_stage": "Phone Screen",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-05-20T11:24:24.266Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-05-23T14:57:17.746Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Phone Screen",
+        "entered_at": "2026-05-25T00:31:14.996Z",
+        "actor": "Taylor R."
+      }
+    ],
+    "applied_at": "2026-05-20T11:24:24.266Z"
+  },
+  {
+    "id": "ebddfc95-2af7-4b76-9685-bde3e54b405b",
+    "candidate_id": "3e8e5074-bfbe-47cd-bb8a-b4cf7bba8e70",
+    "job_id": "bada9154-3f6e-4ac8-b973-b40a2ffe50e6",
+    "status": "active",
+    "current_stage": "Applied",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-05-31T22:17:19.796Z",
+        "actor": "Priya R."
+      }
+    ],
+    "applied_at": "2026-05-31T22:17:19.796Z"
+  },
+  {
+    "id": "ce1a2822-0a51-452f-b55d-abaf3fd9aa03",
+    "candidate_id": "124c4641-f8ca-481a-a26a-caa250bf417d",
+    "job_id": "142ecadc-2e8c-4e51-b36d-d086315f58b5",
+    "status": "active",
+    "current_stage": "Screening Scheduled",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-06-02T01:01:46.494Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-06-03T04:16:16.369Z",
+        "actor": "Alex T."
+      }
+    ],
+    "applied_at": "2026-06-02T01:01:46.494Z"
+  },
+  {
+    "id": "a0375b82-e4bc-4f79-b5a7-7d0ed875f19a",
+    "candidate_id": "552fc0cb-0597-4c62-af3b-2573728a0d23",
+    "job_id": "142ecadc-2e8c-4e51-b36d-d086315f58b5",
+    "status": "active",
+    "current_stage": "Applied",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-05-30T18:52:23.210Z",
+        "actor": "Alex T."
+      }
+    ],
+    "applied_at": "2026-05-30T18:52:23.210Z"
+  },
+  {
+    "id": "9fff5f7d-38ff-4ac2-bb91-11b2758ba876",
+    "candidate_id": "ca8252b2-bb72-455b-81dc-2bab3235cbe0",
+    "job_id": "528eb919-f28e-4bbb-854c-cde88cabce56",
+    "status": "active",
+    "current_stage": "Applied",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-06-17T18:12:41.939Z",
+        "actor": "Alex T."
+      }
+    ],
+    "applied_at": "2026-06-17T18:12:41.939Z"
+  },
+  {
+    "id": "df40d9f4-1714-4231-bf47-ea9bdeae84e8",
+    "candidate_id": "065df7db-fc1b-4804-aeec-fc040138dd9e",
+    "job_id": "dbbc151d-9514-45ba-ae71-bc8c786010a5",
+    "status": "active",
+    "current_stage": "Phone Screen",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-06-11T16:36:10.085Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-06-12T02:08:36.048Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Phone Screen",
+        "entered_at": "2026-06-13T02:06:35.870Z",
+        "actor": "Alex T."
+      }
+    ],
+    "applied_at": "2026-06-11T16:36:10.085Z"
+  },
+  {
+    "id": "86865742-8d20-43fd-b9e7-f43a6a4940ee",
+    "candidate_id": "403611e9-e5a3-4920-8e8e-556b9e0b5288",
+    "job_id": "fb9220d9-b0fd-4322-8486-492457c38909",
+    "status": "hired",
+    "current_stage": "Offer Accepted",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-05-18T18:57:01.000Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-05-20T20:06:22.647Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Phone Screen",
+        "entered_at": "2026-05-21T05:10:27.795Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Assessment to Send",
+        "entered_at": "2026-05-21T12:07:18.686Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Assessment Pending",
+        "entered_at": "2026-05-22T04:43:37.780Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Assessment Review",
+        "entered_at": "2026-05-24T06:54:53.007Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Round N Scheduling",
+        "entered_at": "2026-05-24T14:51:09.267Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Round N In Progress",
+        "entered_at": "2026-05-26T12:51:41.324Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Pending Feedback",
+        "entered_at": "2026-05-27T03:05:40.981Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Debrief / Decision",
+        "entered_at": "2026-05-27T06:11:33.816Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Offer Prep",
+        "entered_at": "2026-05-27T21:36:31.217Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Offer Pending Approval",
+        "entered_at": "2026-05-29T00:11:20.672Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Offer Extended",
+        "entered_at": "2026-05-29T19:26:23.731Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Offer Accepted",
+        "entered_at": "2026-05-29T21:30:46.182Z",
+        "actor": "Taylor R."
+      }
+    ],
+    "applied_at": "2026-05-18T18:57:01.000Z",
+    "hired_at": "2026-07-15T00:22:11.043Z"
+  },
+  {
+    "id": "29f9cc55-b79b-4c42-b485-9085864e2ae8",
+    "candidate_id": "df2795dc-bf4b-4852-8e9d-8356f0fff7f6",
+    "job_id": "528eb919-f28e-4bbb-854c-cde88cabce56",
+    "status": "active",
+    "current_stage": "Debrief / Decision",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-06-13T00:30:21.932Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-06-13T12:21:25.788Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Phone Screen",
+        "entered_at": "2026-06-13T12:44:49.709Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Assessment to Send",
+        "entered_at": "2026-06-14T06:27:38.682Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Assessment Pending",
+        "entered_at": "2026-06-17T02:01:13.823Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Assessment Review",
+        "entered_at": "2026-06-17T09:52:48.455Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Round N Scheduling",
+        "entered_at": "2026-06-18T07:43:45.033Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Round N In Progress",
+        "entered_at": "2026-06-20T02:17:43.132Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Pending Feedback",
+        "entered_at": "2026-06-20T19:20:16.416Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Debrief / Decision",
+        "entered_at": "2026-06-22T20:40:22.371Z",
+        "actor": "Alex T."
+      }
+    ],
+    "applied_at": "2026-06-13T00:30:21.932Z"
+  },
+  {
+    "id": "61c5ee0f-b868-4591-a940-8961e918709c",
+    "candidate_id": "12ddaa93-6b80-4fd4-a9e1-876d61106b3a",
+    "job_id": "1ee4ad88-31ee-4a55-abee-ca12e901a028",
+    "status": "active",
+    "current_stage": "Screening Scheduled",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-06-03T13:12:00.422Z",
+        "actor": "Jamie L."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-06-04T09:53:42.635Z",
+        "actor": "Jamie L."
+      }
+    ],
+    "applied_at": "2026-06-03T13:12:00.422Z"
+  },
+  {
+    "id": "7e103a43-7934-49fa-9c54-7c7df10262d0",
+    "candidate_id": "d538e0c9-6bf3-42ea-979b-ce64a69627bc",
+    "job_id": "dbbc151d-9514-45ba-ae71-bc8c786010a5",
+    "status": "active",
+    "current_stage": "Offer Prep",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-06-22T02:56:36.399Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-06-23T01:18:01.466Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Phone Screen",
+        "entered_at": "2026-06-25T18:57:59.797Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Assessment to Send",
+        "entered_at": "2026-06-27T18:41:17.453Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Assessment Pending",
+        "entered_at": "2026-06-27T23:20:16.426Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Assessment Review",
+        "entered_at": "2026-06-28T16:20:39.179Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Round N Scheduling",
+        "entered_at": "2026-06-28T17:34:37.724Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Round N In Progress",
+        "entered_at": "2026-06-30T15:48:19.295Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Pending Feedback",
+        "entered_at": "2026-07-01T18:34:51.350Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Debrief / Decision",
+        "entered_at": "2026-07-03T21:48:32.474Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Offer Prep",
+        "entered_at": "2026-07-04T16:56:22.057Z",
+        "actor": "Alex T."
+      }
+    ],
+    "applied_at": "2026-06-22T02:56:36.399Z"
+  },
+  {
+    "id": "fe56c98e-8801-40e6-87d9-94d20344a3a1",
+    "candidate_id": "2f986e34-1c99-43ac-b5c5-c08ff471d961",
+    "job_id": "bada9154-3f6e-4ac8-b973-b40a2ffe50e6",
+    "status": "active",
+    "current_stage": "Applied",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-06-23T11:54:26.068Z",
+        "actor": "Priya R."
+      }
+    ],
+    "applied_at": "2026-06-23T11:54:26.068Z"
+  },
+  {
+    "id": "086c6a12-208c-499a-9555-b209f9ca7bd3",
+    "candidate_id": "28678251-f14e-4726-9130-7c9935d1d7d5",
+    "job_id": "1ee4ad88-31ee-4a55-abee-ca12e901a028",
+    "status": "active",
+    "current_stage": "Assessment Pending",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-07-11T03:53:14.688Z",
+        "actor": "Jamie L."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-07-11T14:44:22.979Z",
+        "actor": "Jamie L."
+      },
+      {
+        "stage": "Phone Screen",
+        "entered_at": "2026-07-12T23:52:47.208Z",
+        "actor": "Jamie L."
+      },
+      {
+        "stage": "Assessment to Send",
+        "entered_at": "2026-07-14T17:10:38.806Z",
+        "actor": "Jamie L."
+      },
+      {
+        "stage": "Assessment Pending",
+        "entered_at": "2026-07-16T07:43:47.651Z",
+        "actor": "Jamie L."
+      }
+    ],
+    "applied_at": "2026-07-11T03:53:14.688Z"
+  },
+  {
+    "id": "2191df57-bee0-42cb-a28c-3d0c95bce5a9",
+    "candidate_id": "7961694d-2516-4046-a784-885d85fdfb64",
+    "job_id": "bada9154-3f6e-4ac8-b973-b40a2ffe50e6",
+    "status": "rejected",
+    "current_stage": "Assessment Review",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-07-05T08:21:26.069Z",
+        "actor": "Priya R."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-07-05T08:39:41.689Z",
+        "actor": "Priya R."
+      },
+      {
+        "stage": "Phone Screen",
+        "entered_at": "2026-07-06T10:29:56.458Z",
+        "actor": "Priya R."
+      },
+      {
+        "stage": "Assessment to Send",
+        "entered_at": "2026-07-07T08:17:16.219Z",
+        "actor": "Priya R."
+      },
+      {
+        "stage": "Assessment Pending",
+        "entered_at": "2026-07-08T18:41:44.013Z",
+        "actor": "Priya R."
+      },
+      {
+        "stage": "Assessment Review",
+        "entered_at": "2026-07-10T13:58:50.830Z",
+        "actor": "Priya R."
+      }
+    ],
+    "applied_at": "2026-07-05T08:21:26.069Z",
+    "rejected_at": "2026-07-09T17:05:07.031Z",
+    "rejected_reason": "Not enough experience"
+  },
+  {
+    "id": "b0c072d5-76c7-4c13-98f1-02a6d134aa1f",
+    "candidate_id": "6da2e33d-138d-428b-8dec-a61bfb079bb8",
+    "job_id": "1a7170e4-a488-42fc-bfe9-e130564d5482",
+    "status": "active",
+    "current_stage": "Round N Scheduling",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-06-18T21:36:07.141Z",
+        "actor": "Noor H."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-06-20T11:20:42.258Z",
+        "actor": "Noor H."
+      },
+      {
+        "stage": "Phone Screen",
+        "entered_at": "2026-06-21T07:39:16.539Z",
+        "actor": "Noor H."
+      },
+      {
+        "stage": "Assessment to Send",
+        "entered_at": "2026-06-22T21:40:39.576Z",
+        "actor": "Noor H."
+      },
+      {
+        "stage": "Assessment Pending",
+        "entered_at": "2026-06-23T16:14:28.738Z",
+        "actor": "Noor H."
+      },
+      {
+        "stage": "Assessment Review",
+        "entered_at": "2026-06-24T14:29:29.179Z",
+        "actor": "Noor H."
+      },
+      {
+        "stage": "Round N Scheduling",
+        "entered_at": "2026-06-25T11:21:38.253Z",
+        "actor": "Noor H."
+      }
+    ],
+    "applied_at": "2026-06-18T21:36:07.141Z"
+  },
+  {
+    "id": "1bb2069b-c91a-4fed-84cd-a4f721a71bcb",
+    "candidate_id": "8e0a1026-c4a6-438c-8dd5-c3bf07ab2f92",
+    "job_id": "09804e32-7f3a-4c3b-85aa-81d5209a083a",
+    "status": "active",
+    "current_stage": "Assessment Pending",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-07-07T20:13:47.738Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-07-07T21:00:08.077Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Phone Screen",
+        "entered_at": "2026-07-08T16:08:45.039Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Assessment to Send",
+        "entered_at": "2026-07-10T05:37:25.944Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Assessment Pending",
+        "entered_at": "2026-07-10T14:04:49.321Z",
+        "actor": "Taylor R."
+      }
+    ],
+    "applied_at": "2026-07-07T20:13:47.738Z"
+  },
+  {
+    "id": "3792c438-6ee7-4554-a8c4-371b874e1d6e",
+    "candidate_id": "255fb8fe-8e63-43a8-8aa0-083a894adfd8",
+    "job_id": "bada9154-3f6e-4ac8-b973-b40a2ffe50e6",
+    "status": "active",
+    "current_stage": "Assessment Pending",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-05-24T09:16:50.030Z",
+        "actor": "Priya R."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-05-25T05:14:14.934Z",
+        "actor": "Priya R."
+      },
+      {
+        "stage": "Phone Screen",
+        "entered_at": "2026-05-25T07:33:48.557Z",
+        "actor": "Priya R."
+      },
+      {
+        "stage": "Assessment to Send",
+        "entered_at": "2026-05-25T22:49:07.186Z",
+        "actor": "Priya R."
+      },
+      {
+        "stage": "Assessment Pending",
+        "entered_at": "2026-05-28T04:34:39.491Z",
+        "actor": "Priya R."
+      }
+    ],
+    "applied_at": "2026-05-24T09:16:50.030Z"
+  },
+  {
+    "id": "102e3f93-73fd-40fb-b1aa-3c170fc252c0",
+    "candidate_id": "807db7d1-edbd-48a8-a594-7415d6b26129",
+    "job_id": "fb9220d9-b0fd-4322-8486-492457c38909",
+    "status": "active",
+    "current_stage": "Applied",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-06-30T02:23:10.952Z",
+        "actor": "Taylor R."
+      }
+    ],
+    "applied_at": "2026-06-30T02:23:10.952Z"
+  },
+  {
+    "id": "8f8205ef-fb89-48b6-8a14-de80eb6967e2",
+    "candidate_id": "85e17c0b-da02-453f-9a4e-b463f8e5d0fe",
+    "job_id": "09804e32-7f3a-4c3b-85aa-81d5209a083a",
+    "status": "rejected",
+    "current_stage": "Assessment to Send",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-06-28T12:29:30.857Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-06-28T20:01:41.175Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Phone Screen",
+        "entered_at": "2026-06-29T01:18:28.702Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Assessment to Send",
+        "entered_at": "2026-06-29T06:45:39.158Z",
+        "actor": "Taylor R."
+      }
+    ],
+    "applied_at": "2026-06-28T12:29:30.857Z",
+    "rejected_at": "2026-07-12T03:12:50.695Z",
+    "rejected_reason": "Failed assessment"
+  },
+  {
+    "id": "e66ba665-37ab-4c5c-b07c-a7ae9cfb9059",
+    "candidate_id": "f0fdab10-1183-4d7b-8a53-5c94d0b7bec7",
+    "job_id": "bada9154-3f6e-4ac8-b973-b40a2ffe50e6",
+    "status": "active",
+    "current_stage": "Screening Scheduled",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-06-22T06:48:49.999Z",
+        "actor": "Priya R."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-06-24T04:53:48.109Z",
+        "actor": "Priya R."
+      }
+    ],
+    "applied_at": "2026-06-22T06:48:49.999Z"
+  },
+  {
+    "id": "83e36284-730c-4a50-9d2e-75be566eb323",
+    "candidate_id": "63ab4cde-24d3-40d5-b67d-5e985397e786",
+    "job_id": "09804e32-7f3a-4c3b-85aa-81d5209a083a",
+    "status": "active",
+    "current_stage": "Applied",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-06-09T19:12:09.704Z",
+        "actor": "Taylor R."
+      }
+    ],
+    "applied_at": "2026-06-09T19:12:09.704Z"
+  },
+  {
+    "id": "cb3d4c7b-65d0-4fa6-aa18-f3b6a37f3a99",
+    "candidate_id": "12da1649-8752-4bef-90bb-f4b0a5cd5816",
+    "job_id": "dbbc151d-9514-45ba-ae71-bc8c786010a5",
+    "status": "rejected",
+    "current_stage": "Applied",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-05-24T16:44:19.365Z",
+        "actor": "Alex T."
+      }
+    ],
+    "applied_at": "2026-05-24T16:44:19.365Z",
+    "rejected_at": "2026-07-15T01:20:24.885Z",
+    "rejected_reason": "Compensation mismatch"
+  },
+  {
+    "id": "8040ebf4-e973-4be3-b2bf-b466dc94faf9",
+    "candidate_id": "e2ee667a-4027-44c1-aeee-b172f59ceca7",
+    "job_id": "528eb919-f28e-4bbb-854c-cde88cabce56",
+    "status": "active",
+    "current_stage": "Screening Scheduled",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-06-16T00:50:16.881Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-06-17T09:13:18.369Z",
+        "actor": "Alex T."
+      }
+    ],
+    "applied_at": "2026-06-16T00:50:16.881Z"
+  },
+  {
+    "id": "f938bc08-3d2a-445f-8311-8a5b0ddfe56b",
+    "candidate_id": "ac2475fd-7e5c-43c7-9146-b1abac29f99b",
+    "job_id": "dbbc151d-9514-45ba-ae71-bc8c786010a5",
+    "status": "active",
+    "current_stage": "Offer Extended",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-06-20T22:32:23.887Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-06-21T04:13:48.642Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Phone Screen",
+        "entered_at": "2026-06-22T06:43:35.430Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Assessment to Send",
+        "entered_at": "2026-06-22T07:21:57.381Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Assessment Pending",
+        "entered_at": "2026-06-22T08:48:23.699Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Assessment Review",
+        "entered_at": "2026-06-23T06:04:51.945Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Round N Scheduling",
+        "entered_at": "2026-06-24T13:23:00.158Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Round N In Progress",
+        "entered_at": "2026-06-25T00:42:57.349Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Pending Feedback",
+        "entered_at": "2026-06-27T14:15:11.382Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Debrief / Decision",
+        "entered_at": "2026-06-27T19:57:47.504Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Offer Prep",
+        "entered_at": "2026-06-28T03:26:55.288Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Offer Pending Approval",
+        "entered_at": "2026-06-28T14:24:51.911Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Offer Extended",
+        "entered_at": "2026-06-30T15:49:02.577Z",
+        "actor": "Alex T."
+      }
+    ],
+    "applied_at": "2026-06-20T22:32:23.887Z"
+  },
+  {
+    "id": "fba8dfc9-1bbc-41a4-8c3a-40a1aef3c5ec",
+    "candidate_id": "244afaec-b65d-4e70-9c40-c8ae8844c721",
+    "job_id": "fb9220d9-b0fd-4322-8486-492457c38909",
+    "status": "active",
+    "current_stage": "Round N Scheduling",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-05-22T17:00:20.458Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-05-23T09:11:49.641Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Phone Screen",
+        "entered_at": "2026-05-25T00:35:04.972Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Assessment to Send",
+        "entered_at": "2026-05-26T19:57:36.588Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Assessment Pending",
+        "entered_at": "2026-05-30T13:59:15.132Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Assessment Review",
+        "entered_at": "2026-06-01T00:43:09.724Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Round N Scheduling",
+        "entered_at": "2026-06-04T15:00:44.742Z",
+        "actor": "Taylor R."
+      }
+    ],
+    "applied_at": "2026-05-22T17:00:20.458Z"
+  },
+  {
+    "id": "6b77a4c2-6adc-4b51-83dd-f18abac52305",
+    "candidate_id": "c38248b1-4e6f-4f84-8c24-c63ab2436cba",
+    "job_id": "bada9154-3f6e-4ac8-b973-b40a2ffe50e6",
+    "status": "rejected",
+    "current_stage": "Screening Scheduled",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-07-10T03:12:52.015Z",
+        "actor": "Priya R."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-07-11T09:22:07.088Z",
+        "actor": "Priya R."
+      }
+    ],
+    "applied_at": "2026-07-10T03:12:52.015Z",
+    "rejected_at": "2026-07-08T13:57:32.406Z",
+    "rejected_reason": "Not enough experience"
+  },
+  {
+    "id": "8d809c21-3b98-435f-93e9-17f6d49de7a0",
+    "candidate_id": "cd5a4b79-6221-49d0-917b-243635b91a7e",
+    "job_id": "dbbc151d-9514-45ba-ae71-bc8c786010a5",
+    "status": "rejected",
+    "current_stage": "Screening Scheduled",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-05-24T03:19:19.358Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-05-24T07:48:35.857Z",
+        "actor": "Alex T."
+      }
+    ],
+    "applied_at": "2026-05-24T03:19:19.358Z",
+    "rejected_at": "2026-07-15T17:49:15.030Z",
+    "rejected_reason": "Failed assessment"
+  },
+  {
+    "id": "d986d20f-0fb5-4bd3-9cc3-0331b6e47ae8",
+    "candidate_id": "25359587-41e0-40df-ab03-fc930090f2b2",
+    "job_id": "bada9154-3f6e-4ac8-b973-b40a2ffe50e6",
+    "status": "active",
+    "current_stage": "Offer Extended",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-07-05T16:15:45.139Z",
+        "actor": "Priya R."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-07-06T22:02:46.993Z",
+        "actor": "Priya R."
+      },
+      {
+        "stage": "Phone Screen",
+        "entered_at": "2026-07-07T08:43:39.186Z",
+        "actor": "Priya R."
+      },
+      {
+        "stage": "Assessment to Send",
+        "entered_at": "2026-07-07T11:40:58.010Z",
+        "actor": "Priya R."
+      },
+      {
+        "stage": "Assessment Pending",
+        "entered_at": "2026-07-09T06:29:03.497Z",
+        "actor": "Priya R."
+      },
+      {
+        "stage": "Assessment Review",
+        "entered_at": "2026-07-10T09:59:06.451Z",
+        "actor": "Priya R."
+      },
+      {
+        "stage": "Round N Scheduling",
+        "entered_at": "2026-07-11T07:07:42.585Z",
+        "actor": "Priya R."
+      },
+      {
+        "stage": "Round N In Progress",
+        "entered_at": "2026-07-12T18:28:23.414Z",
+        "actor": "Priya R."
+      },
+      {
+        "stage": "Pending Feedback",
+        "entered_at": "2026-07-15T01:06:55.988Z",
+        "actor": "Priya R."
+      },
+      {
+        "stage": "Debrief / Decision",
+        "entered_at": "2026-07-18T17:43:18.345Z",
+        "actor": "Priya R."
+      },
+      {
+        "stage": "Offer Prep",
+        "entered_at": "2026-07-20T16:59:14.070Z",
+        "actor": "Priya R."
+      },
+      {
+        "stage": "Offer Pending Approval",
+        "entered_at": "2026-07-21T10:07:55.506Z",
+        "actor": "Priya R."
+      },
+      {
+        "stage": "Offer Extended",
+        "entered_at": "2026-07-23T20:56:56.324Z",
+        "actor": "Priya R."
+      }
+    ],
+    "applied_at": "2026-07-05T16:15:45.139Z"
+  },
+  {
+    "id": "ec0dcacf-6170-4494-9ad6-e1dd544cd592",
+    "candidate_id": "e596156e-56cc-4cfc-a6d8-443221ee9d2e",
+    "job_id": "1a7170e4-a488-42fc-bfe9-e130564d5482",
+    "status": "active",
+    "current_stage": "Phone Screen",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-07-04T09:15:39.538Z",
+        "actor": "Noor H."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-07-05T00:30:35.188Z",
+        "actor": "Noor H."
+      },
+      {
+        "stage": "Phone Screen",
+        "entered_at": "2026-07-08T07:38:17.796Z",
+        "actor": "Noor H."
+      }
+    ],
+    "applied_at": "2026-07-04T09:15:39.538Z"
+  },
+  {
+    "id": "499c99e7-326b-4021-8932-9c591e5ffc08",
+    "candidate_id": "a107f65f-8663-4874-a248-02f81b0bbab1",
+    "job_id": "142ecadc-2e8c-4e51-b36d-d086315f58b5",
+    "status": "rejected",
+    "current_stage": "Round N Scheduling",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-05-22T19:51:12.609Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-05-25T23:39:31.109Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Phone Screen",
+        "entered_at": "2026-05-28T10:03:48.649Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Assessment to Send",
+        "entered_at": "2026-05-29T23:25:47.154Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Assessment Pending",
+        "entered_at": "2026-05-30T21:55:37.329Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Assessment Review",
+        "entered_at": "2026-06-02T17:05:57.416Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Round N Scheduling",
+        "entered_at": "2026-06-05T06:48:42.011Z",
+        "actor": "Alex T."
+      }
+    ],
+    "applied_at": "2026-05-22T19:51:12.609Z",
+    "rejected_at": "2026-07-09T12:42:35.564Z",
+    "rejected_reason": "Failed assessment"
+  },
+  {
+    "id": "b498dbd3-a01b-409d-a60b-eb930b3d78cc",
+    "candidate_id": "a1f19569-e7f9-423b-9072-6b7245199066",
+    "job_id": "bada9154-3f6e-4ac8-b973-b40a2ffe50e6",
+    "status": "active",
+    "current_stage": "Applied",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-05-26T12:02:49.697Z",
+        "actor": "Priya R."
+      }
+    ],
+    "applied_at": "2026-05-26T12:02:49.697Z"
+  },
+  {
+    "id": "69ec3b8b-7297-48ee-8778-8fa48aa92056",
+    "candidate_id": "3c3fab3e-adf2-41cd-b95a-43737fdfc5ce",
+    "job_id": "fb9220d9-b0fd-4322-8486-492457c38909",
+    "status": "active",
+    "current_stage": "Assessment Pending",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-05-19T18:00:07.662Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-05-21T03:02:01.480Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Phone Screen",
+        "entered_at": "2026-05-21T17:51:26.459Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Assessment to Send",
+        "entered_at": "2026-05-22T05:25:59.088Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Assessment Pending",
+        "entered_at": "2026-05-23T03:55:50.448Z",
+        "actor": "Taylor R."
+      }
+    ],
+    "applied_at": "2026-05-19T18:00:07.662Z"
+  },
+  {
+    "id": "df9c845e-0956-4ed9-b476-5184a560f808",
+    "candidate_id": "bbac7184-606c-4807-a476-e0adf28072d1",
+    "job_id": "1ee4ad88-31ee-4a55-abee-ca12e901a028",
+    "status": "active",
+    "current_stage": "Assessment to Send",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-07-07T21:12:25.574Z",
+        "actor": "Jamie L."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-07-10T16:29:39.223Z",
+        "actor": "Jamie L."
+      },
+      {
+        "stage": "Phone Screen",
+        "entered_at": "2026-07-11T08:16:48.049Z",
+        "actor": "Jamie L."
+      },
+      {
+        "stage": "Assessment to Send",
+        "entered_at": "2026-07-13T15:13:56.505Z",
+        "actor": "Jamie L."
+      }
+    ],
+    "applied_at": "2026-07-07T21:12:25.574Z"
+  },
+  {
+    "id": "a109e8ec-13a7-4467-ae14-8bafc837bdf9",
+    "candidate_id": "79eb7f71-f084-4883-b8c4-64dbd21128f5",
+    "job_id": "fb9220d9-b0fd-4322-8486-492457c38909",
+    "status": "active",
+    "current_stage": "Debrief / Decision",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-05-19T16:06:22.037Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-05-19T17:50:12.324Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Phone Screen",
+        "entered_at": "2026-05-19T19:09:04.527Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Assessment to Send",
+        "entered_at": "2026-05-20T11:19:17.803Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Assessment Pending",
+        "entered_at": "2026-05-22T01:53:22.663Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Assessment Review",
+        "entered_at": "2026-05-23T11:52:19.682Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Round N Scheduling",
+        "entered_at": "2026-05-25T09:36:27.944Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Round N In Progress",
+        "entered_at": "2026-05-26T08:08:28.188Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Pending Feedback",
+        "entered_at": "2026-05-27T08:44:56.573Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Debrief / Decision",
+        "entered_at": "2026-05-27T10:27:05.946Z",
+        "actor": "Taylor R."
+      }
+    ],
+    "applied_at": "2026-05-19T16:06:22.037Z"
+  },
+  {
+    "id": "03c934d3-5a87-4e3b-829d-7bd2be922418",
+    "candidate_id": "33a605cc-7793-4807-95aa-604a11ac57ff",
+    "job_id": "528eb919-f28e-4bbb-854c-cde88cabce56",
+    "status": "active",
+    "current_stage": "Screening Scheduled",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-07-02T07:30:13.689Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-07-02T18:03:42.511Z",
+        "actor": "Alex T."
+      }
+    ],
+    "applied_at": "2026-07-02T07:30:13.689Z"
+  },
+  {
+    "id": "9cc28d56-c1d4-4031-91b3-e876b72e618a",
+    "candidate_id": "bf4ad9c6-90fc-4db2-90d6-486a7bd356f5",
+    "job_id": "bada9154-3f6e-4ac8-b973-b40a2ffe50e6",
+    "status": "rejected",
+    "current_stage": "Pending Feedback",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-07-01T15:39:56.096Z",
+        "actor": "Priya R."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-07-04T07:57:50.959Z",
+        "actor": "Priya R."
+      },
+      {
+        "stage": "Phone Screen",
+        "entered_at": "2026-07-05T14:15:49.366Z",
+        "actor": "Priya R."
+      },
+      {
+        "stage": "Assessment to Send",
+        "entered_at": "2026-07-06T16:35:09.868Z",
+        "actor": "Priya R."
+      },
+      {
+        "stage": "Assessment Pending",
+        "entered_at": "2026-07-07T14:50:17.656Z",
+        "actor": "Priya R."
+      },
+      {
+        "stage": "Assessment Review",
+        "entered_at": "2026-07-07T18:16:46.160Z",
+        "actor": "Priya R."
+      },
+      {
+        "stage": "Round N Scheduling",
+        "entered_at": "2026-07-08T13:44:24.737Z",
+        "actor": "Priya R."
+      },
+      {
+        "stage": "Round N In Progress",
+        "entered_at": "2026-07-09T06:07:01.309Z",
+        "actor": "Priya R."
+      },
+      {
+        "stage": "Pending Feedback",
+        "entered_at": "2026-07-11T08:39:13.917Z",
+        "actor": "Priya R."
+      }
+    ],
+    "applied_at": "2026-07-01T15:39:56.096Z",
+    "rejected_at": "2026-07-15T15:16:23.429Z",
+    "rejected_reason": "Failed assessment"
+  },
+  {
+    "id": "15981cf2-e8e2-4c0e-8a53-d957d51e653e",
+    "candidate_id": "47a8ef2d-77c1-4eae-8f81-251d4fb27778",
+    "job_id": "1a7170e4-a488-42fc-bfe9-e130564d5482",
+    "status": "active",
+    "current_stage": "Applied",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-07-07T04:32:06.577Z",
+        "actor": "Noor H."
+      }
+    ],
+    "applied_at": "2026-07-07T04:32:06.577Z"
+  },
+  {
+    "id": "c5899ba1-7a45-416f-b48b-0e6d0255d0a2",
+    "candidate_id": "b40f0d26-d3d7-45a5-a5b4-3cc78b86f29e",
+    "job_id": "1ee4ad88-31ee-4a55-abee-ca12e901a028",
+    "status": "rejected",
+    "current_stage": "Round N Scheduling",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-07-05T15:23:44.493Z",
+        "actor": "Jamie L."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-07-07T15:23:17.700Z",
+        "actor": "Jamie L."
+      },
+      {
+        "stage": "Phone Screen",
+        "entered_at": "2026-07-08T06:36:58.467Z",
+        "actor": "Jamie L."
+      },
+      {
+        "stage": "Assessment to Send",
+        "entered_at": "2026-07-08T11:10:37.332Z",
+        "actor": "Jamie L."
+      },
+      {
+        "stage": "Assessment Pending",
+        "entered_at": "2026-07-11T10:32:43.754Z",
+        "actor": "Jamie L."
+      },
+      {
+        "stage": "Assessment Review",
+        "entered_at": "2026-07-13T19:29:02.064Z",
+        "actor": "Jamie L."
+      },
+      {
+        "stage": "Round N Scheduling",
+        "entered_at": "2026-07-16T19:22:03.427Z",
+        "actor": "Jamie L."
+      }
+    ],
+    "applied_at": "2026-07-05T15:23:44.493Z",
+    "rejected_at": "2026-07-15T03:36:37.215Z",
+    "rejected_reason": "Not enough experience"
+  },
+  {
+    "id": "a8f635d7-5820-449b-8de6-b101734a5862",
+    "candidate_id": "bcc03756-c0a0-416d-928a-38e82a901224",
+    "job_id": "dbbc151d-9514-45ba-ae71-bc8c786010a5",
+    "status": "active",
+    "current_stage": "Offer Pending Approval",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-06-17T13:54:37.792Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-06-17T15:17:44.054Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Phone Screen",
+        "entered_at": "2026-06-20T00:35:14.261Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Assessment to Send",
+        "entered_at": "2026-06-20T19:10:07.664Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Assessment Pending",
+        "entered_at": "2026-06-21T16:32:23.464Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Assessment Review",
+        "entered_at": "2026-06-22T04:34:00.568Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Round N Scheduling",
+        "entered_at": "2026-06-23T23:44:31.395Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Round N In Progress",
+        "entered_at": "2026-06-24T03:49:42.244Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Pending Feedback",
+        "entered_at": "2026-06-24T15:16:47.992Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Debrief / Decision",
+        "entered_at": "2026-06-28T03:03:43.775Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Offer Prep",
+        "entered_at": "2026-06-28T07:37:58.363Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Offer Pending Approval",
+        "entered_at": "2026-06-28T12:37:31.926Z",
+        "actor": "Alex T."
+      }
+    ],
+    "applied_at": "2026-06-17T13:54:37.792Z"
+  },
+  {
+    "id": "6cdf13c8-5346-42f1-bfd6-ba358a877768",
+    "candidate_id": "c2e6764e-593c-4c4a-9b99-91a77d04104f",
+    "job_id": "1ee4ad88-31ee-4a55-abee-ca12e901a028",
+    "status": "rejected",
+    "current_stage": "Applied",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-06-12T22:56:28.648Z",
+        "actor": "Jamie L."
+      }
+    ],
+    "applied_at": "2026-06-12T22:56:28.648Z",
+    "rejected_at": "2026-07-12T00:42:46.972Z",
+    "rejected_reason": "Failed assessment"
+  },
+  {
+    "id": "a2bafe40-a901-49ee-9260-7cc716e35bbe",
+    "candidate_id": "11c6c444-9d76-4f17-b614-0e9d89be15bf",
+    "job_id": "fb9220d9-b0fd-4322-8486-492457c38909",
+    "status": "active",
+    "current_stage": "Assessment Pending",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-05-18T16:31:34.204Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-05-20T02:10:42.863Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Phone Screen",
+        "entered_at": "2026-05-23T04:02:03.745Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Assessment to Send",
+        "entered_at": "2026-05-23T16:48:43.373Z",
+        "actor": "Taylor R."
+      },
+      {
+        "stage": "Assessment Pending",
+        "entered_at": "2026-05-25T10:22:41.402Z",
+        "actor": "Taylor R."
+      }
+    ],
+    "applied_at": "2026-05-18T16:31:34.204Z"
+  },
+  {
+    "id": "f978c9af-96ba-407b-97c7-f416853a6acc",
+    "candidate_id": "0042aaff-a058-479f-be14-dd4ba73ea2bb",
+    "job_id": "528eb919-f28e-4bbb-854c-cde88cabce56",
+    "status": "active",
+    "current_stage": "Round N Scheduling",
+    "stage_history": [
+      {
+        "stage": "Applied",
+        "entered_at": "2026-06-13T05:41:12.891Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Screening Scheduled",
+        "entered_at": "2026-06-14T14:03:44.853Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Phone Screen",
+        "entered_at": "2026-06-18T02:25:23.905Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Assessment to Send",
+        "entered_at": "2026-06-18T06:49:37.044Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Assessment Pending",
+        "entered_at": "2026-06-18T15:38:06.627Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Assessment Review",
+        "entered_at": "2026-06-20T14:55:26.164Z",
+        "actor": "Alex T."
+      },
+      {
+        "stage": "Round N Scheduling",
+        "entered_at": "2026-06-21T22:57:50.345Z",
+        "actor": "Alex T."
+      }
+    ],
+    "applied_at": "2026-06-13T05:41:12.891Z"
+  }
+]

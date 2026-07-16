@@ -1,0 +1,42 @@
+[
+  {
+    "id": "u-sarah",
+    "name": "Sarah M.",
+    "email": "sarah.m@recruiteros.dev"
+  },
+  {
+    "id": "u-marcus",
+    "name": "Marcus T.",
+    "email": "marcus.t@recruiteros.dev"
+  },
+  {
+    "id": "u-priya",
+    "name": "Priya R.",
+    "email": "priya.r@recruiteros.dev"
+  },
+  {
+    "id": "u-alex",
+    "name": "Alex T.",
+    "email": "alex.t@recruiteros.dev"
+  },
+  {
+    "id": "u-devon",
+    "name": "Devon K.",
+    "email": "devon.k@recruiteros.dev"
+  },
+  {
+    "id": "u-jamie",
+    "name": "Jamie L.",
+    "email": "jamie.l@recruiteros.dev"
+  },
+  {
+    "id": "u-noor",
+    "name": "Noor H.",
+    "email": "noor.h@recruiteros.dev"
+  },
+  {
+    "id": "u-taylor",
+    "name": "Taylor R.",
+    "email": "taylor.r@recruiteros.dev"
+  }
+]

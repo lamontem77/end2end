@@ -38,6 +38,7 @@ Explicitly stubbed (no external credentials in this environment):
 - `src/pages` — one file per route in the PRD's IA (`/tickets/*`, `/new-hires*`, `/scheduling/*`, `/reports`, `/settings`).
 - `src/components` — sidebar, command palette, kanban board/cards, ticket drawer, scheduling approval cards, new-hire checklist, assistant chat panel.
 - `server/` — standalone Node backend for the real Slack app (separate `package.json`, not part of the Vite build). See `server/README.md`.
+- `mock-ats/` — standalone mock ATS API + synthetic candidate data + candidate simulator agent (separate `package.json`). See `mock-ats/README.md`.
 
 ## Chat assistant / Slack bot
 
@@ -58,6 +59,36 @@ parser. It compiles and its signature verification/health-check endpoints were s
 it has **not** been connected to a live Slack workspace (no app credentials available in this
 environment) and its candidate store is an in-memory placeholder rather than the app's real
 data — see `server/README.md` for exactly what's left to wire up before it's production-ready.
+
+## Mock ATS + synthetic data + candidate simulator
+
+`mock-ats/` is a separate, fully standalone service (own `package.json`, not wired into this
+frontend or its GitHub Pages deploy) built for a different purpose than the demo above: stress-
+testing recruiting coordination logic against something that behaves like a real ATS and real,
+occasionally messy candidates.
+
+- **150 synthetic candidates** generated with `@faker-js/faker` (names, emails, phones, resume
+  blurbs) — safe to use as a sales-demo dataset since none of it is real. Regenerate any time with
+  `npm run generate:candidates`.
+- **A mock ATS REST API** (`/v1/candidates`, `/v1/jobs`, `/v1/applications`, `/v1/webhooks`, …)
+  shaped after Greenhouse's Harvest API conventions, so pointing real code at a real ATS later is
+  a base-URL-and-auth swap. Includes working webhook delivery with a failure/delivery log, not
+  just fire-and-forget.
+- **A candidate simulator agent** with per-candidate personas (consistently flaky vs. consistently
+  prompt) that accepts, counter-proposes, or ghosts scheduling messages — either persistently via
+  webhook (`npm run simulate:watch`) or invoked directly by the lifecycle script below.
+- **A full-lifecycle script** (`npm run simulate:lifecycle`) that drives one candidate through
+  apply → recruiter screen → assessment → 3 interview rounds (each independently negotiated
+  against the simulator, including realistic ghosting/rescheduling) → debrief → offer →
+  onboarding (BGC, drug test, tech setup) → day one, logging every transition to the console and
+  to a JSON file — then runs 8 more candidates through just the scheduling exchange and prints an
+  accept/reschedule/ghost breakdown.
+- **Sandboxed email + calendar** — no real Mailtrap/Resend/Google Calendar/Nylas credentials were
+  available in this environment, so these default to a capture-only outbox and deterministic
+  synthetic free/busy data, with the real swap-in points documented inline in
+  `mock-ats/src/integrations/`.
+
+See `mock-ats/README.md` for the full endpoint reference and setup.
 
 ## Try the end-to-end scenario
 
