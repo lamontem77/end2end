@@ -1,12 +1,12 @@
 import { useState } from 'react'
 import { format, formatDistanceToNow } from 'date-fns'
-import { X, FileText, ClipboardList, Zap } from 'lucide-react'
+import { X, FileText, ClipboardList, Zap, AlertCircle } from 'lucide-react'
 import { useStore } from '../../store/useStore'
 import { Avatar } from '../ui/Avatar'
 import { SlaBadge } from '../ui/SlaBadge'
 import { PriorityTag } from '../ui/PriorityTag'
 import { StageActions } from './StageActions'
-import { nextActionFor } from '../../lib/nextAction'
+import { statusLine } from '../../lib/statusLine'
 
 export function TicketDrawer({ candidateId }: { candidateId: string }) {
   const candidate = useStore((s) => s.candidateById(candidateId))
@@ -15,8 +15,12 @@ export function TicketDrawer({ candidateId }: { candidateId: string }) {
   const addNote = useStore((s) => s.addNote)
   const [note, setNote] = useState('')
 
+  const users = useStore((s) => s.users)
+  const tracker = useStore((s) => s.newHireTrackers[candidateId])
+
   if (!candidate) return null
-  const action = nextActionFor(candidate)
+  const sl = statusLine(candidate, users, tracker)
+  const action = sl.nextAction
 
   return (
     <>
@@ -41,6 +45,17 @@ export function TicketDrawer({ candidateId }: { candidateId: string }) {
         </div>
 
         <div className="flex-1 overflow-y-auto px-6 py-4">
+          <div className={`mb-4 rounded-card border px-3 py-2.5 text-meta ${sl.stalled ? 'border-danger/30 bg-danger/5' : 'border-accent/20 bg-accent/5'}`}>
+            {sl.lastCompleted && <div className="text-caption text-text-muted">{sl.lastCompleted}</div>}
+            <div className="font-medium text-text-primary">{sl.currentPosition}</div>
+            {sl.nextAction && (
+              <div className={`mt-1 flex items-center gap-1 text-caption ${sl.stalled ? 'text-danger' : 'text-accent'}`}>
+                {sl.stalled ? <AlertCircle className="h-3 w-3 shrink-0" /> : <Zap className="h-3 w-3 shrink-0" />}
+                <span>Next: {sl.nextAction}{sl.nextOwnerName ? ` (${sl.nextOwnerName})` : ''}{sl.nextDue ? ` — ${sl.nextDue}` : ''}</span>
+              </div>
+            )}
+          </div>
+
           <div className="grid grid-cols-2 gap-3">
             <div className="rounded-card border border-border bg-surface p-3">
               <div className="text-caption font-medium uppercase tracking-wide text-text-muted">Current Stage</div>
@@ -74,16 +89,20 @@ export function TicketDrawer({ candidateId }: { candidateId: string }) {
             <div className="mt-4">
               <SectionHeading>Interview Rounds</SectionHeading>
               <div className="flex flex-col gap-2">
-                {candidate.interviewRounds.map((r) => (
-                  <div key={r.id} className="rounded-card border border-border bg-surface p-3 text-meta">
-                    <div className="font-medium text-text-primary">
-                      Round {r.roundNumber} · {formatScheduledAt(r.scheduledAt)} · {r.interviewerName}
+                {candidate.interviewRounds.map((r) => {
+                  const names = r.interviewers.map((i) => i.interviewerName).join(', ') || 'TBD'
+                  const submitted = r.interviewers.filter((i) => i.status === 'submitted').length
+                  const total = r.interviewers.length
+                  const feedbackText = total === 0 ? '—' : submitted === total ? '✅ All submitted' : `⏳ ${submitted}/${total} submitted`
+                  return (
+                    <div key={r.id} className="rounded-card border border-border bg-surface p-3 text-meta">
+                      <div className="font-medium text-text-primary">
+                        Round {r.roundNumber} · {formatScheduledAt(r.scheduledAt)} · {names}
+                      </div>
+                      <div className="mt-1 text-text-secondary">Feedback: {feedbackText}</div>
                     </div>
-                    <div className="mt-1 text-text-secondary">
-                      Feedback: {r.feedbackStatus === 'pending' ? '⏳ Pending' : '✅ Submitted'}
-                    </div>
-                  </div>
-                ))}
+                  )
+                })}
               </div>
             </div>
           )}

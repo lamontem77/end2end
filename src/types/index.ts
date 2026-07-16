@@ -79,6 +79,12 @@ export type ActivityEventType =
   | 'bgc_dt_result'
   | 'sub_ticket_change'
   | 'ticket_created'
+  | 'round_created'
+  | 'substatus_change'
+  | 'interview_completed'
+  | 'decision_recorded'
+  | 'candidate_nudged'
+  | 'escalated'
 
 export interface ActivityEvent {
   id: string
@@ -89,20 +95,54 @@ export interface ActivityEvent {
   meta?: Record<string, string>
 }
 
+// "Everything is an event" (v2 spec, product principle #4): every state
+// change is written here too, append-only, keyed to a candidate. Reports
+// and exports are computed from this — never from hand-maintained counters.
+// candidate.activityLog is the same data filtered to one candidate, kept for
+// the existing timeline UI; this is the flat, global, cross-candidate log.
+export interface AppEvent extends ActivityEvent {
+  candidateId: string
+}
+
+// Phase 1 sub-status model (v2 spec): a round's position is always
+// (stage, subStatus). SLA timers, ownership, and the next-action text all
+// derive from subStatus + its timestamp, not from the coarser Stage alone.
+export type SubStatus =
+  | 'needs_scheduling' // nothing sent yet — owner: coordinator (+ scheduling agent)
+  | 'availability_requested' // waiting on candidate reply — owner: candidate
+  | 'scheduled' // interview booked, waiting for the date — no SLA pressure
+  | 'awaiting_feedback' // interview happened, feedback outstanding — owner: interviewer(s)
+  | 'feedback_complete' // all feedback in, decision required — owner: recruiter
+
+export type RoundDecision = 'advance' | 'reject' | 'hold'
+
+export interface InterviewerFeedback {
+  interviewerId: string
+  interviewerName: string
+  status: 'pending' | 'submitted'
+  submittedAt?: string
+}
+
 export interface InterviewRound {
   id: string
   roundNumber: number
-  interviewerId: string
-  interviewerName: string
-  scheduledAt?: string
+  interviewers: InterviewerFeedback[]
+  subStatus: SubStatus
   format: 'virtual' | 'in_person'
-  feedbackStatus: 'pending' | 'submitted'
   webexLink?: string
+  createdAt: string // needs_scheduling started (round stub created)
+  requestSentAt?: string // availability_requested started
+  scheduledAt?: string // the interview's actual date/time, once booked
+  interviewCompletedAt?: string // awaiting_feedback started
+  feedbackCompletedAt?: string // feedback_complete started (all interviewers submitted)
+  roundCompletedAt?: string // decision recorded — round lifecycle fully done
+  decision?: RoundDecision
 }
 
 export interface Scorecard {
   id: string
   roundId: string
+  interviewerId: string
   submittedBy: string
   submittedAt: string
   recommendation: 'strong_yes' | 'yes' | 'no' | 'strong_no'

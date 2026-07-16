@@ -1,12 +1,13 @@
 import { Draggable } from '@hello-pangea/dnd'
-import { Zap } from 'lucide-react'
+import { AlertCircle, Zap } from 'lucide-react'
 import type { Candidate } from '../../types'
 import { slaState } from '../../lib/stageEngine'
+import { SUB_STATUS_LABEL, subStatusUrgency } from '../../lib/subStatus'
+import { statusLine } from '../../lib/statusLine'
 import { useStore } from '../../store/useStore'
 import { Avatar } from '../ui/Avatar'
 import { PriorityTag } from '../ui/PriorityTag'
 import { SlaBadge } from '../ui/SlaBadge'
-import { nextActionFor } from '../../lib/nextAction'
 
 const BORDER: Record<string, string> = {
   ok: 'border-l-border',
@@ -22,12 +23,21 @@ function daysInStage(stageEnteredAt: string) {
 export function CandidateCard({ candidate, index }: { candidate: Candidate; index: number }) {
   const setSelectedCandidate = useStore((s) => s.setSelectedCandidate)
   const agentDrafts = useStore((s) => s.agentDrafts)
+  const users = useStore((s) => s.users)
   const assignee = useStore((s) => s.userById(candidate.currentAssigneeId))
   const state = slaState(candidate.slaDeadline, candidate.stageEnteredAt)
   const hasPendingDraft = agentDrafts.some((d) => d.candidateId === candidate.id && d.status === 'pending')
   const borderClass = hasPendingDraft ? 'border-l-accent' : BORDER[state]
   const tint = state === 'breach' || state === 'at_risk' ? 'bg-danger/[0.04]' : ''
-  const action = nextActionFor(candidate)
+
+  const sl = statusLine(candidate, users)
+  const action = sl.nextAction
+
+  // Active round sub-status chip
+  const isRoundStage = candidate.currentStage === 'Round N Scheduling' || candidate.currentStage === 'Round N In Progress' || candidate.currentStage === 'Pending Feedback' || candidate.currentStage === 'Debrief / Decision'
+  const activeRound = isRoundStage ? (candidate.interviewRounds.find((r) => !r.roundCompletedAt) ?? candidate.interviewRounds[candidate.interviewRounds.length - 1]) : null
+  const subStatusLabel = activeRound ? SUB_STATUS_LABEL[activeRound.subStatus] : null
+  const subStatusColor = activeRound ? subStatusUrgency(activeRound) : null
 
   return (
     <Draggable draggableId={candidate.id} index={index}>
@@ -49,9 +59,15 @@ export function CandidateCard({ candidate, index }: { candidate: Candidate; inde
           <div className="text-label font-semibold text-text-primary">{candidate.name}</div>
           <div className="text-meta text-text-secondary">{candidate.role}</div>
 
+          {subStatusLabel && (
+            <div className={`mt-1.5 inline-flex items-center gap-1 rounded-tag px-1.5 py-0.5 text-caption font-medium ${subStatusColor === 'amber' ? 'bg-warning/10 text-warning' : 'bg-teal-500/10 text-teal-600 dark:text-teal-400'}`}>
+              {subStatusLabel}
+            </div>
+          )}
+
           {action && (
-            <div className="mt-2 inline-flex items-center gap-1 rounded-tag bg-accent/10 px-1.5 py-1 text-caption font-medium text-accent">
-              <Zap className="h-3 w-3" />
+            <div className={`mt-1.5 inline-flex items-center gap-1 rounded-tag px-1.5 py-1 text-caption font-medium ${sl.stalled ? 'bg-danger/10 text-danger' : 'bg-accent/10 text-accent'}`}>
+              {sl.stalled ? <AlertCircle className="h-3 w-3" /> : <Zap className="h-3 w-3" />}
               {action}
             </div>
           )}

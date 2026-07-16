@@ -1,8 +1,8 @@
 import { format } from 'date-fns'
 import { useStore } from '../store/useStore'
 import { ViewSwitcher } from '../components/tickets/ViewSwitcher'
-import { slaState, formatSlaLabel } from '../lib/stageEngine'
-import { nextActionFor } from '../lib/nextAction'
+import { slaState } from '../lib/stageEngine'
+import { statusLine } from '../lib/statusLine'
 import { DraftApprovalCard } from '../components/scheduling/DraftApprovalCard'
 
 export function MyQueue() {
@@ -88,9 +88,10 @@ function Empty({ text }: { text: string }) {
 
 function QueueRow({ candidateId, onOpen }: { candidateId: string; onOpen: () => void }) {
   const candidate = useStore((s) => s.candidateById(candidateId))
+  const users = useStore((s) => s.users)
   if (!candidate) return null
   const st = slaState(candidate.slaDeadline, candidate.stageEnteredAt)
-  const action = nextActionFor(candidate)
+  const sl = statusLine(candidate, users)
   return (
     <button
       onClick={onOpen}
@@ -98,12 +99,12 @@ function QueueRow({ candidateId, onOpen }: { candidateId: string; onOpen: () => 
     >
       <div>
         <div className="text-meta font-medium text-text-primary">
-          {action} · <span className="text-text-secondary">{candidate.name}</span>
+          {sl.nextAction ?? sl.currentPosition} · <span className="text-text-secondary">{candidate.name}</span>
         </div>
-        <div className="text-caption text-text-muted">{candidate.currentStage}</div>
+        <div className="text-caption text-text-muted">{sl.nextOwnerName ? `${sl.nextOwnerName} · ` : ''}{candidate.currentStage}</div>
       </div>
-      <span className={`text-caption font-medium ${st === 'breach' || st === 'at_risk' ? 'text-danger' : st === 'warning' ? 'text-warning' : 'text-text-secondary'}`}>
-        {formatSlaLabel(candidate.slaDeadline)}
+      <span className={`text-caption font-medium ${sl.stalled ? 'text-warning' : st === 'breach' || st === 'at_risk' ? 'text-danger' : st === 'warning' ? 'text-warning' : 'text-text-secondary'}`}>
+        {sl.nextDue ?? (sl.stalled ? 'Stalled' : '')}
       </span>
     </button>
   )

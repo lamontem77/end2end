@@ -7,17 +7,22 @@ import type {
   ActivityEventType,
   AgentActionType,
   AgentDraft,
+  AppEvent,
   AppNotification,
   Candidate,
   ChatMessage,
+  InterviewRound,
   NewHireTracker,
+  RoundDecision,
+  Scorecard,
   Stage,
   SubTicket,
   User,
 } from '../types'
-import { agentTriggerFor, assigneeRoleFor, formatSlaLabel, slaDeadlineFor, STAGES } from '../lib/stageEngine'
+import { agentTriggerFor, assigneeRoleFor, slaDeadlineFor, STAGES } from '../lib/stageEngine'
 import { generateDraftContent } from '../lib/agent'
 import { parseIntent } from '../lib/botIntent'
+import { statusLine } from '../lib/statusLine'
 
 interface PendingCandidateAction {
   kind: 'availability_reply' | 'self_schedule_pick'
@@ -35,6 +40,7 @@ interface AppState {
   notifications: AppNotification[]
   pendingCandidateActions: Record<string, PendingCandidateAction>
   chatMessages: ChatMessage[]
+  events: AppEvent[]
   selectedCandidateId: string | null
   commandPaletteOpen: boolean
 
@@ -63,6 +69,14 @@ interface AppState {
     recommendation: 'strong_yes' | 'yes' | 'no' | 'strong_no',
     notes: string,
   ) => void
+  submitInterviewerFeedback: (
+    candidateId: string,
+    roundId: string,
+    recommendation: 'strong_yes' | 'yes' | 'no' | 'strong_no',
+    notes: string,
+  ) => void
+  decideRound: (candidateId: string, roundId: string, decision: RoundDecision) => void
+  nudgeCandidate: (candidateId: string, roundId: string) => void
   hmDecision: (candidateId: string, decision: 'advance' | 'reject') => void
   hmApproveOffer: (candidateId: string) => void
 
@@ -93,7 +107,7 @@ function pickAssignee(candidate: Candidate, stage: Stage): string {
   if (role === 'hiring_manager') return candidate.hiringManagerId
   if (role === 'interviewer') {
     const latest = candidate.interviewRounds[candidate.interviewRounds.length - 1]
-    return latest?.interviewerId ?? candidate.currentAssigneeId
+    return latest?.interviewers[0]?.interviewerId ?? candidate.currentAssigneeId
   }
   if (role === 'it') return 'u-sam'
   return candidate.currentAssigneeId
@@ -134,6 +148,7 @@ export const useStore = create<AppState>()(
       notifications: [],
       pendingCandidateActions: {},
       chatMessages: [],
+      events: [],
       selectedCandidateId: null,
       commandPaletteOpen: false,
 
@@ -218,7 +233,7 @@ export const useStore = create<AppState>()(
         if (!candidate) return
         const isFirstRound = candidate.currentStage === 'Screening Scheduled'
         const roundLabel = isFirstRound ? 'Phone Screen' : `Round ${candidate.interviewRounds.length + 1}`
-        const interviewerId = candidate.interviewRounds[candidate.interviewRounds.length - 1]?.interviewerId ?? 'u-devon'
+        const interviewerId = candidate.interviewRounds[candidate.interviewRounds.length - 1]?.interviewers[0]?.interviewerId ?? 'u-devon'
         const nextStage: Stage = isFirstRound ? 'Phone Screen' : 'Round N In Progress'
         get().createAgentDraft(candidateId, mode === 'self_schedule' ? 'self_schedule' : 'availability_request', {
           roundLabel,
@@ -374,15 +389,18 @@ export const useStore = create<AppState>()(
             break
           case 'schedule_invite': {
             const roundNum = candidate.interviewRounds.length + 1
-            const round = {
+            const interviewerName = get().userById(meta.interviewerId)?.name ?? 'Interviewer'
+            const now = new Date().toISOString()
+            const round: InterviewRound = {
               id: nanoid(),
               roundNumber: roundNum,
-              interviewerId: meta.interviewerId,
-              interviewerName: get().userById(meta.interviewerId)?.name ?? 'Interviewer',
-              scheduledAt: meta.when,
-              format: 'virtual' as const,
-              feedbackStatus: 'pending' as const,
+              interviewers: [{ interviewerId: meta.interviewerId, interviewerName, status: 'pending' }],
+              subStatus: 'scheduled',
+              format: 'virtual',
               webexLink: meta.webex,
+              createdAt: now,
+              requestSentAt: now,
+              scheduledAt: meta.when,
             }
             set((s) => ({
               candidates: s.candidates.map((c) => (c.id === candidate.id ? { ...c, interviewRounds: [...c.interviewRounds, round] } : c)),
@@ -430,13 +448,23 @@ export const useStore = create<AppState>()(
         const candidate = get().candidateById(candidateId)
         if (!candidate) return
         const submitter = get().currentUser()
+        const submittedAt = new Date().toISOString()
+        const scorecard: Scorecard = { id: nanoid(), roundId, interviewerId: submitter.id, submittedBy: submitter.name, submittedAt, recommendation, notes }
         set((s) => ({
           candidates: s.candidates.map((c) =>
             c.id === candidateId
               ? {
                   ...c,
-                  scorecards: [...c.scorecards, { id: nanoid(), roundId, submittedBy: submitter.name, submittedAt: new Date().toISOString(), recommendation, notes }],
-                  interviewRounds: c.interviewRounds.map((r) => (r.id === roundId ? { ...r, feedbackStatus: 'submitted' } : r)),
+                  scorecards: [...c.scorecards, scorecard],
+                  interviewRounds: c.interviewRounds.map((r) => {
+                    if (r.id !== roundId) return r
+                    const pending = r.interviewers.find((i) => i.status === 'pending')
+                    const updatedInterviewers = r.interviewers.map((i) =>
+                      i.interviewerId === (pending?.interviewerId ?? '') ? { ...i, status: 'submitted' as const, submittedAt } : i,
+                    )
+                    const allSubmitted = updatedInterviewers.every((i) => i.status === 'submitted')
+                    return { ...r, interviewers: updatedInterviewers, subStatus: allSubmitted ? ('feedback_complete' as const) : r.subStatus, feedbackCompletedAt: allSubmitted ? submittedAt : r.feedbackCompletedAt }
+                  }),
                   activityLog: [...c.activityLog, logEvent('scorecard_submitted', `Scorecard submitted by ${submitter.name}`, submitter.name)],
                 }
               : c,
@@ -445,6 +473,70 @@ export const useStore = create<AppState>()(
         if (candidate.currentStage === 'Phone Screen' || candidate.currentStage === 'Pending Feedback') {
           get().moveToStage(candidateId, 'Debrief / Decision', submitter.name)
         }
+      },
+
+      submitInterviewerFeedback: (candidateId, roundId, recommendation, notes) => {
+        const candidate = get().candidateById(candidateId)
+        if (!candidate) return
+        const submitter = get().currentUser()
+        const submittedAt = new Date().toISOString()
+        set((s) => ({
+          candidates: s.candidates.map((c) => {
+            if (c.id !== candidateId) return c
+            const updatedRounds = c.interviewRounds.map((r) => {
+              if (r.id !== roundId) return r
+              const target = r.interviewers.find((i) => i.interviewerId === submitter.id) ?? r.interviewers.find((i) => i.status === 'pending')
+              const updatedInterviewers = r.interviewers.map((i) => (i.interviewerId === target?.interviewerId ? { ...i, status: 'submitted' as const, submittedAt } : i))
+              const allSubmitted = updatedInterviewers.every((i) => i.status === 'submitted')
+              return { ...r, interviewers: updatedInterviewers, subStatus: allSubmitted ? ('feedback_complete' as const) : r.subStatus, feedbackCompletedAt: allSubmitted ? submittedAt : r.feedbackCompletedAt }
+            })
+            const scorecard: Scorecard = {
+              id: nanoid(),
+              roundId,
+              interviewerId: submitter.id,
+              submittedBy: submitter.name,
+              submittedAt,
+              recommendation,
+              notes,
+            }
+            const event = logEvent('scorecard_submitted', `Feedback submitted by ${submitter.name}`, submitter.name)
+            return { ...c, interviewRounds: updatedRounds, scorecards: [...c.scorecards, scorecard], activityLog: [...c.activityLog, event] }
+          }),
+          events: [...s.events, { ...logEvent('scorecard_submitted', `Feedback submitted by ${submitter.name}`, submitter.name), candidateId }],
+        }))
+      },
+
+      decideRound: (candidateId, roundId, decision) => {
+        const actor = get().currentUser().name
+        const roundCompletedAt = new Date().toISOString()
+        set((s) => ({
+          candidates: s.candidates.map((c) =>
+            c.id === candidateId
+              ? {
+                  ...c,
+                  interviewRounds: c.interviewRounds.map((r) => (r.id === roundId ? { ...r, decision, roundCompletedAt } : r)),
+                  activityLog: [...c.activityLog, logEvent('decision_recorded', `Round decision: ${decision}`, actor)],
+                }
+              : c,
+          ),
+          events: [...s.events, { ...logEvent('decision_recorded', `Round decision: ${decision}`, actor), candidateId }],
+        }))
+        if (decision === 'advance') {
+          get().moveToStage(candidateId, 'Round N Scheduling', actor)
+        } else if (decision === 'reject') {
+          get().rejectCandidate(candidateId)
+        }
+      },
+
+      nudgeCandidate: (candidateId, roundId) => {
+        const actor = get().currentUser().name
+        set((s) => ({
+          candidates: s.candidates.map((c) =>
+            c.id === candidateId ? { ...c, activityLog: [...c.activityLog, logEvent('candidate_nudged', 'Candidate nudged for availability', actor)] } : c,
+          ),
+          events: [...s.events, { ...logEvent('candidate_nudged', 'Candidate nudged for availability', actor), candidateId }],
+        }))
+        get().createAgentDraft(candidateId, 'availability_request', { roundId })
       },
 
       hmDecision: (candidateId, decision) => {
@@ -621,16 +713,16 @@ export const useStore = create<AppState>()(
             if (!round) {
               reply = `${intent.candidate.name} doesn't have an interview on file yet, so there's no one to nudge.`
             } else {
-              get().createAgentDraft(intent.candidate.id, 'interviewer_nudge', { interviewerId: round.interviewerId })
-              reply = `Drafted a nudge for ${round.interviewerName} to submit their scorecard on ${intent.candidate.name} — approve it in My Queue → Approvals.`
+              const pending = round.interviewers.find((i) => i.status === 'pending') ?? round.interviewers[0]
+              get().createAgentDraft(intent.candidate.id, 'interviewer_nudge', { interviewerId: pending?.interviewerId ?? '' })
+              reply = `Drafted a nudge for ${pending?.interviewerName ?? 'the interviewer'} to submit their scorecard on ${intent.candidate.name} — approve it in My Queue → Approvals.`
             }
             break
           }
           case 'status': {
             candidateId = intent.candidate.id
-            const assignee = state.userById(intent.candidate.currentAssigneeId)
-            // Comma (not a period) after the name — names like "Alex T." already end in one.
-            reply = `${intent.candidate.name} is at "${intent.candidate.currentStage}", owned by ${assignee?.name ?? 'unassigned'}, SLA: ${formatSlaLabel(intent.candidate.slaDeadline)}.`
+            const sl = statusLine(intent.candidate, state.users)
+            reply = sl.text
             break
           }
           case 'ambiguous':
@@ -656,6 +748,7 @@ export const useStore = create<AppState>()(
           notifications: [],
           pendingCandidateActions: {},
           chatMessages: [],
+          events: [],
           selectedCandidateId: null,
         }),
     }),
@@ -668,6 +761,7 @@ export const useStore = create<AppState>()(
         notifications: s.notifications,
         pendingCandidateActions: s.pendingCandidateActions,
         chatMessages: s.chatMessages,
+        events: s.events,
         currentUserId: s.currentUserId,
       }),
     },
