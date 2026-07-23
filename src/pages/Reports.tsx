@@ -1,95 +1,115 @@
 import { useMemo, useState } from 'react'
-import { AlertCircle, ChevronDown, ChevronUp, Download, RefreshCw, Search, Zap } from 'lucide-react'
+import { ChevronDown, ChevronUp, Download, Search } from 'lucide-react'
 import { format } from 'date-fns'
-import type { AgentDraft, Candidate, Stage } from '../types'
+import type { Candidate, Stage } from '../types'
 import { STAGES } from '../types'
 import { useStore } from '../store/useStore'
-import { statusLine } from '../lib/statusLine'
+import { statusLine, type StatusLineResult } from '../lib/statusLine'
 import { slaState, formatSlaLabel } from '../lib/stageEngine'
-import { SUB_STATUS_LABEL } from '../lib/subStatus'
 import { buildCsvExport, downloadCsv } from '../lib/csvExport'
 
-// ── Stage group & categorical palette ────────────────────────────────────────
-// Five hue families: sky (screening) · amber (assessment) · purple (interviews)
-// · emerald (offer) · teal (onboarding). Fixed assignment — never cycled.
-// Adjacent families have ΔH ≥ 45° so CVD-variant pairs remain distinct.
-
+// ── Stage group palette ───────────────────────────────────────────────────────
+// Five hue families with ΔH ≥ 45° between adjacent pairs — CVD-safe.
+// Fixed assignment; never cycled.
 type StageGroup = 'screening' | 'assessment' | 'interviews' | 'offer' | 'onboarding'
 
 const STAGE_GROUP: Record<Stage, StageGroup> = {
-  'Applied': 'screening',
-  'Screening Scheduled': 'screening',
-  'Phone Screen': 'screening',
-  'Assessment to Send': 'assessment',
-  'Assessment Pending': 'assessment',
-  'Assessment Review': 'assessment',
-  'Round N Scheduling': 'interviews',
-  'Round N In Progress': 'interviews',
-  'Pending Feedback': 'interviews',
-  'Debrief / Decision': 'interviews',
-  'Offer Prep': 'offer',
+  'Applied':                'screening',
+  'Screening Scheduled':    'screening',
+  'Phone Screen':           'screening',
+  'Assessment to Send':     'assessment',
+  'Assessment Pending':     'assessment',
+  'Assessment Review':      'assessment',
+  'Round N Scheduling':     'interviews',
+  'Round N In Progress':    'interviews',
+  'Pending Feedback':       'interviews',
+  'Debrief / Decision':     'interviews',
+  'Offer Prep':             'offer',
   'Offer Pending Approval': 'offer',
-  'Offer Extended': 'offer',
-  'Offer Accepted': 'onboarding',
+  'Offer Extended':         'offer',
+  'Offer Accepted':         'onboarding',
 }
 
 const GROUP_STYLE: Record<StageGroup, { pill: string; dot: string; label: string }> = {
-  screening:  { pill: 'bg-sky-100 text-sky-800 dark:bg-sky-900/40 dark:text-sky-200',         dot: 'bg-sky-500',     label: 'Screening' },
-  assessment: { pill: 'bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-200', dot: 'bg-amber-500',   label: 'Assessment' },
-  interviews: { pill: 'bg-purple-100 text-purple-800 dark:bg-purple-900/40 dark:text-purple-200', dot: 'bg-purple-500', label: 'Interviews' },
-  offer:      { pill: 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-200', dot: 'bg-emerald-500', label: 'Offer' },
-  onboarding: { pill: 'bg-teal-100 text-teal-800 dark:bg-teal-900/40 dark:text-teal-200',     dot: 'bg-teal-500',    label: 'Onboarding' },
+  screening:  { dot: 'bg-sky-500',     pill: 'bg-sky-100 text-sky-800 dark:bg-sky-900/40 dark:text-sky-200',             label: 'Screening' },
+  assessment: { dot: 'bg-amber-500',   pill: 'bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-200',     label: 'Assessment' },
+  interviews: { dot: 'bg-purple-500',  pill: 'bg-purple-100 text-purple-800 dark:bg-purple-900/40 dark:text-purple-200', label: 'Interviews' },
+  offer:      { dot: 'bg-emerald-500', pill: 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-200', label: 'Offer' },
+  onboarding: { dot: 'bg-teal-500',    pill: 'bg-teal-100 text-teal-800 dark:bg-teal-900/40 dark:text-teal-200',         label: 'Onboarding' },
 }
 
-// ── Source palette ─────────────────────────────────────────────────────────────
-function sourceClass(source: string): string {
-  const s = source.toLowerCase()
-  if (s === 'linkedin') return 'bg-sky-100 text-sky-700 dark:bg-sky-900/30 dark:text-sky-300'
-  if (s === 'referral') return 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300'
-  if (isAgency(source)) return 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300'
-  return 'bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300'
+// ── "Waiting on" system ───────────────────────────────────────────────────────
+// The primary visual signal. Every row gets exactly one category, derived
+// from stage + sub-status at render time — never stored.
+// Left border + colored chip both reflect the category so it reads at a glance.
+
+type WaitingOn = 'you' | 'candidate' | 'interviewer' | 'recruiter_hm' | 'hr_it' | 'stalled'
+
+const WAITING_STYLE: Record<WaitingOn, { label: string; border: string; pill: string; dot: string; num: string }> = {
+  you:          { label: 'Needs Your Action', border: 'border-l-blue-500',    dot: 'bg-blue-500',    pill: 'bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-200',         num: 'text-blue-600 dark:text-blue-400' },
+  candidate:    { label: 'Pending Candidate', border: 'border-l-amber-500',   dot: 'bg-amber-500',   pill: 'bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-200',     num: 'text-amber-600 dark:text-amber-400' },
+  interviewer:  { label: 'Awaiting Feedback', border: 'border-l-purple-500',  dot: 'bg-purple-500',  pill: 'bg-purple-100 text-purple-800 dark:bg-purple-900/40 dark:text-purple-200', num: 'text-purple-600 dark:text-purple-400' },
+  recruiter_hm: { label: 'Recruiter / HM',   border: 'border-l-emerald-500', dot: 'bg-emerald-500', pill: 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-200', num: 'text-emerald-600 dark:text-emerald-400' },
+  hr_it:        { label: 'HR / IT',          border: 'border-l-teal-500',    dot: 'bg-teal-500',    pill: 'bg-teal-100 text-teal-800 dark:bg-teal-900/40 dark:text-teal-200',         num: 'text-teal-600 dark:text-teal-400' },
+  stalled:      { label: 'Stalled',          border: 'border-l-orange-500',  dot: 'bg-orange-500',  pill: 'bg-orange-100 text-orange-800 dark:bg-orange-900/40 dark:text-orange-200', num: 'text-orange-600 dark:text-orange-400' },
 }
 
+const ROUND_STAGES = new Set<Stage>(['Round N Scheduling', 'Round N In Progress', 'Pending Feedback', 'Debrief / Decision'])
+const WAITING_ORDER: Record<WaitingOn, number> = { stalled: 0, you: 1, candidate: 2, interviewer: 3, recruiter_hm: 4, hr_it: 5 }
+
+function deriveWaitingOn(c: Candidate, sl: StatusLineResult, currentUserId: string): WaitingOn {
+  if (sl.stalled) return 'stalled'
+
+  const activeRound = ROUND_STAGES.has(c.currentStage)
+    ? (c.interviewRounds.find((r) => !r.roundCompletedAt) ?? c.interviewRounds[c.interviewRounds.length - 1])
+    : null
+
+  // Candidate-blocked: they need to reply, book, complete, or sign
+  if (activeRound?.subStatus === 'availability_requested') return 'candidate'
+  if (activeRound?.subStatus === 'scheduled') return 'candidate'
+  if (c.currentStage === 'Assessment Pending') return 'candidate'
+  if (c.currentStage === 'Offer Extended') return 'candidate'
+
+  // Feedback awaited from interviewers
+  if (activeRound?.subStatus === 'awaiting_feedback') return 'interviewer'
+
+  // Decision / approval needed from recruiter or HM
+  if (activeRound?.subStatus === 'feedback_complete') return 'recruiter_hm'
+  if (c.currentStage === 'Debrief / Decision') return 'recruiter_hm'
+  if (c.currentStage === 'Offer Pending Approval') return 'recruiter_hm'
+
+  // HR Ops / IT
+  if (sl.nextOwnerName === 'HR Ops' || sl.nextOwnerName === 'IT') return 'hr_it'
+
+  // If the current user is assignee / RC / recruiter → it's on them
+  if (c.currentAssigneeId === currentUserId || c.rcId === currentUserId || c.recruiterId === currentUserId) return 'you'
+
+  return 'recruiter_hm'
+}
+
+// ── Source helpers ────────────────────────────────────────────────────────────
 function isAgency(source: string): boolean {
   const s = source.toLowerCase()
   return s.includes('agency') || s.includes('staffing') || s.includes('recruiter') || s.includes('headhunt') || s.includes('firm')
 }
 
-// ── Helpers ────────────────────────────────────────────────────────────────────
+// ── Misc helpers ──────────────────────────────────────────────────────────────
 const STAGE_IDX = Object.fromEntries(STAGES.map((s, i) => [s, i])) as Record<string, number>
-const SLA_SEVERITY: Record<string, number> = { at_risk: 0, breach: 1, warning: 2, ok: 3 }
 
 function daysInStage(iso: string): number {
   return Math.max(0, Math.floor((Date.now() - new Date(iso).getTime()) / 86_400_000))
 }
 
-// A candidate is flagged as "rescheduled" when a nudge event appears in their
-// log OR when more than one outbound email/draft-approval fired, implying at
-// least one scheduling attempt failed and a new one was sent.
-function wasRescheduled(c: Candidate): boolean {
-  return (
-    c.activityLog.some((e) => e.type === 'candidate_nudged') ||
-    c.activityLog.filter((e) => e.type === 'email_sent').length > 1
-  )
-}
-
-function hasPendingDraft(candidateId: string, drafts: AgentDraft[]): boolean {
-  return drafts.some((d) => d.candidateId === candidateId && d.status === 'pending')
-}
-
-// ── Sort ───────────────────────────────────────────────────────────────────────
-type SortKey = 'name' | 'stage' | 'days' | 'sla'
+type SortKey = 'name' | 'stage' | 'days' | 'waiting'
 type SortDir = 'asc' | 'desc'
 
 // ── Sub-components ─────────────────────────────────────────────────────────────
 
-/** Compact round-progress pills: R1 ✓  R2 → */
 function RoundPills({ candidate }: { candidate: Candidate }) {
-  const rounds = candidate.interviewRounds
-  if (!rounds.length) return null
+  if (!candidate.interviewRounds.length) return null
   return (
     <div className="mt-1 flex flex-wrap gap-1">
-      {rounds.map((r) => {
+      {candidate.interviewRounds.map((r) => {
         const done = !!r.roundCompletedAt
         return (
           <span
@@ -109,30 +129,27 @@ function RoundPills({ candidate }: { candidate: Candidate }) {
   )
 }
 
-/** Stat tile */
-function Tile({ label, value, sub, accent }: { label: string; value: number; sub?: string; accent?: string }) {
-  const numColors: Record<string, string> = {
-    red: 'text-red-600 dark:text-red-400',
-    amber: 'text-amber-600 dark:text-amber-400',
-    orange: 'text-orange-500 dark:text-orange-400',
-    purple: 'text-purple-600 dark:text-purple-400',
-    emerald: 'text-emerald-600 dark:text-emerald-400',
-    teal: 'text-teal-600 dark:text-teal-400',
-  }
-  const numColor = (accent && numColors[accent]) ?? 'text-text-primary'
+function SummaryCard({
+  waiting, count, active, onClick,
+}: { waiting: WaitingOn; count: number; active: boolean; onClick: () => void }) {
+  const s = WAITING_STYLE[waiting]
   return (
-    <div className="rounded-card border border-border bg-surface p-3">
-      <div className="text-caption text-text-muted">{label}</div>
-      <div className={`mt-0.5 text-2xl font-bold tabular-nums ${numColor}`}>{value}</div>
-      {sub && <div className="mt-0.5 text-[10px] text-text-muted">{sub}</div>}
-    </div>
+    <button
+      onClick={onClick}
+      className={`flex flex-col items-start rounded-card border px-3 py-2.5 text-left transition-all hover:shadow-sm ${
+        active ? `${s.pill} border-transparent` : 'border-border bg-surface hover:bg-surface-elevated'
+      }`}
+    >
+      <div className="flex items-center gap-1.5">
+        <span className={`h-1.5 w-1.5 rounded-full ${s.dot}`} />
+        <span className="text-caption text-text-muted">{s.label}</span>
+      </div>
+      <div className={`mt-0.5 text-2xl font-bold tabular-nums ${s.num}`}>{count}</div>
+    </button>
   )
 }
 
-/** Sortable column header */
-function SortTh({
-  label, col, current, dir, onSort,
-}: { label: string; col: SortKey; current: SortKey; dir: SortDir; onSort: (k: SortKey) => void }) {
+function SortTh({ label, col, current, dir, onSort }: { label: string; col: SortKey; current: SortKey; dir: SortDir; onSort: (k: SortKey) => void }) {
   const active = current === col
   return (
     <th
@@ -147,24 +164,20 @@ function SortTh({
   )
 }
 
-/** Non-sortable column header */
 function Th({ label }: { label: string }) {
-  return (
-    <th className="whitespace-nowrap px-3 py-2.5 text-left text-caption font-semibold uppercase tracking-wide text-text-muted">
-      {label}
-    </th>
-  )
+  return <th className="whitespace-nowrap px-3 py-2.5 text-left text-caption font-semibold uppercase tracking-wide text-text-muted">{label}</th>
 }
 
-// ── Reports page ────────────────────────────────────────────────────────────────
+// ── Page ───────────────────────────────────────────────────────────────────────
 export function Reports() {
   const candidates = useStore((s) => s.candidates)
   const users = useStore((s) => s.users)
   const trackers = useStore((s) => s.newHireTrackers)
   const drafts = useStore((s) => s.agentDrafts)
   const setSelected = useStore((s) => s.setSelectedCandidate)
+  const currentUser = useStore((s) => s.currentUser())
 
-  // Enriched rows — computed once per render, never re-derived per-filter
+  // Enrich once per render — filter + sort operate on this stable array
   const rows = useMemo(
     () =>
       candidates
@@ -172,29 +185,25 @@ export function Reports() {
         .map((c) => {
           const tracker = trackers[c.id]
           const sl = statusLine(c, users, tracker)
-          const state = slaState(c.slaDeadline, c.stageEnteredAt)
-          return {
-            c,
-            sl,
-            state,
-            days: daysInStage(c.stageEnteredAt),
-            rescheduled: wasRescheduled(c),
-            pendingDraft: hasPendingDraft(c.id, drafts),
-          }
+          const waitingOn = deriveWaitingOn(c, sl, currentUser.id)
+          const days = daysInStage(c.stageEnteredAt)
+          const sla = slaState(c.slaDeadline, c.stageEnteredAt)
+          const pendingDraft = drafts.some((d) => d.candidateId === c.id && d.status === 'pending')
+          return { c, sl, waitingOn, days, sla, pendingDraft }
         }),
-    [candidates, users, trackers, drafts],
+    [candidates, users, trackers, drafts, currentUser.id],
   )
 
-  // ── Filter state ─────────────────────────────────────────────────────────────
+  // ── Filter state ──────────────────────────────────────────────────────────────
   const [search, setSearch] = useState('')
+  const [waitingFilter, setWaitingFilter] = useState<WaitingOn | 'all'>('all')
+  const [groupFilter, setGroupFilter] = useState<StageGroup | 'all'>('all')
+  const [daysFilter, setDaysFilter] = useState<'any' | '1' | '3' | '5'>('any')
   const [sourceFilter, setSourceFilter] = useState('all')
   const [agencyFilter, setAgencyFilter] = useState('all')
-  const [groupFilter, setGroupFilter] = useState<StageGroup | 'all'>('all')
-  const [slaFilter, setSlaFilter] = useState<'all' | 'warning' | 'breach' | 'stalled'>('all')
-  const [rescheduledOnly, setRescheduledOnly] = useState(false)
 
-  // ── Sort state ───────────────────────────────────────────────────────────────
-  const [sortKey, setSortKey] = useState<SortKey>('sla')
+  // ── Sort state ────────────────────────────────────────────────────────────────
+  const [sortKey, setSortKey] = useState<SortKey>('waiting')
   const [sortDir, setSortDir] = useState<SortDir>('asc')
 
   function toggleSort(col: SortKey) {
@@ -202,25 +211,31 @@ export function Reports() {
     else { setSortKey(col); setSortDir('asc') }
   }
 
-  // ── Source lists ─────────────────────────────────────────────────────────────
+  // ── Derived lists ─────────────────────────────────────────────────────────────
   const allSources = useMemo(() => [...new Set(candidates.map((c) => c.source))].sort(), [candidates])
   const agencySources = useMemo(() => allSources.filter(isAgency), [allSources])
   const directSources = useMemo(() => allSources.filter((s) => !isAgency(s)), [allSources])
 
-  // ── Filtered + sorted rows ───────────────────────────────────────────────────
+  const counts = useMemo(() => {
+    const acc: Partial<Record<WaitingOn, number>> = {}
+    for (const r of rows) acc[r.waitingOn] = (acc[r.waitingOn] ?? 0) + 1
+    return acc
+  }, [rows])
+
+  // ── Filtered + sorted rows ────────────────────────────────────────────────────
   const visible = useMemo(() => {
     const q = search.toLowerCase()
-    const filtered = rows.filter(({ c, sl, state, rescheduled }) => {
+    const minDays = daysFilter === '1' ? 1 : daysFilter === '3' ? 3 : daysFilter === '5' ? 5 : 0
+
+    const filtered = rows.filter(({ c, waitingOn, days }) => {
       if (q && !c.name.toLowerCase().includes(q) && !c.role.toLowerCase().includes(q) && !c.department.toLowerCase().includes(q)) return false
+      if (waitingFilter !== 'all' && waitingOn !== waitingFilter) return false
+      if (groupFilter !== 'all' && STAGE_GROUP[c.currentStage] !== groupFilter) return false
+      if (days < minDays) return false
       if (sourceFilter === 'agency') {
         if (!isAgency(c.source)) return false
         if (agencyFilter !== 'all' && c.source !== agencyFilter) return false
       } else if (sourceFilter !== 'all' && c.source !== sourceFilter) return false
-      if (groupFilter !== 'all' && STAGE_GROUP[c.currentStage] !== groupFilter) return false
-      if (slaFilter === 'stalled' && !sl.stalled) return false
-      if (slaFilter === 'breach' && state !== 'breach' && state !== 'at_risk') return false
-      if (slaFilter === 'warning' && state !== 'warning') return false
-      if (rescheduledOnly && !rescheduled) return false
       return true
     })
 
@@ -229,52 +244,33 @@ export function Reports() {
       if (sortKey === 'name') return dir * a.c.name.localeCompare(b.c.name)
       if (sortKey === 'stage') return dir * ((STAGE_IDX[a.c.currentStage] ?? 0) - (STAGE_IDX[b.c.currentStage] ?? 0))
       if (sortKey === 'days') return dir * (a.days - b.days)
-      if (sortKey === 'sla') {
-        const ao = a.sl.stalled ? -1 : (SLA_SEVERITY[a.state] ?? 3)
-        const bo = b.sl.stalled ? -1 : (SLA_SEVERITY[b.state] ?? 3)
-        return dir * (ao - bo)
-      }
+      if (sortKey === 'waiting') return dir * ((WAITING_ORDER[a.waitingOn] ?? 9) - (WAITING_ORDER[b.waitingOn] ?? 9))
       return 0
     })
-  }, [rows, search, sourceFilter, agencyFilter, groupFilter, slaFilter, rescheduledOnly, sortKey, sortDir])
+  }, [rows, search, waitingFilter, groupFilter, daysFilter, sourceFilter, agencyFilter, sortKey, sortDir])
 
-  // ── Summary stats ────────────────────────────────────────────────────────────
-  const stats = useMemo(
-    () => ({
-      total: rows.length,
-      stalled: rows.filter((r) => r.sl.stalled).length,
-      atRisk: rows.filter((r) => r.state === 'breach' || r.state === 'at_risk').length,
-      interviews: rows.filter((r) => STAGE_GROUP[r.c.currentStage] === 'interviews').length,
-      offer: rows.filter((r) => STAGE_GROUP[r.c.currentStage] === 'offer' || STAGE_GROUP[r.c.currentStage] === 'onboarding').length,
-      rescheduled: rows.filter((r) => r.rescheduled).length,
-    }),
-    [rows],
-  )
-
-  const anyFilter = !!(search || sourceFilter !== 'all' || groupFilter !== 'all' || slaFilter !== 'all' || rescheduledOnly)
+  const anyFilter = !!(search || waitingFilter !== 'all' || groupFilter !== 'all' || daysFilter !== 'any' || sourceFilter !== 'all')
 
   function clearFilters() {
-    setSearch('')
-    setSourceFilter('all')
-    setAgencyFilter('all')
-    setGroupFilter('all')
-    setSlaFilter('all')
-    setRescheduledOnly(false)
+    setSearch(''); setWaitingFilter('all'); setGroupFilter('all')
+    setDaysFilter('any'); setSourceFilter('all'); setAgencyFilter('all')
   }
 
   function handleExport() {
-    const csv = buildCsvExport(candidates, users, trackers)
-    downloadCsv(csv, `pipeline-${format(new Date(), 'yyyy-MM-dd')}.csv`)
+    downloadCsv(buildCsvExport(candidates, users, trackers), `pipeline-${format(new Date(), 'yyyy-MM-dd')}.csv`)
   }
 
+  // ── Render ────────────────────────────────────────────────────────────────────
   return (
     <div className="flex h-full flex-col overflow-hidden">
 
       {/* ── Header ── */}
       <div className="flex flex-shrink-0 items-center justify-between border-b border-border px-6 py-4">
         <div>
-          <h1 className="text-heading font-semibold text-text-primary">Pipeline Report</h1>
-          <p className="text-meta text-text-secondary">Live · {format(new Date(), 'EEEE, MMMM d, yyyy')}</p>
+          <h1 className="text-heading font-semibold text-text-primary">Pipeline Dashboard</h1>
+          <p className="text-meta text-text-secondary">
+            Live · {format(new Date(), 'EEEE, MMMM d')} · {rows.length} active candidates
+          </p>
         </div>
         <button
           onClick={handleExport}
@@ -284,60 +280,31 @@ export function Reports() {
         </button>
       </div>
 
-      {/* ── Stat tiles ── */}
+      {/* ── Summary cards — click to filter by waiting-on category ── */}
       <div className="flex-shrink-0 grid grid-cols-3 gap-3 border-b border-border px-6 py-4 sm:grid-cols-6">
-        <Tile label="Active" value={stats.total} />
-        <Tile label="Stalled" value={stats.stalled} accent="orange" sub="no next step" />
-        <Tile label="SLA at Risk" value={stats.atRisk} accent="red" sub="breach / escalated" />
-        <Tile label="In Interviews" value={stats.interviews} accent="purple" />
-        <Tile label="Offer / Onboard" value={stats.offer} accent="emerald" />
-        <Tile label="Rescheduled" value={stats.rescheduled} accent="amber" sub="at least once" />
+        {(Object.keys(WAITING_STYLE) as WaitingOn[]).map((w) => (
+          <SummaryCard
+            key={w}
+            waiting={w}
+            count={counts[w] ?? 0}
+            active={waitingFilter === w}
+            onClick={() => setWaitingFilter((prev) => (prev === w ? 'all' : w))}
+          />
+        ))}
       </div>
 
       {/* ── Filter bar ── */}
-      <div className="flex-shrink-0 flex flex-wrap items-center gap-2 border-b border-border bg-surface-elevated/40 px-6 py-3">
-
-        {/* Search */}
+      <div className="flex-shrink-0 flex flex-wrap items-center gap-2 border-b border-border bg-bg px-6 py-2.5">
         <div className="relative">
-          <Search className="absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-text-muted pointer-events-none" />
+          <Search className="pointer-events-none absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-text-muted" />
           <input
-            className="h-8 w-48 rounded-button border border-border bg-surface pl-8 pr-3 text-meta text-text-primary placeholder:text-text-muted focus:border-accent focus:outline-none"
-            placeholder="Name, role, department…"
+            className="h-8 w-44 rounded-button border border-border bg-surface pl-8 pr-3 text-meta text-text-primary placeholder:text-text-muted focus:border-accent focus:outline-none"
+            placeholder="Name, role, dept…"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
         </div>
 
-        {/* Source */}
-        <select
-          className="h-8 rounded-button border border-border bg-surface px-2 text-meta text-text-primary focus:border-accent focus:outline-none"
-          value={sourceFilter}
-          onChange={(e) => { setSourceFilter(e.target.value); setAgencyFilter('all') }}
-        >
-          <option value="all">All sources</option>
-          <optgroup label="Direct">
-            {directSources.map((s) => <option key={s} value={s}>{s}</option>)}
-          </optgroup>
-          {agencySources.length > 0 && (
-            <optgroup label="Agency">
-              <option value="agency">All agencies</option>
-            </optgroup>
-          )}
-        </select>
-
-        {/* Agency sub-filter */}
-        {sourceFilter === 'agency' && agencySources.length > 1 && (
-          <select
-            className="h-8 rounded-button border border-border bg-surface px-2 text-meta text-text-primary focus:border-accent focus:outline-none"
-            value={agencyFilter}
-            onChange={(e) => setAgencyFilter(e.target.value)}
-          >
-            <option value="all">All agencies</option>
-            {agencySources.map((s) => <option key={s} value={s}>{s}</option>)}
-          </select>
-        )}
-
-        {/* Stage group */}
         <select
           className="h-8 rounded-button border border-border bg-surface px-2 text-meta text-text-primary focus:border-accent focus:outline-none"
           value={groupFilter}
@@ -349,29 +316,39 @@ export function Reports() {
           ))}
         </select>
 
-        {/* SLA */}
         <select
           className="h-8 rounded-button border border-border bg-surface px-2 text-meta text-text-primary focus:border-accent focus:outline-none"
-          value={slaFilter}
-          onChange={(e) => setSlaFilter(e.target.value as typeof slaFilter)}
+          value={daysFilter}
+          onChange={(e) => setDaysFilter(e.target.value as typeof daysFilter)}
         >
-          <option value="all">All SLA</option>
-          <option value="warning">Warning</option>
-          <option value="breach">Breach / At Risk</option>
-          <option value="stalled">Stalled</option>
+          <option value="any">Any duration</option>
+          <option value="1">1+ days</option>
+          <option value="3">3+ days</option>
+          <option value="5">5+ days</option>
         </select>
 
-        {/* Rescheduled toggle */}
-        <button
-          onClick={() => setRescheduledOnly((v) => !v)}
-          className={`flex h-8 items-center gap-1.5 rounded-button border px-2.5 text-meta font-medium transition-colors ${
-            rescheduledOnly
-              ? 'border-amber-400 bg-amber-50 text-amber-700 dark:border-amber-600 dark:bg-amber-900/30 dark:text-amber-300'
-              : 'border-border bg-surface text-text-secondary hover:bg-surface-elevated'
-          }`}
+        <select
+          className="h-8 rounded-button border border-border bg-surface px-2 text-meta text-text-primary focus:border-accent focus:outline-none"
+          value={sourceFilter}
+          onChange={(e) => { setSourceFilter(e.target.value); setAgencyFilter('all') }}
         >
-          <RefreshCw className="h-3.5 w-3.5" /> Rescheduled
-        </button>
+          <option value="all">All sources</option>
+          <optgroup label="Direct">{directSources.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
+          {agencySources.length > 0 && (
+            <optgroup label="Agency"><option value="agency">All agencies</option></optgroup>
+          )}
+        </select>
+
+        {sourceFilter === 'agency' && agencySources.length > 1 && (
+          <select
+            className="h-8 rounded-button border border-border bg-surface px-2 text-meta text-text-primary focus:border-accent focus:outline-none"
+            value={agencyFilter}
+            onChange={(e) => setAgencyFilter(e.target.value)}
+          >
+            <option value="all">All agencies</option>
+            {agencySources.map((s) => <option key={s} value={s}>{s}</option>)}
+          </select>
+        )}
 
         {anyFilter && (
           <button onClick={clearFilters} className="h-8 rounded-button px-2 text-meta text-text-muted hover:text-text-secondary">
@@ -386,170 +363,99 @@ export function Reports() {
 
       {/* ── Pipeline table ── */}
       <div className="min-h-0 flex-1 overflow-auto">
-        <table className="w-full min-w-[960px] border-collapse text-meta">
+        <table className="w-full min-w-[700px] border-collapse text-meta">
           <thead className="sticky top-0 z-10 border-b border-border bg-surface shadow-sm">
             <tr>
               <SortTh label="Candidate" col="name" current={sortKey} dir={sortDir} onSort={toggleSort} />
               <SortTh label="Stage" col="stage" current={sortKey} dir={sortDir} onSort={toggleSort} />
-              <Th label="Status" />
-              <Th label="Next Action" />
-              <Th label="Owner" />
-              <SortTh label="SLA" col="sla" current={sortKey} dir={sortDir} onSort={toggleSort} />
+              <SortTh label="Waiting On" col="waiting" current={sortKey} dir={sortDir} onSort={toggleSort} />
+              <Th label="Next Step" />
               <SortTh label="Days" col="days" current={sortKey} dir={sortDir} onSort={toggleSort} />
-              <Th label="Source" />
-              <Th label="" />
+              <Th label="Due" />
             </tr>
           </thead>
+
           <tbody>
             {visible.length === 0 && (
               <tr>
-                <td colSpan={9} className="px-6 py-12 text-center text-meta text-text-muted">
+                <td colSpan={6} className="px-6 py-14 text-center text-meta text-text-muted">
                   No candidates match the current filters.
                 </td>
               </tr>
             )}
-            {visible.map(({ c, sl, state, days, rescheduled, pendingDraft }) => {
-              const group = STAGE_GROUP[c.currentStage]
-              const gs = GROUP_STYLE[group]
-              const isRoundStage = group === 'interviews'
-              const activeRound = isRoundStage
-                ? (c.interviewRounds.find((r) => !r.roundCompletedAt) ?? c.interviewRounds[c.interviewRounds.length - 1])
-                : null
 
-              // Row-level tint for worst state only
-              const rowTint =
-                state === 'at_risk' || state === 'breach'
-                  ? 'bg-danger/[0.025] hover:bg-danger/[0.04]'
-                  : sl.stalled
-                    ? 'bg-warning/[0.025] hover:bg-warning/[0.04]'
+            {visible.map(({ c, sl, waitingOn, days, sla, pendingDraft }) => {
+              const gs = GROUP_STYLE[STAGE_GROUP[c.currentStage]]
+              const ws = WAITING_STYLE[waitingOn]
+
+              const rowBg =
+                waitingOn === 'stalled'
+                  ? 'bg-orange-50/50 dark:bg-orange-900/[0.07] hover:bg-orange-50 dark:hover:bg-orange-900/10'
+                  : sla === 'breach' || sla === 'at_risk'
+                    ? 'bg-red-50/40 dark:bg-red-900/[0.07] hover:bg-red-50/60 dark:hover:bg-red-900/10'
                     : 'hover:bg-surface-elevated'
 
               return (
                 <tr
                   key={c.id}
                   onClick={() => setSelected(c.id)}
-                  className={`cursor-pointer border-b border-border transition-colors ${rowTint}`}
+                  className={`cursor-pointer border-b border-border transition-colors duration-micro ${rowBg}`}
                 >
 
-                  {/* ── Candidate name + role ── */}
-                  <td className="px-3 py-3">
-                    <div className="font-medium text-text-primary">{c.name}</div>
+                  {/* ── Candidate (left border = waiting-on color) ── */}
+                  <td className={`border-l-[3px] ${ws.border} px-3 py-2.5`}>
+                    <div className="flex items-center gap-1.5">
+                      <span className="font-medium text-text-primary">{c.name}</span>
+                      {pendingDraft && (
+                        <span title="Draft awaiting your approval" className="h-1.5 w-1.5 rounded-full bg-accent" />
+                      )}
+                    </div>
                     <div className="text-caption text-text-muted">{c.role} · {c.department}</div>
                   </td>
 
-                  {/* ── Stage badge + round pills ── */}
-                  <td className="px-3 py-3">
-                    <span className={`inline-flex items-center gap-1.5 rounded-tag px-2 py-0.5 text-caption font-medium ${gs.pill}`}>
+                  {/* ── Stage pill + round progress ── */}
+                  <td className="px-3 py-2.5">
+                    <span className={`inline-flex items-center gap-1 rounded-tag px-2 py-0.5 text-caption font-medium ${gs.pill}`}>
                       <span className={`h-1.5 w-1.5 rounded-full ${gs.dot}`} />
                       {c.currentStage}
                     </span>
                     <RoundPills candidate={c} />
                   </td>
 
-                  {/* ── Status — what is happening right now ── */}
-                  <td className="max-w-[220px] px-3 py-3">
-                    {isRoundStage && activeRound ? (
-                      <div>
-                        <span
-                          className={`text-caption font-medium ${
-                            activeRound.subStatus === 'awaiting_feedback' || activeRound.subStatus === 'needs_scheduling' || activeRound.subStatus === 'feedback_complete'
-                              ? 'text-orange-600 dark:text-orange-400'
-                              : activeRound.subStatus === 'scheduled'
-                                ? 'text-blue-600 dark:text-blue-400'
-                                : 'text-text-secondary'
-                          }`}
-                        >
-                          {SUB_STATUS_LABEL[activeRound.subStatus]}
-                        </span>
-                        {activeRound.subStatus === 'awaiting_feedback' && activeRound.interviewers.length > 0 && (
-                          <div className="text-caption text-text-muted">
-                            {activeRound.interviewers.filter((i) => i.status === 'submitted').length}/{activeRound.interviewers.length} scorecards in
-                          </div>
-                        )}
-                        {activeRound.subStatus === 'scheduled' && activeRound.scheduledAt && (
-                          <div className="text-caption text-text-muted">
-                            {format(new Date(activeRound.scheduledAt), 'MMM d, h:mm a')}
-                          </div>
-                        )}
-                        {activeRound.subStatus === 'availability_requested' && activeRound.requestSentAt && (
-                          <div className="text-caption text-text-muted">
-                            Sent {format(new Date(activeRound.requestSentAt), 'MMM d')}
-                          </div>
-                        )}
-                      </div>
-                    ) : (
-                      <span className="line-clamp-2 text-caption text-text-secondary">{sl.currentPosition}</span>
-                    )}
+                  {/* ── Waiting on chip — primary visual signal ── */}
+                  <td className="px-3 py-2.5">
+                    <span className={`inline-flex items-center gap-1 rounded-tag px-2 py-0.5 text-caption font-medium ${ws.pill}`}>
+                      {ws.label}
+                    </span>
                   </td>
 
-                  {/* ── Next Action ── */}
-                  <td className="max-w-[200px] px-3 py-3">
-                    {sl.nextAction ? (
-                      <div className={`flex items-start gap-1 ${sl.stalled ? 'text-orange-600 dark:text-orange-400' : 'text-text-primary'}`}>
-                        {sl.stalled
-                          ? <AlertCircle className="mt-px h-3 w-3 shrink-0" />
-                          : <Zap className="mt-px h-3 w-3 shrink-0 text-accent" />}
-                        <span className="line-clamp-2 text-caption">{sl.nextAction}</span>
-                      </div>
-                    ) : sl.stalled ? (
-                      <span className="text-caption font-medium text-orange-500">No next step</span>
-                    ) : (
-                      <span className="text-caption text-text-muted">—</span>
-                    )}
-                  </td>
-
-                  {/* ── Owner ── */}
-                  <td className="whitespace-nowrap px-3 py-3">
-                    <span className="text-caption text-text-secondary">{sl.nextOwnerName ?? '—'}</span>
-                  </td>
-
-                  {/* ── SLA ── */}
-                  <td className="whitespace-nowrap px-3 py-3">
-                    {sl.stalled ? (
-                      <span className="text-caption font-semibold text-orange-500">Stalled</span>
-                    ) : state === 'breach' || state === 'at_risk' ? (
-                      <span className="text-caption font-semibold text-danger">{formatSlaLabel(c.slaDeadline)}</span>
-                    ) : state === 'warning' ? (
-                      <span className="text-caption font-medium text-warning">{sl.nextDue ?? formatSlaLabel(c.slaDeadline)}</span>
-                    ) : (
-                      <span className="text-caption text-text-muted">{sl.nextDue ?? formatSlaLabel(c.slaDeadline)}</span>
-                    )}
+                  {/* ── Next step ── */}
+                  <td className="max-w-[260px] px-3 py-2.5">
+                    <span className={`line-clamp-2 text-caption ${sl.stalled ? 'italic text-text-muted' : 'text-text-secondary'}`}>
+                      {sl.nextAction ?? (sl.stalled ? 'No next step assigned' : sl.currentPosition)}
+                    </span>
                   </td>
 
                   {/* ── Days in stage ── */}
-                  <td className="px-3 py-3 text-center">
-                    <span className={`tabular-nums text-caption ${days >= 5 ? 'font-semibold text-warning' : 'text-text-muted'}`}>
+                  <td className="px-3 py-2.5 text-center">
+                    <span className={`tabular-nums text-caption font-medium ${days >= 5 ? 'text-warning' : 'text-text-muted'}`}>
                       {days}d
                     </span>
                   </td>
 
-                  {/* ── Source ── */}
-                  <td className="whitespace-nowrap px-3 py-3">
-                    <span className={`inline-flex items-center rounded-tag px-1.5 py-0.5 text-caption font-medium ${sourceClass(c.source)}`}>
-                      {c.source}
+                  {/* ── SLA / due date ── */}
+                  <td className="whitespace-nowrap px-3 py-2.5">
+                    <span className={`text-caption ${
+                      sla === 'breach' || sla === 'at_risk'
+                        ? 'font-semibold text-danger'
+                        : sla === 'warning'
+                          ? 'font-medium text-warning'
+                          : 'text-text-muted'
+                    }`}>
+                      {sl.nextDue ?? formatSlaLabel(c.slaDeadline)}
                     </span>
                   </td>
 
-                  {/* ── Flags ── */}
-                  <td className="px-3 py-3">
-                    <div className="flex items-center gap-1">
-                      {pendingDraft && (
-                        <span title="Approval draft pending" className="rounded-full bg-accent/10 p-0.5 text-accent">
-                          <Zap className="h-3 w-3" />
-                        </span>
-                      )}
-                      {rescheduled && (
-                        <span title="Rescheduled at least once" className="rounded-full bg-amber-100 p-0.5 text-amber-600 dark:bg-amber-900/30 dark:text-amber-400">
-                          <RefreshCw className="h-3 w-3" />
-                        </span>
-                      )}
-                      {sl.stalled && !rescheduled && !pendingDraft && (
-                        <span title="Stalled — no next step assigned" className="rounded-full bg-orange-100 p-0.5 text-orange-600 dark:bg-orange-900/30 dark:text-orange-400">
-                          <AlertCircle className="h-3 w-3" />
-                        </span>
-                      )}
-                    </div>
-                  </td>
                 </tr>
               )
             })}
@@ -558,28 +464,21 @@ export function Reports() {
       </div>
 
       {/* ── Legend ── */}
-      <div className="flex-shrink-0 flex flex-wrap items-center gap-x-4 gap-y-1.5 border-t border-border bg-surface-elevated/40 px-6 py-2.5">
-        <span className="text-caption font-medium text-text-muted">Stage:</span>
-        {(Object.entries(GROUP_STYLE) as [StageGroup, typeof GROUP_STYLE[StageGroup]][]).map(([key, s]) => (
-          <span key={key} className="flex items-center gap-1 text-caption text-text-muted">
-            <span className={`h-2 w-2 rounded-full ${s.dot}`} />
-            {s.label}
+      <div className="flex-shrink-0 flex flex-wrap items-center gap-x-5 gap-y-1 border-t border-border bg-bg px-6 py-2">
+        <span className="text-caption font-semibold text-text-muted">Waiting on:</span>
+        {(Object.entries(WAITING_STYLE) as [WaitingOn, (typeof WAITING_STYLE)[WaitingOn]][]).map(([k, s]) => (
+          <span key={k} className="flex items-center gap-1 text-caption text-text-muted">
+            <span className={`h-2 w-2 rounded-full ${s.dot}`} /> {s.label}
           </span>
         ))}
-        <span className="ml-4 text-caption font-medium text-text-muted">Flags:</span>
-        <span className="flex items-center gap-1 text-caption text-text-muted"><Zap className="h-3 w-3 text-accent" /> Draft pending</span>
-        <span className="flex items-center gap-1 text-caption text-text-muted"><RefreshCw className="h-3 w-3 text-amber-500" /> Rescheduled</span>
-        <span className="flex items-center gap-1 text-caption text-text-muted"><AlertCircle className="h-3 w-3 text-orange-500" /> Stalled</span>
-        <span className="ml-4 text-caption font-medium text-text-muted">Rounds:</span>
-        <span className="flex items-center gap-1 text-caption text-text-muted">
-          <span className="inline-flex items-center rounded-full bg-emerald-100 px-1.5 text-[10px] font-semibold text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300">R1 ✓</span>
-          Complete
-        </span>
-        <span className="flex items-center gap-1 text-caption text-text-muted">
-          <span className="inline-flex items-center rounded-full bg-purple-100 px-1.5 text-[10px] font-semibold text-purple-700 ring-1 ring-inset ring-purple-300 dark:bg-purple-900/40 dark:text-purple-200 dark:ring-purple-700">R2 →</span>
-          In progress
-        </span>
+        <span className="ml-3 text-caption font-semibold text-text-muted">Stage:</span>
+        {(Object.entries(GROUP_STYLE) as [StageGroup, (typeof GROUP_STYLE)[StageGroup]][]).map(([k, s]) => (
+          <span key={k} className="flex items-center gap-1 text-caption text-text-muted">
+            <span className={`h-2 w-2 rounded-full ${s.dot}`} /> {s.label}
+          </span>
+        ))}
       </div>
+
     </div>
   )
 }
