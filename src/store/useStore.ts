@@ -753,7 +753,7 @@ export const useStore = create<AppState>()(
         }),
     }),
     {
-      name: 'recruiteros-demo-store-v1',
+      name: 'recruiteros-demo-store-v2',
       partialize: (s) => ({
         candidates: s.candidates,
         agentDrafts: s.agentDrafts,
