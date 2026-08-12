@@ -201,6 +201,7 @@ function BreezySection() {
 function GoogleSection() {
   const [status, setStatus] = useState<GoogleStatus | null>(null)
   const [revoking, setRevoking] = useState(false)
+  const [testSending, setTestSending] = useState(false)
 
   const fetchStatus = async () => {
     try {
@@ -212,7 +213,6 @@ function GoogleSection() {
   }
 
   useEffect(() => {
-    // Check if we just came back from OAuth
     const params = new URLSearchParams(window.location.search)
     if (params.get('google') === 'connected') {
       toast.success(`Google connected as ${params.get('email') ?? 'unknown'}`)
@@ -237,6 +237,23 @@ function GoogleSection() {
     }
   }
 
+  const handleTestEmail = async () => {
+    if (!status?.email) return
+    setTestSending(true)
+    try {
+      await api.email.send({
+        to: [status.email],
+        subject: 'RecruiterOS — Gmail connection verified ✓',
+        bodyHtml: `<p>Hi,</p><p>This test confirms your Gmail account (${status.email}) is connected to RecruiterOS.</p><p>You can now approve agent-drafted emails and they'll be sent from this address.</p><p>— RecruiterOS</p>`,
+      })
+      toast.success('Test email sent — check your inbox')
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : 'Failed to send test email')
+    } finally {
+      setTestSending(false)
+    }
+  }
+
   return (
     <IntegrationCard
       title="Google (Gmail + Calendar)"
@@ -249,14 +266,24 @@ function GoogleSection() {
         />
         <div className="flex items-center gap-2">
           {status?.connected ? (
-            <button
-              onClick={handleRevoke}
-              disabled={revoking}
-              className="flex items-center gap-1 rounded-button border border-border px-2 py-1 text-caption text-danger hover:bg-danger/5"
-            >
-              {revoking ? <Loader2 className="h-3 w-3 animate-spin" /> : <Unlink className="h-3 w-3" />}
-              Disconnect
-            </button>
+            <>
+              <button
+                onClick={handleTestEmail}
+                disabled={testSending}
+                className="flex items-center gap-1 rounded-button border border-border px-2 py-1 text-caption text-text-secondary hover:bg-surface-elevated"
+              >
+                {testSending ? <Loader2 className="h-3 w-3 animate-spin" /> : null}
+                Send test email
+              </button>
+              <button
+                onClick={handleRevoke}
+                disabled={revoking}
+                className="flex items-center gap-1 rounded-button border border-border px-2 py-1 text-caption text-danger hover:bg-danger/5"
+              >
+                {revoking ? <Loader2 className="h-3 w-3 animate-spin" /> : <Unlink className="h-3 w-3" />}
+                Disconnect
+              </button>
+            </>
           ) : (
             <a
               href={api.google.oauthUrl()}
@@ -268,18 +295,24 @@ function GoogleSection() {
           )}
         </div>
       </div>
+
       {!status?.connected && (
-        <p className="mt-2 text-caption text-text-secondary">
-          Requires GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET in the server .env.{' '}
-          <a
-            href="https://console.cloud.google.com/apis/credentials"
-            target="_blank"
-            rel="noreferrer"
-            className="text-accent hover:underline"
-          >
-            Set up in Google Cloud Console →
-          </a>
-        </p>
+        <div className="mt-3 rounded-button bg-surface-elevated p-3 text-caption text-text-secondary">
+          <p className="mb-2 font-medium text-text-primary">Setup steps:</p>
+          <ol className="list-inside list-decimal space-y-1">
+            <li>
+              Create OAuth credentials at{' '}
+              <a href="https://console.cloud.google.com/apis/credentials" target="_blank" rel="noreferrer" className="text-accent hover:underline">
+                Google Cloud Console
+              </a>{' '}
+              — type "Web application", add redirect URI <code className="rounded bg-surface px-1">http://localhost:3001/api/google/oauth/callback</code>
+            </li>
+            <li>Copy Client ID + Secret into <code className="rounded bg-surface px-1">server/.env</code></li>
+            <li>Run <code className="rounded bg-surface px-1">cd server && npm run dev</code> in a terminal</li>
+            <li>Set Backend URL above to <code className="rounded bg-surface px-1">http://localhost:3001</code> and click Save</li>
+            <li>Click <strong>Connect Google</strong> — Google will ask to approve Gmail + Calendar access</li>
+          </ol>
+        </div>
       )}
     </IntegrationCard>
   )
