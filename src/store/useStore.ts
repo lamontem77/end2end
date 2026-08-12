@@ -93,6 +93,18 @@ interface AppState {
 
   sendChatMessage: (text: string) => void
 
+  createInterviewRequest: (params: {
+    candidateName: string
+    candidateEmail: string
+    role: string
+    department: string
+    round: number
+    interviewerUserId: string
+    format: 'virtual' | 'in_person' | 'phone'
+    requestedByUserId: string
+    notes?: string
+  }) => void
+
   resetDemoData: () => void
 }
 
@@ -738,6 +750,77 @@ export const useStore = create<AppState>()(
 
         const botMsg: ChatMessage = { id: nanoid(), role: 'bot', text: reply, candidateId, createdAt: new Date().toISOString() }
         set((s) => ({ chatMessages: [...s.chatMessages, botMsg] }))
+      },
+
+      createInterviewRequest: ({ candidateName, candidateEmail, role, department, round, interviewerUserId, format, requestedByUserId, notes }) => {
+        const state = get()
+        const requestedBy = state.userById(requestedByUserId)
+        const interviewer = state.userById(interviewerUserId)
+        const now = new Date()
+        const stage: Stage = round === 1 ? 'Screening Scheduled' : 'Round N Scheduling'
+        const rcId = state.users.find((u) => u.role === 'rc')?.id ?? state.currentUserId
+        const recruiterId = state.users.find((u) => u.role === 'recruiter')?.id ?? state.currentUserId
+        const hmId = state.users.find((u) => u.role === 'hiring_manager')?.id ?? requestedByUserId
+        const candidateId = nanoid()
+
+        const interviewRound: InterviewRound = {
+          id: nanoid(),
+          roundNumber: round,
+          interviewers: interviewer ? [{ interviewerId: interviewerUserId, interviewerName: interviewer.name, status: 'pending' }] : [],
+          subStatus: 'needs_scheduling',
+          format,
+          createdAt: now.toISOString(),
+        }
+
+        const newCandidate: Candidate = {
+          id: candidateId,
+          name: candidateName,
+          email: candidateEmail,
+          role,
+          department,
+          source: 'Internal Request',
+          currentStage: stage,
+          currentAssigneeId: rcId,
+          priority: 'standard',
+          tags: [department, `Round ${round}`].filter(Boolean),
+          stageEnteredAt: now.toISOString(),
+          slaDeadline: slaDeadlineFor(stage, now),
+          notes: notes ? [{ id: nanoid(), author: requestedBy?.name ?? 'System', content: notes, createdAt: now.toISOString() }] : [],
+          activityLog: [
+            logEvent('ticket_created', `Interview request from ${requestedBy?.name ?? 'Unknown'}`, requestedBy?.name ?? 'System'),
+            logEvent('assignment_change', `Assigned to RC`, 'System'),
+          ],
+          interviewRounds: [interviewRound],
+          scorecards: [],
+          assessmentStatus: 'not_sent',
+          recruiterId,
+          rcId,
+          hiringManagerId: hmId,
+          createdAt: now.toISOString(),
+          updatedAt: now.toISOString(),
+        }
+
+        set((s) => ({
+          candidates: [...s.candidates, newCandidate],
+          notifications: [
+            ...s.notifications,
+            {
+              id: nanoid(),
+              userId: rcId,
+              title: `New interview request — ${candidateName}`,
+              body: `${requestedBy?.name ?? 'Someone'} requested ${round === 1 ? 'a phone screen' : `Round ${round}`} with ${interviewer?.name ?? 'interviewer TBD'}.`,
+              candidateId,
+              read: false,
+              createdAt: now.toISOString(),
+            },
+          ],
+        }))
+
+        get().createAgentDraft(candidateId, 'availability_request', {
+          roundLabel: round === 1 ? 'Phone Screen' : `Round ${round}`,
+          interviewerId: interviewerUserId,
+          nextStage: round === 1 ? 'Phone Screen' : 'Round N In Progress',
+        })
       },
 
       resetDemoData: () =>

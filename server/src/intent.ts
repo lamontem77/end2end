@@ -11,6 +11,7 @@ export type ParsedIntent =
   | { type: 'send_assessment'; candidate: CandidateRecord }
   | { type: 'nudge_interviewer'; candidate: CandidateRecord }
   | { type: 'status'; candidate: CandidateRecord }
+  | { type: 'interview_request'; candidateName: string; role: string; round: number; interviewerName: string; format: string }
   | { type: 'ambiguous'; matches: CandidateRecord[]; raw: string }
   | { type: 'not_found'; raw: string }
   | { type: 'unrecognized'; raw: string }
@@ -53,6 +54,39 @@ function stripPunctuation(text: string) {
   return text.replace(/[?.!,]+$/g, '').trim()
 }
 
+/**
+ * Parse the Slack /interview slash command format:
+ *   /interview Ming X · Senior SWE · R1 · Devon K. · Webex
+ * Also handles `·` vs `.` vs `|` as delimiters.
+ */
+export function parseInterviewCommand(text: string): ParsedIntent | null {
+  const cleaned = text.replace(/^\/interview\s*/i, '').trim()
+  // Split on · or | or  (em dash)
+  const parts = cleaned.split(/[·|—]/).map((p) => p.trim()).filter(Boolean)
+  if (parts.length < 3) return null
+
+  const candidateName = parts[0]
+  const role = parts[1] ?? ''
+  const roundStr = parts[2] ?? ''
+  const interviewerName = parts[3] ?? ''
+  const formatStr = parts[4] ?? 'Webex'
+
+  // Parse round number: "R1", "Round 1", "Round 2", "R2", "Phone Screen" etc.
+  let round = 1
+  const roundMatch = roundStr.match(/(\d+)/)
+  if (roundMatch) round = parseInt(roundMatch[1], 10)
+  else if (/phone/i.test(roundStr)) round = 1
+
+  return {
+    type: 'interview_request',
+    candidateName,
+    role,
+    round,
+    interviewerName,
+    format: /webex|zoom|virtual|meet/i.test(formatStr) ? 'Virtual' : formatStr,
+  }
+}
+
 export function parseIntent(rawText: string, candidates: CandidateRecord[]): ParsedIntent {
   const text = stripPunctuation(rawText)
   const lower = normalize(text)
@@ -81,6 +115,22 @@ export function parseIntent(rawText: string, candidates: CandidateRecord[]): Par
 }
 
 export async function handleMessage(text: string, store: { listCandidates(): Promise<CandidateRecord[]> } & Record<string, any>): Promise<string> {
+  // Check for /interview slash command first
+  if (/^\/interview\s+/i.test(text.trim())) {
+    const interviewIntent = parseInterviewCommand(text.trim())
+    if (interviewIntent && interviewIntent.type === 'interview_request') {
+      const { candidateName, role, round, interviewerName, format } = interviewIntent
+      // Log the request and notify RC (in demo: just return confirmation)
+      await store.createInterviewRequest?.({ candidateName, role, round, interviewerName, format })
+      const roundLabel = round === 1 ? 'Phone Screen' : `Round ${round}`
+      return (
+        `✅ Request logged — *${candidateName}* / ${role} / ${roundLabel}\n` +
+        `Assigned to: RC · Agent drafting outreach now\n` +
+        (interviewerName ? `Interviewer: ${interviewerName} · Format: ${format}` : '')
+      )
+    }
+  }
+
   const candidates = await store.listCandidates()
   const intent = parseIntent(text, candidates)
 
