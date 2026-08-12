@@ -2,11 +2,23 @@ import { useState, useMemo } from 'react'
 import { format } from 'date-fns'
 import { ChevronDown, ChevronRight, Search, Filter } from 'lucide-react'
 import { useStore } from '../store/useStore'
-import { ViewSwitcher } from '../components/tickets/ViewSwitcher'
 import { slaState } from '../lib/stageEngine'
 import { statusLine } from '../lib/statusLine'
 import { DraftApprovalCard } from '../components/scheduling/DraftApprovalCard'
 import { Avatar } from '../components/ui/Avatar'
+import type { Candidate } from '../types'
+
+type ViewTab = 'all' | 'approvals' | 'scheduling' | 'assessment' | 'at_risk'
+
+const SCHEDULING_STAGES = new Set([
+  'Screening Scheduled', 'Phone Screen',
+  'Round N Scheduling', 'Round N In Progress',
+  'Pending Feedback', 'Debrief / Decision',
+])
+
+const ASSESSMENT_STAGES = new Set([
+  'Assessment to Send', 'Assessment Pending', 'Assessment Review',
+])
 
 export function MyQueue() {
   const currentUser = useStore((s) => s.currentUser())
@@ -16,72 +28,128 @@ export function MyQueue() {
   const setSelectedCandidate = useStore((s) => s.setSelectedCandidate)
 
   const candidates = allCandidates.filter((c) => !c.tags.includes('Rejected'))
-  const drafts = allDrafts.filter((d) => d.status === 'pending')
+  const pendingDrafts = allDrafts.filter((d) => d.status === 'pending')
 
+  const [tab, setTab] = useState<ViewTab>('all')
   const [reqFilter, setReqFilter] = useState('')
   const [search, setSearch] = useState('')
   const [collapsed, setCollapsed] = useState<Record<string, boolean>>({})
 
-  const myDrafts = drafts.filter((d) => {
-    const candidate = candidates.find((c) => c.id === d.candidateId)
-    return candidate?.rcId === currentUser.id || candidate?.recruiterId === currentUser.id
-  })
-
-  const assigned = candidates.filter(
-    (c) => c.currentAssigneeId === currentUser.id && !myDrafts.some((d) => d.candidateId === c.id),
+  // Scope: candidates I own (as RC, recruiter, or current assignee)
+  const mine = useMemo(
+    () =>
+      candidates.filter(
+        (c) =>
+          c.currentAssigneeId === currentUser.id ||
+          c.rcId === currentUser.id ||
+          c.recruiterId === currentUser.id,
+      ),
+    [candidates, currentUser.id],
   )
-  const overdue = assigned.filter((c) => {
-    const st = slaState(c.slaDeadline, c.stageEnteredAt)
-    return st === 'breach' || st === 'at_risk'
+
+  const myDrafts = pendingDrafts.filter((d) => {
+    const c = candidates.find((x) => x.id === d.candidateId)
+    return c?.rcId === currentUser.id || c?.recruiterId === currentUser.id || c?.currentAssigneeId === currentUser.id
   })
-  const onTrack = assigned.filter((c) => !overdue.includes(c))
 
-  // Unique roles across all assigned candidates (for req filter)
-  const allReqs = useMemo(() => {
-    const roles = new Set([...assigned, ...overdue].map((c) => c.role))
-    return Array.from(roles).sort()
-  }, [assigned, overdue])
+  const overdue = mine.filter((c) => {
+    const s = slaState(c.slaDeadline, c.stageEnteredAt)
+    return s === 'breach' || s === 'at_risk'
+  })
 
-  function filterCandidates(list: typeof candidates) {
+  const scheduling = mine.filter((c) => SCHEDULING_STAGES.has(c.currentStage))
+  const assessment = mine.filter((c) => ASSESSMENT_STAGES.has(c.currentStage))
+  const rest = mine.filter(
+    (c) => !overdue.includes(c) && !scheduling.includes(c) && !assessment.includes(c),
+  )
+
+  const TABS: { key: ViewTab; label: string; count: number; accent?: boolean }[] = [
+    { key: 'all',        label: 'All',        count: mine.length + myDrafts.length },
+    { key: 'approvals',  label: 'Approvals',  count: myDrafts.length,    accent: myDrafts.length > 0 },
+    { key: 'scheduling', label: 'Scheduling', count: scheduling.length },
+    { key: 'assessment', label: 'Assessment', count: assessment.length },
+    { key: 'at_risk',    label: 'At Risk',    count: overdue.length,     accent: overdue.length > 0 },
+  ]
+
+  const allReqs = useMemo(
+    () => Array.from(new Set(mine.map((c) => c.role))).sort(),
+    [mine],
+  )
+
+  function filter(list: Candidate[]) {
     return list.filter((c) => {
       if (reqFilter && c.role !== reqFilter) return false
       if (search) {
         const q = search.toLowerCase()
-        return c.name.toLowerCase().includes(q) || c.role.toLowerCase().includes(q) || c.department.toLowerCase().includes(q)
+        return (
+          c.name.toLowerCase().includes(q) ||
+          c.role.toLowerCase().includes(q) ||
+          c.department.toLowerCase().includes(q)
+        )
       }
       return true
     })
   }
 
-  const filteredOverdue = filterCandidates(overdue)
-  const filteredOnTrack = filterCandidates(onTrack)
-
   function toggle(key: string) {
-    setCollapsed((prev) => ({ ...prev, [key]: !prev[key] }))
+    setCollapsed((p) => ({ ...p, [key]: !p[key] }))
   }
 
-  const totalItems = myDrafts.length + filteredOverdue.length + filteredOnTrack.length
+  const showApprovals = tab === 'all' || tab === 'approvals'
+  const showAtRisk    = tab === 'all' || tab === 'at_risk'
+  const showSched     = tab === 'all' || tab === 'scheduling'
+  const showAssess    = tab === 'all' || tab === 'assessment'
+  const showRest      = tab === 'all'
 
   return (
     <div className="flex h-full flex-col">
       {/* Header */}
-      <div className="flex flex-col gap-3 border-b border-border px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+      <div className="flex flex-col gap-3 border-b border-border px-6 py-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-subhead font-semibold text-text-primary sm:text-heading">My Queue — {currentUser.name}</h1>
-          <p className="text-meta text-text-secondary">{format(new Date(), 'EEEE, MMMM d')} · {totalItems} item{totalItems !== 1 ? 's' : ''}</p>
+          <h1 className="text-heading font-semibold text-text-primary">Queue — {currentUser.name}</h1>
+          <p className="text-meta text-text-secondary">{format(new Date(), 'EEEE, MMMM d')}</p>
         </div>
-        <ViewSwitcher />
+      </div>
+
+      {/* Tabs */}
+      <div className="flex gap-0.5 border-b border-border px-6 pt-2">
+        {TABS.map((t) => (
+          <button
+            key={t.key}
+            onClick={() => setTab(t.key)}
+            className={`flex items-center gap-1.5 rounded-t-button px-3 py-2 text-meta font-medium transition-colors duration-micro ${
+              tab === t.key
+                ? 'border-b-2 border-accent text-accent'
+                : 'text-text-secondary hover:text-text-primary'
+            }`}
+          >
+            {t.label}
+            {t.count > 0 && (
+              <span
+                className={`rounded-tag px-1.5 py-0.5 text-caption font-mono ${
+                  t.accent
+                    ? 'bg-accent/15 text-accent'
+                    : tab === t.key
+                      ? 'bg-accent/10 text-accent'
+                      : 'bg-surface-elevated text-text-muted'
+                }`}
+              >
+                {t.count}
+              </span>
+            )}
+          </button>
+        ))}
       </div>
 
       {/* Filter bar */}
-      <div className="flex flex-wrap items-center gap-2 border-b border-border bg-bg px-4 py-2 sm:px-6">
-        <div className="relative flex-1 min-w-[140px] max-w-[260px]">
+      <div className="flex flex-wrap items-center gap-2 border-b border-border bg-bg px-6 py-2">
+        <div className="relative">
           <Search className="pointer-events-none absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-text-muted" />
           <input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search name, role…"
-            className="h-7 w-full rounded-button border border-border bg-surface pl-7 pr-2 text-caption text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-1 focus:ring-accent"
+            className="h-7 w-44 rounded-button border border-border bg-surface pl-7 pr-2 text-caption text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-1 focus:ring-accent"
           />
         </div>
         <div className="flex items-center gap-1.5">
@@ -107,66 +175,101 @@ export function MyQueue() {
         )}
       </div>
 
-      {/* Sections */}
-      <div className="flex-1 overflow-y-auto px-4 py-3 sm:px-6">
-        {/* Needs Approval */}
-        <Section
-          title="Needs Your Approval"
-          count={myDrafts.length}
-          accent="accent"
-          collapsed={!!collapsed['drafts']}
-          onToggle={() => toggle('drafts')}
-        >
-          {myDrafts.length === 0
-            ? <Empty text="No drafts waiting on you." />
-            : myDrafts.map((d) => <DraftApprovalCard key={d.id} draft={d} />)}
-        </Section>
+      {/* Content */}
+      <div className="flex-1 overflow-y-auto px-6 py-3">
+        {showApprovals && myDrafts.length > 0 && (
+          <Section
+            title="Needs Your Approval"
+            count={myDrafts.length}
+            accent="accent"
+            collapsed={!!collapsed['drafts']}
+            onToggle={() => toggle('drafts')}
+          >
+            {myDrafts.map((d) => <DraftApprovalCard key={d.id} draft={d} />)}
+          </Section>
+        )}
 
-        {/* Overdue */}
-        <Section
-          title="Overdue"
-          count={filteredOverdue.length}
-          accent="danger"
-          collapsed={!!collapsed['overdue']}
-          onToggle={() => toggle('overdue')}
-        >
-          {filteredOverdue.length === 0
-            ? <Empty text={overdue.length === 0 ? 'Nothing overdue. Nice work.' : 'No matches for current filters.'} />
-            : filteredOverdue.map((c) => (
+        {showAtRisk && (
+          <Section
+            title="Overdue / At Risk"
+            count={filter(overdue).length}
+            accent="danger"
+            collapsed={!!collapsed['overdue']}
+            onToggle={() => toggle('overdue')}
+          >
+            {filter(overdue).length === 0
+              ? <Empty text={overdue.length === 0 ? 'Nothing overdue.' : 'No matches.'} />
+              : filter(overdue).map((c) => (
+                <QueueRow key={c.id} candidateId={c.id} users={users} onOpen={() => setSelectedCandidate(c.id)} />
+              ))}
+          </Section>
+        )}
+
+        {showSched && (
+          <Section
+            title="Scheduling"
+            count={filter(scheduling).length}
+            collapsed={!!collapsed['scheduling']}
+            onToggle={() => toggle('scheduling')}
+          >
+            {filter(scheduling).length === 0
+              ? <Empty text="No scheduling items." />
+              : filter(scheduling).map((c) => (
+                <QueueRow key={c.id} candidateId={c.id} users={users} onOpen={() => setSelectedCandidate(c.id)} />
+              ))}
+          </Section>
+        )}
+
+        {showAssess && (
+          <Section
+            title="Assessment"
+            count={filter(assessment).length}
+            collapsed={!!collapsed['assessment']}
+            onToggle={() => toggle('assessment')}
+          >
+            {filter(assessment).length === 0
+              ? <Empty text="No assessment items." />
+              : filter(assessment).map((c) => (
+                <QueueRow key={c.id} candidateId={c.id} users={users} onOpen={() => setSelectedCandidate(c.id)} />
+              ))}
+          </Section>
+        )}
+
+        {showRest && rest.length > 0 && (
+          <Section
+            title="Other Assigned"
+            count={filter(rest).length}
+            collapsed={!!collapsed['rest']}
+            onToggle={() => toggle('rest')}
+          >
+            {filter(rest).map((c) => (
               <QueueRow key={c.id} candidateId={c.id} users={users} onOpen={() => setSelectedCandidate(c.id)} />
             ))}
-        </Section>
+          </Section>
+        )}
 
-        {/* On Track */}
-        <Section
-          title="Assigned to You"
-          count={filteredOnTrack.length}
-          collapsed={!!collapsed['ontrack']}
-          onToggle={() => toggle('ontrack')}
-        >
-          {filteredOnTrack.length === 0
-            ? <Empty text={onTrack.length === 0 ? 'Nothing else assigned to you right now.' : 'No matches for current filters.'} />
-            : filteredOnTrack.map((c) => (
-              <QueueRow key={c.id} candidateId={c.id} users={users} onOpen={() => setSelectedCandidate(c.id)} />
-            ))}
-        </Section>
+        {mine.length === 0 && myDrafts.length === 0 && (
+          <div className="flex h-40 items-center justify-center text-meta text-text-muted">
+            Nothing in your queue right now.
+          </div>
+        )}
       </div>
     </div>
   )
 }
 
-// ─── Section ────────────────────────────────────────────────────────────────
+// ─── Section ─────────────────────────────────────────────────────────────────
 
-interface SectionProps {
+function Section({
+  title, count, accent, collapsed, onToggle, children,
+}: {
   title: string
   count: number
   accent?: 'accent' | 'danger'
   collapsed: boolean
   onToggle: () => void
   children: React.ReactNode
-}
-
-function Section({ title, count, accent, collapsed, onToggle, children }: SectionProps) {
+}) {
   const labelColor =
     accent === 'accent' ? 'text-accent' : accent === 'danger' ? 'text-danger' : 'text-text-secondary'
   const badgeColor =
@@ -175,7 +278,6 @@ function Section({ title, count, accent, collapsed, onToggle, children }: Sectio
       : accent === 'danger'
         ? 'bg-danger/10 text-danger'
         : 'bg-surface-elevated text-text-muted'
-  const icon = accent === 'accent' ? '⚡' : accent === 'danger' ? '●' : '●'
 
   return (
     <div className="mb-4">
@@ -183,20 +285,14 @@ function Section({ title, count, accent, collapsed, onToggle, children }: Sectio
         onClick={onToggle}
         className="mb-1.5 flex w-full items-center gap-1.5 py-0.5 text-left"
       >
-        {collapsed ? (
-          <ChevronRight className={`h-3.5 w-3.5 ${labelColor}`} />
-        ) : (
-          <ChevronDown className={`h-3.5 w-3.5 ${labelColor}`} />
-        )}
-        <span className={`text-meta font-semibold ${labelColor}`}>
-          {accent ? <span className="mr-1">{icon}</span> : null}
-          {title}
-        </span>
+        {collapsed
+          ? <ChevronRight className={`h-3.5 w-3.5 ${labelColor}`} />
+          : <ChevronDown className={`h-3.5 w-3.5 ${labelColor}`} />}
+        <span className={`text-meta font-semibold ${labelColor}`}>{title}</span>
         <span className={`ml-1 rounded-full px-1.5 py-0.5 text-caption font-medium ${badgeColor}`}>
           {count}
         </span>
       </button>
-
       {!collapsed && <div className="flex flex-col gap-1">{children}</div>}
     </div>
   )
@@ -204,15 +300,23 @@ function Section({ title, count, accent, collapsed, onToggle, children }: Sectio
 
 function Empty({ text }: { text: string }) {
   return (
-    <div className="rounded-card border border-dashed border-border px-4 py-4 text-center text-caption text-text-muted">
+    <div className="rounded-card border border-dashed border-border px-4 py-3 text-center text-caption text-text-muted">
       {text}
     </div>
   )
 }
 
-// ─── Queue Row ───────────────────────────────────────────────────────────────
+// ─── Queue Row ────────────────────────────────────────────────────────────────
 
-function QueueRow({ candidateId, users, onOpen }: { candidateId: string; users: ReturnType<typeof useStore.getState>['users']; onOpen: () => void }) {
+function QueueRow({
+  candidateId,
+  users,
+  onOpen,
+}: {
+  candidateId: string
+  users: ReturnType<typeof useStore.getState>['users']
+  onOpen: () => void
+}) {
   const candidate = useStore((s) => s.candidateById(candidateId))
   if (!candidate) return null
 
@@ -220,25 +324,25 @@ function QueueRow({ candidateId, users, onOpen }: { candidateId: string; users: 
   const sl = statusLine(candidate, users)
 
   const dueColor =
-    sl.stalled
-      ? 'text-warning'
-      : st === 'breach' || st === 'at_risk'
-        ? 'text-danger'
-        : st === 'warning'
+    st === 'breach' || st === 'at_risk'
+      ? 'text-danger'
+      : st === 'warning'
+        ? 'text-warning'
+        : sl.stalled
           ? 'text-warning'
           : 'text-text-muted'
 
-  const rowBg =
+  const leftBorder =
     st === 'breach' || st === 'at_risk'
-      ? 'bg-danger/[0.03] border-l-2 border-l-danger'
+      ? 'border-l-2 border-l-danger'
       : sl.stalled
-        ? 'bg-warning/[0.03] border-l-2 border-l-warning'
+        ? 'border-l-2 border-l-warning'
         : ''
 
   return (
     <button
       onClick={onOpen}
-      className={`flex items-center gap-3 rounded-card border border-border bg-surface px-3 py-2 text-left transition-colors duration-micro hover:bg-surface-elevated ${rowBg}`}
+      className={`flex items-center gap-3 rounded-card border border-border bg-surface px-3 py-2 text-left transition-colors duration-micro hover:bg-surface-elevated ${leftBorder}`}
     >
       <Avatar userId={candidate.currentAssigneeId} size={20} />
 

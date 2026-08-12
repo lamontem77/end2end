@@ -1,16 +1,9 @@
 import { useMemo, useState } from 'react'
 import { NavLink } from 'react-router-dom'
-import { Hexagon, Columns3, ListChecks, Inbox, UserPlus, TrendingUp, Settings, Bell, ChevronsLeft, ChevronsRight, Zap } from 'lucide-react'
+import { Hexagon, Columns3, ListChecks, UserPlus, TrendingUp, Settings, Bell, ChevronsLeft, ChevronsRight } from 'lucide-react'
 import { useStore } from '../store/useStore'
 import { Avatar } from './ui/Avatar'
-import { slaState } from '../lib/stageEngine'
 import { NotificationTray } from './NotificationTray'
-
-const SCHEDULING_STAGES = new Set([
-  'Screening Scheduled', 'Phone Screen', 'Round N Scheduling',
-  'Round N In Progress', 'Pending Feedback', 'Debrief / Decision',
-  'Assessment to Send', 'Assessment Pending', 'Assessment Review',
-])
 
 export function Sidebar({
   mobileOpen = false,
@@ -25,23 +18,15 @@ export function Sidebar({
   const collapsed = forceCollapsed ?? localCollapsed
   const [notifOpen, setNotifOpen] = useState(false)
   const currentUser = useStore((s) => s.currentUser())
-  const candidates = useStore((s) => s.candidates)
   const drafts = useStore((s) => s.agentDrafts)
   const trackers = useStore((s) => s.newHireTrackers)
   const notifications = useStore((s) => s.notifications)
 
   const counts = useMemo(() => {
     const pendingDrafts = drafts.filter((d) => d.status === 'pending').length
-    const openRequests = candidates.filter(
-      (c) => SCHEDULING_STAGES.has(c.currentStage) && !c.tags.includes('Rejected'),
-    ).length
     const newHires = Object.values(trackers).filter((t) => !t.readyToStart).length
-    const atRisk = candidates.filter((c) => {
-      const s = slaState(c.slaDeadline, c.stageEnteredAt)
-      return s === 'breach' || s === 'at_risk'
-    }).length
-    return { pendingDrafts, openRequests, newHires, atRisk }
-  }, [drafts, trackers, candidates])
+    return { pendingDrafts, newHires }
+  }, [drafts, trackers])
 
   const unread = notifications.filter((n) => n.userId === currentUser.id && !n.read).length
 
@@ -57,18 +42,10 @@ export function Sidebar({
     {
       to: '/queue',
       icon: ListChecks,
-      label: 'My Queue',
+      label: 'Queue',
       count: counts.pendingDrafts,
       accent: counts.pendingDrafts > 0,
       title: 'G then Q',
-    },
-    {
-      to: '/requests',
-      icon: Inbox,
-      label: 'Requests',
-      count: counts.openRequests + counts.pendingDrafts,
-      accent: counts.pendingDrafts > 0,
-      title: 'G then R',
     },
     {
       to: '/onboarding',
