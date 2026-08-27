@@ -2,9 +2,9 @@ import { useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import {
   ChevronLeft, ChevronRight, Target, Sparkles, Users, TrendingUp, CheckCircle2,
-  BarChart3, AlertCircle, Building2, MapPin, Zap, Info,
+  BarChart3, AlertCircle, Building2, MapPin, Zap, Info, PenLine,
 } from 'lucide-react'
-import { talentNeeds, eventFormatOptions } from '../../data/eventloop'
+import { talentNeeds, eventFormatOptions, nextEventRecommendation } from '../../data/eventloop'
 
 const OBJECTIVES = [
   { id: 'source', label: 'Source new talent', icon: Sparkles },
@@ -14,7 +14,43 @@ const OBJECTIVES = [
   { id: 'close', label: 'Close candidates', icon: CheckCircle2 },
 ]
 
-const STEPS = ['Talent Need', 'Event Objective', 'Format', 'Forecast', 'Confirm']
+const STEPS = ['Talent Need', 'Objective', 'Format', 'Forecast', 'Confirm']
+
+const RECOMMENDATIONS = [
+  {
+    id: 'rec-dinner',
+    name: 'AI Builders Dinner — FDE',
+    format: 'Curated Dinner · 20–25 people',
+    why: 'Curated dinners have the highest qualified-pipeline yield in your historical data. Founder presence drives high RSVP from Staff+ candidates.',
+    targetRole: 'Field Deployment Engineer',
+    targetLevel: 'Senior / Staff',
+    inviteVolume: 54,
+    day: 'Thursday',
+    time: '7:00 PM',
+    forecast: { rsvp: 29, attended: 23, qualified: 5, entries: '2–3' },
+    tag: 'Top pick',
+    tagColor: 'bg-accent/15 text-accent border-accent/25',
+  },
+  {
+    id: 'rec-roundtable',
+    name: nextEventRecommendation.name,
+    format: `${nextEventRecommendation.format} · ${nextEventRecommendation.capacity} people`,
+    why: nextEventRecommendation.reason,
+    targetRole: nextEventRecommendation.targetRole,
+    targetLevel: nextEventRecommendation.targetLevel,
+    inviteVolume: nextEventRecommendation.inviteVolume,
+    day: nextEventRecommendation.suggestedDay,
+    time: nextEventRecommendation.suggestedTime,
+    forecast: {
+      rsvp: nextEventRecommendation.forecast.rsvp,
+      attended: nextEventRecommendation.forecast.attended,
+      qualified: nextEventRecommendation.forecast.qualified,
+      entries: `${nextEventRecommendation.forecast.processEntries.min}–${nextEventRecommendation.forecast.processEntries.max}`,
+    },
+    tag: 'Alternative',
+    tagColor: 'bg-surface-elevated text-text-secondary border-border',
+  },
+]
 
 function StepIndicator({ current, total }: { current: number; total: number }) {
   return (
@@ -53,12 +89,18 @@ function ConversionRow({ from, to, rate }: { from: string; to: string; rate: str
   )
 }
 
+type Mode = 'choose' | 'from-rec' | 'scratch'
+
 export function EventPlanner() {
   const navigate = useNavigate()
   const [params] = useSearchParams()
   const roleParam = params.get('role') ?? ''
 
   const defaultNeed = talentNeeds.find((n) => n.id === roleParam) ?? talentNeeds[0]
+  const [mode, setMode] = useState<Mode>('choose')
+  const [selectedRec, setSelectedRec] = useState(RECOMMENDATIONS[0])
+
+  // Scratch wizard state
   const [step, setStep] = useState(0)
   const [selectedNeed, setSelectedNeed] = useState(defaultNeed)
   const [objective, setObjective] = useState('source')
@@ -72,17 +114,180 @@ export function EventPlanner() {
   const qualified = Math.round(targetTalent * convRate.qualify)
   const process = Math.round(qualified * 0.4)
 
-  const canNext = step === 0 || step === 1 || step === 2 || step === 3
+  const handleBack = () => {
+    if (mode === 'choose') navigate('/events')
+    else if (mode === 'from-rec') setMode('choose')
+    else if (step === 0) setMode('choose')
+    else setStep(step - 1)
+  }
 
+  // ─── Landing: Choose ─────────────────────────────────────────────────────────
+  if (mode === 'choose') {
+    return (
+      <div className="flex h-full flex-col overflow-hidden">
+        <div className="flex items-center gap-4 border-b border-border px-6 py-4 shrink-0">
+          <button onClick={() => navigate('/events')} className="rounded-button p-1.5 text-text-secondary hover:bg-surface-elevated">
+            <ChevronLeft className="h-5 w-5" />
+          </button>
+          <div>
+            <h1 className="text-label font-semibold text-text-primary">Plan a Recruiting Event</h1>
+            <p className="text-meta text-text-secondary">Start from a recommendation or build from scratch</p>
+          </div>
+        </div>
+
+        <div className="flex-1 overflow-y-auto p-6">
+          <div className="max-w-2xl mx-auto space-y-5">
+
+            <div>
+              <p className="text-caption text-text-muted mb-3 flex items-center gap-1.5">
+                <Sparkles className="h-3.5 w-3.5 text-accent" />
+                Recommended based on your historical data
+              </p>
+              <div className="space-y-3">
+                {RECOMMENDATIONS.map((rec) => (
+                  <div key={rec.id} className="rounded-card border border-border bg-surface p-5">
+                    <div className="flex items-start justify-between gap-3 mb-3">
+                      <div>
+                        <div className="flex items-center gap-2 mb-1">
+                          <h3 className="text-body font-semibold text-text-primary">{rec.name}</h3>
+                          <span className={`rounded-tag border px-2 py-0.5 text-caption ${rec.tagColor}`}>{rec.tag}</span>
+                        </div>
+                        <div className="text-caption text-text-muted">{rec.format} · {rec.day} {rec.time}</div>
+                      </div>
+                    </div>
+                    <p className="text-meta text-text-secondary mb-4 leading-relaxed">{rec.why}</p>
+                    <div className="flex items-center gap-6 mb-4 text-caption text-text-secondary">
+                      <div><span className="text-text-muted">Role</span> · {rec.targetRole}</div>
+                      <div><span className="text-text-muted">Level</span> · {rec.targetLevel}</div>
+                      <div><span className="text-text-muted">Invites</span> · {rec.inviteVolume}</div>
+                    </div>
+                    <div className="flex items-center gap-6 border-t border-border pt-4 mb-4">
+                      {[
+                        { label: 'RSVP', v: rec.forecast.rsvp },
+                        { label: 'Attend', v: rec.forecast.attended },
+                        { label: 'Qualified', v: rec.forecast.qualified, accent: true },
+                        { label: 'Process', v: rec.forecast.entries, accent: true },
+                      ].map(({ label, v, accent }) => (
+                        <div key={label}>
+                          <div className={`text-subhead font-semibold ${accent ? 'text-accent' : 'text-text-primary'}`}>{v}</div>
+                          <div className="text-caption text-text-muted">{label}</div>
+                        </div>
+                      ))}
+                      <span className="text-caption text-text-muted ml-auto">Illustrative · demo data</span>
+                    </div>
+                    <button
+                      onClick={() => { setSelectedRec(rec); setMode('from-rec') }}
+                      className="flex w-full items-center justify-center gap-2 rounded-button bg-accent py-2.5 text-body font-medium text-white hover:bg-accent-hover transition-colors"
+                    >
+                      Use this plan
+                      <ChevronRight className="h-4 w-4" />
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3">
+              <div className="flex-1 h-px bg-border" />
+              <span className="text-caption text-text-muted">or</span>
+              <div className="flex-1 h-px bg-border" />
+            </div>
+
+            <button
+              onClick={() => setMode('scratch')}
+              className="flex w-full items-center gap-3 rounded-card border border-border bg-surface p-5 hover:border-accent/40 hover:bg-surface-elevated transition-colors text-left"
+            >
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-button bg-surface-elevated text-text-secondary">
+                <PenLine className="h-5 w-5" />
+              </div>
+              <div>
+                <div className="text-body font-semibold text-text-primary mb-0.5">Start from scratch</div>
+                <div className="text-meta text-text-secondary">Choose talent need, objective, format, and set your own targets</div>
+              </div>
+              <ChevronRight className="h-4 w-4 text-text-muted ml-auto" />
+            </button>
+
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  // ─── From Recommendation: single review page ──────────────────────────────────
+  if (mode === 'from-rec') {
+    return (
+      <div className="flex h-full flex-col overflow-hidden">
+        <div className="flex items-center gap-4 border-b border-border px-6 py-4 shrink-0">
+          <button onClick={handleBack} className="rounded-button p-1.5 text-text-secondary hover:bg-surface-elevated">
+            <ChevronLeft className="h-5 w-5" />
+          </button>
+          <div>
+            <h1 className="text-label font-semibold text-text-primary">{selectedRec.name}</h1>
+            <p className="text-meta text-text-secondary">Review and confirm</p>
+          </div>
+        </div>
+
+        <div className="flex-1 overflow-y-auto p-6">
+          <div className="max-w-2xl mx-auto space-y-4">
+
+            <div className="rounded-card border border-border bg-surface p-5 space-y-3">
+              {[
+                { label: 'Format', value: selectedRec.format },
+                { label: 'Target role', value: selectedRec.targetRole },
+                { label: 'Target level', value: selectedRec.targetLevel },
+                { label: 'Suggested day', value: `${selectedRec.day} · ${selectedRec.time}` },
+                { label: 'Invite volume', value: selectedRec.inviteVolume.toString() },
+              ].map(({ label, value }) => (
+                <div key={label} className="flex items-center justify-between py-2 border-b border-border last:border-0">
+                  <span className="text-meta text-text-secondary">{label}</span>
+                  <span className="text-meta text-text-primary font-medium">{value}</span>
+                </div>
+              ))}
+            </div>
+
+            <div className="rounded-card border border-border bg-surface p-5">
+              <h3 className="text-body font-semibold text-text-primary mb-4">Illustrative Forecast</h3>
+              <div className="flex items-center gap-8">
+                {[
+                  { label: 'RSVP', v: selectedRec.forecast.rsvp },
+                  { label: 'Attend', v: selectedRec.forecast.attended },
+                  { label: 'Qualified', v: selectedRec.forecast.qualified, accent: true },
+                  { label: 'Process', v: selectedRec.forecast.entries, accent: true },
+                ].map(({ label, v, accent }) => (
+                  <div key={label}>
+                    <div className={`text-subhead font-semibold ${accent ? 'text-success' : 'text-text-primary'}`}>{v}</div>
+                    <div className="text-caption text-text-muted">{label}</div>
+                  </div>
+                ))}
+              </div>
+              <div className="mt-3 flex items-center gap-1 text-caption text-text-muted">
+                <AlertCircle className="h-3 w-3" />
+                Illustrative forecast based on demo historical data
+              </div>
+            </div>
+
+            <button
+              onClick={() => navigate('/events/evt-001')}
+              className="w-full rounded-button bg-accent py-3 text-body font-semibold text-white hover:bg-accent-hover transition-colors"
+            >
+              Create Event →
+            </button>
+
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  // ─── Scratch wizard ───────────────────────────────────────────────────────────
   return (
     <div className="flex h-full flex-col overflow-hidden">
-      {/* Header */}
-      <div className="flex items-center gap-4 border-b border-border px-6 py-4">
-        <button onClick={() => navigate('/events')} className="rounded-button p-1.5 text-text-secondary hover:bg-surface-elevated">
+      <div className="flex items-center gap-4 border-b border-border px-6 py-4 shrink-0">
+        <button onClick={handleBack} className="rounded-button p-1.5 text-text-secondary hover:bg-surface-elevated">
           <ChevronLeft className="h-5 w-5" />
         </button>
         <div className="flex-1">
-          <h1 className="text-label font-semibold text-text-primary">Plan a Recruiting Event</h1>
+          <h1 className="text-label font-semibold text-text-primary">Plan from Scratch</h1>
           <p className="text-meta text-text-secondary">Start with talent need, not event type</p>
         </div>
         <StepIndicator current={step} total={STEPS.length} />
@@ -136,14 +341,6 @@ export function EventPlanner() {
                           </div>
                         </div>
                         <div>
-                          <div className="text-caption text-text-muted mb-2 flex items-center gap-1"><Sparkles className="h-3 w-3" />Talent archetypes</div>
-                          <div className="flex flex-wrap gap-1">
-                            {need.talentPools.slice(0, 3).map((p) => (
-                              <span key={p} className="rounded-tag bg-accent/10 border border-accent/20 px-1.5 py-0.5 text-caption text-accent">{p}</span>
-                            ))}
-                          </div>
-                        </div>
-                        <div>
                           <div className="text-caption text-text-muted mb-2 flex items-center gap-1"><Zap className="h-3 w-3" />Key traits</div>
                           <div className="flex flex-wrap gap-1">
                             {need.traits.slice(0, 4).map((t) => (
@@ -178,9 +375,7 @@ export function EventPlanner() {
                     <div className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-button ${objective === obj.id ? 'bg-accent/20 text-accent' : 'bg-surface-elevated text-text-secondary'}`}>
                       <obj.icon className="h-4 w-4" />
                     </div>
-                    <div>
-                      <div className="text-body font-medium text-text-primary">{obj.label}</div>
-                    </div>
+                    <div className="text-body font-medium text-text-primary">{obj.label}</div>
                     {objective === obj.id && <CheckCircle2 className="h-4 w-4 text-accent ml-auto" />}
                   </button>
                 ))}
@@ -191,14 +386,8 @@ export function EventPlanner() {
           {/* Step 2: Format */}
           {step === 2 && (
             <div>
-              <h2 className="text-subhead font-semibold text-text-primary mb-1">Suggested event formats</h2>
-              <p className="text-meta text-text-secondary mb-2">
-                AI-suggested based on {selectedNeed.role} audience and your objective.
-              </p>
-              <div className="flex items-center gap-1.5 mb-6 rounded-button bg-surface-elevated border border-border px-3 py-2 text-caption text-text-muted w-fit">
-                <AlertCircle className="h-3.5 w-3.5" />
-                Simulated recommendations · Demo data only
-              </div>
+              <h2 className="text-subhead font-semibold text-text-primary mb-1">Choose an event format</h2>
+              <p className="text-meta text-text-secondary mb-5">For <strong className="text-text-primary">{selectedNeed.role}</strong></p>
               <div className="grid gap-4">
                 {eventFormatOptions.map((fmt) => (
                   <button
@@ -267,11 +456,7 @@ export function EventPlanner() {
           {step === 3 && (
             <div>
               <h2 className="text-subhead font-semibold text-text-primary mb-1">Event Forecast</h2>
-              <p className="text-meta text-text-secondary mb-2">{selectedFormat.name} for {selectedNeed.role}</p>
-              <div className="flex items-center gap-1.5 mb-6 rounded-button bg-surface-elevated border border-border px-3 py-2 text-caption text-text-muted w-fit">
-                <Info className="h-3.5 w-3.5" />
-                Illustrative forecast based on demo historical data
-              </div>
+              <p className="text-meta text-text-secondary mb-5">{selectedFormat.name} · {selectedNeed.role}</p>
 
               <div className="rounded-card border border-border bg-surface p-5 mb-4">
                 <div className="flex items-center justify-between mb-4">
@@ -282,11 +467,9 @@ export function EventPlanner() {
                     <button onClick={() => setInviteTarget(Math.min(200, inviteTarget + 5))} className="rounded-button border border-border px-2 py-1 text-body text-text-secondary hover:bg-surface-elevated">+</button>
                   </div>
                 </div>
-                <input
-                  type="range" min={20} max={200} value={inviteTarget}
+                <input type="range" min={20} max={200} value={inviteTarget}
                   onChange={(e) => setInviteTarget(Number(e.target.value))}
-                  className="w-full accent-[#6C63FF]"
-                />
+                  className="w-full accent-[#6C63FF]" />
               </div>
 
               <div className="rounded-card border border-border bg-surface p-5 mb-4">
@@ -297,7 +480,7 @@ export function EventPlanner() {
                     { label: 'Expected RSVP', value: rsvp, color: 'bg-accent' },
                     { label: 'Expected attendance', value: attended, color: 'bg-accent' },
                     { label: 'Target-talent attendees', value: targetTalent, color: 'bg-success' },
-                    { label: 'Expected qualified prospects', value: qualified, color: 'bg-success', highlight: true },
+                    { label: 'Expected qualified', value: qualified, color: 'bg-success', highlight: true },
                     { label: 'Expected process entries', value: process, color: 'bg-success', highlight: true },
                   ].map((row, i, arr) => (
                     <div key={row.label}>
@@ -330,6 +513,11 @@ export function EventPlanner() {
                   <ConversionRow from="Target Talent" to="Qualified" rate="26%" />
                 </div>
               </div>
+
+              <div className="mt-4 flex items-center gap-1 text-caption text-text-muted">
+                <Info className="h-3 w-3" />
+                Illustrative forecast based on demo historical data
+              </div>
             </div>
           )}
 
@@ -337,18 +525,17 @@ export function EventPlanner() {
           {step === 4 && (
             <div>
               <h2 className="text-subhead font-semibold text-text-primary mb-1">Confirm Event</h2>
-              <p className="text-meta text-text-secondary mb-6">Review and confirm to create the event.</p>
-              <div className="rounded-card border border-border bg-surface p-5 mb-4 space-y-3">
+              <p className="text-meta text-text-secondary mb-6">Review before creating.</p>
+              <div className="rounded-card border border-border bg-surface p-5 mb-4 space-y-0">
                 {[
-                  { label: 'Event name', value: selectedFormat.name },
+                  { label: 'Format', value: selectedFormat.name },
                   { label: 'Target role', value: selectedNeed.role },
                   { label: 'Objective', value: OBJECTIVES.find((o) => o.id === objective)?.label ?? '' },
-                  { label: 'Format', value: selectedFormat.description },
                   { label: 'Invite volume', value: inviteTarget.toString() },
                   { label: 'Forecast qualified', value: `${qualified} prospects` },
                   { label: 'Forecast process entries', value: `${process} candidates` },
                 ].map(({ label, value }) => (
-                  <div key={label} className="flex items-center justify-between py-2 border-b border-border last:border-0">
+                  <div key={label} className="flex items-center justify-between py-3 border-b border-border last:border-0">
                     <span className="text-meta text-text-secondary">{label}</span>
                     <span className="text-meta text-text-primary font-medium">{value}</span>
                   </div>
@@ -366,19 +553,18 @@ export function EventPlanner() {
       </div>
 
       {/* Footer nav */}
-      <div className="flex items-center justify-between border-t border-border px-6 py-4">
+      <div className="flex items-center justify-between border-t border-border px-6 py-4 shrink-0">
         <button
-          onClick={() => step === 0 ? navigate('/events') : setStep(step - 1)}
+          onClick={handleBack}
           className="flex items-center gap-2 rounded-button border border-border px-4 py-2 text-body text-text-secondary hover:bg-surface-elevated transition-colors"
         >
           <ChevronLeft className="h-4 w-4" />
-          {step === 0 ? 'Cancel' : 'Back'}
+          {step === 0 ? 'Back' : 'Back'}
         </button>
         {step < STEPS.length - 1 && (
           <button
-            disabled={!canNext}
             onClick={() => setStep(step + 1)}
-            className="flex items-center gap-2 rounded-button bg-accent px-4 py-2 text-body font-medium text-white hover:bg-accent-hover transition-colors disabled:opacity-50"
+            className="flex items-center gap-2 rounded-button bg-accent px-4 py-2 text-body font-medium text-white hover:bg-accent-hover transition-colors"
           >
             Next
             <ChevronRight className="h-4 w-4" />
