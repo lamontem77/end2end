@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react'
-import { Search, Filter, UserPlus, AlertTriangle, ChevronDown, Send, Mail, Users, TrendingUp, Target, Info } from 'lucide-react'
+import { Search, Filter, UserPlus, AlertTriangle, ChevronDown, Mail, Info } from 'lucide-react'
 import { channelRsvpRates } from '../../data/eventloop'
-import type { Prospect, ProspectSource, InviteChannel } from '../../data/eventloop'
+import type { Prospect } from '../../data/eventloop'
 import { useEventLoopStore } from '../../store/eventloopStore'
 import { ProspectDiscovery } from './ProspectDiscovery'
 
@@ -88,12 +88,7 @@ export function InviteTab({ eventId }: Props) {
   const cCount = prospects.filter((p) => p.priority === 'C').length
   const sent = prospects.filter((p) => p.inviteStatus !== 'Not Sent').length
   const rsvpYes = prospects.filter((p) => p.rsvp === 'Yes').length
-  const rsvpNo = prospects.filter((p) => p.rsvp === 'No').length
   const rsvpPending = prospects.filter((p) => p.rsvp === 'Pending').length
-
-  // Forecast: weighted avg RSVP by channel
-  const forecastAttend = Math.round(rsvpYes * 0.9)
-  const forecastTargetTalent = Math.round(forecastAttend * 0.8)
 
   // Audience gaps
   const gaps = useMemo(() => {
@@ -159,20 +154,15 @@ export function InviteTab({ eventId }: Props) {
   return (
     <div className="space-y-5">
       {/* Metrics row */}
-      <div className="grid grid-cols-3 gap-3 md:grid-cols-6">
+      <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
         {[
-          { label: 'Invite Target', value: total, icon: Target, color: 'text-text-primary' },
-          { label: 'Invites Sent', value: sent, icon: Send, color: 'text-accent' },
-          { label: 'RSVP Yes', value: rsvpYes, icon: Users, color: 'text-success' },
-          { label: 'RSVP No', value: rsvpNo, icon: Users, color: 'text-danger' },
-          { label: 'Forecast Attend', value: forecastAttend, icon: TrendingUp, color: 'text-accent' },
-          { label: 'Target Talent', value: forecastTargetTalent, icon: Target, color: 'text-accent' },
-        ].map(({ label, value, icon: Icon, color }) => (
+          { label: 'Prospects', value: total, color: 'text-text-primary' },
+          { label: 'Invites Sent', value: sent, color: 'text-accent' },
+          { label: 'RSVP Yes', value: rsvpYes, color: 'text-success' },
+          { label: 'RSVP Pending', value: rsvpPending, color: 'text-warning' },
+        ].map(({ label, value, color }) => (
           <div key={label} className="rounded-card border border-border bg-surface p-4">
-            <div className="flex items-center gap-1.5 text-caption text-text-muted mb-2">
-              <Icon className="h-3.5 w-3.5" />
-              {label}
-            </div>
+            <div className="text-caption text-text-muted mb-1.5">{label}</div>
             <div className={`text-subhead font-semibold ${color}`}>{value}</div>
           </div>
         ))}

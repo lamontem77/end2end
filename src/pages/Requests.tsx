@@ -80,7 +80,7 @@ export function Requests() {
             {t.label}
             {t.count > 0 && (
               <span className={`rounded-tag px-1.5 py-0.5 text-caption font-mono ${
-                t.accent && pendingDrafts.length > 0 ? 'bg-accent/20 text-accent' : 'bg-surface-elevated text-text-secondary'
+                ('accent' in t) && t.accent && pendingDrafts.length > 0 ? 'bg-accent/20 text-accent' : 'bg-surface-elevated text-text-secondary'
               }`}>
                 {t.count}
               </span>

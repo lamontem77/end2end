@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { BarChart3, TrendingUp, AlertCircle, Sparkles, CheckCircle2, Calendar, Users, Building2, Target, Info, ChevronRight, Send, Mail } from 'lucide-react'
+import { BarChart3, TrendingUp, AlertCircle, Sparkles, Calendar, Users, Building2, Target, Info, ChevronRight, Send, Mail } from 'lucide-react'
 import { historicalEvents, insights, nextEventRecommendation, channelRsvpRates } from '../../data/eventloop'
 import { useNavigate } from 'react-router-dom'
 
@@ -75,7 +75,6 @@ function FormatComparisonChart({ groups, metric, label, format, maxVal }: {
 
 function HistoricalEventRow({ event, maxAttended }: { event: typeof historicalEvents[0]; maxAttended: number }) {
   const yield_ = event.targetTalent > 0 ? Math.round((event.qualified / event.targetTalent) * 100) : 0
-  const showRate = event.rsvp > 0 ? Math.round((event.attended / event.rsvp) * 100) : 0
 
   return (
     <tr className="border-b border-border last:border-0 hover:bg-surface-elevated transition-colors">

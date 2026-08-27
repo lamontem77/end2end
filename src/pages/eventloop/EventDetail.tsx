@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import {
   ChevronLeft, Calendar, MapPin, Target, Users, Zap, BarChart3, TrendingUp,
   CheckCircle2, AlertTriangle, Filter, Search, Clock, QrCode, MessageSquare,
-  Info, ArrowDown, Building2, ChevronDown, Star, Send,
+  Info, ArrowDown, Star,
 } from 'lucide-react'
 import { allEvents } from '../../data/eventloop'
 import { useEventLoopStore } from '../../store/eventloopStore'
@@ -119,8 +119,8 @@ function OverviewTab({ event }: { event: typeof allEvents[0] }) {
 }
 
 // ─── Audience Tab ─────────────────────────────────────────────────────────────
-function AudienceTab({ eventId, onCheckIn, onLogInteraction, onSelectAttendee }: {
-  eventId: string
+function AudienceTab({ onCheckIn, onLogInteraction, onSelectAttendee }: {
+  eventId?: string
   onCheckIn: () => void
   onLogInteraction: (id?: string) => void
   onSelectAttendee: (id: string) => void

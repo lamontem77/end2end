@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom'
-import { Calendar, MapPin, Users, Target, TrendingUp, Plus, ChevronRight, Zap, Clock, CheckCircle2 } from 'lucide-react'
+import { Calendar, MapPin, TrendingUp, Plus, ChevronRight, Zap, Clock, CheckCircle2 } from 'lucide-react'
 import { allEvents } from '../../data/eventloop'
 import type { RecruitingEvent } from '../../data/eventloop'
 
@@ -16,10 +16,22 @@ function EventCard({ event }: { event: RecruitingEvent }) {
   const isLive = event.status === 'live'
   const hasActuals = event.actualAttended > 0
 
+  const stats = hasActuals
+    ? [
+        { label: 'Attended', value: event.actualAttended },
+        { label: 'Qualified', value: event.actualQualified, accent: true },
+        { label: 'In Process', value: event.actualProcessEntries, accent: true },
+      ]
+    : [
+        { label: 'Est. Attend', value: event.forecastAttended },
+        { label: 'Est. Qualified', value: event.forecastQualified, accent: true },
+        { label: 'Est. Process', value: event.forecastProcessEntries, accent: true },
+      ]
+
   return (
     <button
       onClick={() => navigate(`/events/${event.id}`)}
-      className="w-full text-left rounded-card border border-border bg-surface p-5 hover:border-accent/40 hover:bg-surface-elevated transition-colors duration-micro group"
+      className="w-full text-left rounded-card border border-border bg-surface p-5 hover:border-accent/40 transition-colors duration-micro group"
     >
       <div className="flex items-start justify-between gap-3 mb-3">
         <div className="flex-1 min-w-0">
@@ -27,7 +39,17 @@ function EventCard({ event }: { event: RecruitingEvent }) {
             <h3 className="text-label font-semibold text-text-primary truncate group-hover:text-accent transition-colors">{event.name}</h3>
             {isLive && <span className="h-2 w-2 rounded-full bg-success animate-pulse-live shrink-0" />}
           </div>
-          <p className="text-meta text-text-secondary line-clamp-1">{event.objective}</p>
+          <div className="flex items-center gap-3 text-meta text-text-secondary">
+            <span className="flex items-center gap-1">
+              <Calendar className="h-3 w-3 text-text-muted" />
+              {event.date}
+            </span>
+            <span className="text-text-muted">·</span>
+            <span className="flex items-center gap-1">
+              <MapPin className="h-3 w-3 text-text-muted" />
+              {event.location}
+            </span>
+          </div>
         </div>
         <span className={`flex items-center gap-1.5 rounded-tag border px-2.5 py-1 text-caption font-medium shrink-0 ${cfg.bg} ${cfg.color}`}>
           <span className={`h-1.5 w-1.5 rounded-full ${cfg.dot}`} />
@@ -35,64 +57,14 @@ function EventCard({ event }: { event: RecruitingEvent }) {
         </span>
       </div>
 
-      <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-meta text-text-secondary mb-4">
-        <div className="flex items-center gap-1.5">
-          <Calendar className="h-3.5 w-3.5 text-text-muted" />
-          {event.date}
-        </div>
-        <div className="flex items-center gap-1.5">
-          <MapPin className="h-3.5 w-3.5 text-text-muted" />
-          {event.location}
-        </div>
-        <div className="flex items-center gap-1.5">
-          <Target className="h-3.5 w-3.5 text-text-muted" />
-          {event.targetRole}
-        </div>
-      </div>
-
-      {hasActuals ? (
-        <div className="grid grid-cols-5 gap-2">
-          {[
-            { label: 'Invited', value: event.actualInvited },
-            { label: 'RSVP', value: event.actualRsvp },
-            { label: 'Attended', value: event.actualAttended },
-            { label: 'Qualified', value: event.actualQualified, highlight: true },
-            { label: 'Process', value: event.actualProcessEntries, highlight: true },
-          ].map((stat) => (
-            <div key={stat.label} className="text-center">
-              <div className={`text-subhead font-semibold ${stat.highlight ? 'text-accent' : 'text-text-primary'}`}>{stat.value}</div>
-              <div className="text-caption text-text-muted">{stat.label}</div>
+      <div className="flex items-center justify-between mt-4">
+        <div className="flex gap-6">
+          {stats.map(({ label, value, accent }) => (
+            <div key={label}>
+              <div className={`text-subhead font-semibold ${accent ? (hasActuals ? 'text-accent' : 'text-accent/60') : 'text-text-primary'}`}>{value}</div>
+              <div className="text-caption text-text-muted">{label}</div>
             </div>
           ))}
-        </div>
-      ) : (
-        <div className="grid grid-cols-5 gap-2">
-          {[
-            { label: 'Forecast invited', value: event.forecastInvited },
-            { label: 'Forecast RSVP', value: event.forecastRsvp },
-            { label: 'Forecast attend', value: event.forecastAttended },
-            { label: 'Forecast qual.', value: event.forecastQualified, highlight: true },
-            { label: 'Forecast proc.', value: event.forecastProcessEntries, highlight: true },
-          ].map((stat) => (
-            <div key={stat.label} className="text-center">
-              <div className={`text-subhead font-semibold ${stat.highlight ? 'text-accent/70' : 'text-text-secondary'}`}>{stat.value}</div>
-              <div className="text-caption text-text-muted">{stat.label}</div>
-            </div>
-          ))}
-        </div>
-      )}
-
-      <div className="mt-4 flex items-center justify-between">
-        <div className="flex items-center gap-3 text-caption text-text-muted">
-          <span className="flex items-center gap-1">
-            <Users className="h-3 w-3" />
-            {event.format}
-          </span>
-          <span>·</span>
-          <span className="flex items-center gap-1">
-            <TrendingUp className="h-3 w-3" />
-            {event.targetLevel}
-          </span>
         </div>
         <ChevronRight className="h-4 w-4 text-text-muted group-hover:text-accent transition-colors" />
       </div>

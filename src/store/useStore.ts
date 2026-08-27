@@ -768,7 +768,7 @@ export const useStore = create<AppState>()(
           roundNumber: round,
           interviewers: interviewer ? [{ interviewerId: interviewerUserId, interviewerName: interviewer.name, status: 'pending' }] : [],
           subStatus: 'needs_scheduling',
-          format,
+          format: format === 'phone' ? 'virtual' : format,
           createdAt: now.toISOString(),
         }
 

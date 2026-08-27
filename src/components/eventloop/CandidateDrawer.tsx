@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { X, ExternalLink, CheckCircle2, Clock, Zap, TrendingUp, MessageSquare, Mail, UserCheck, Star, ArrowUpRight, Users } from 'lucide-react'
-import type { EventAttendee } from '../../data/eventloop'
 import { useEventLoopStore } from '../../store/eventloopStore'
 
 interface Props {

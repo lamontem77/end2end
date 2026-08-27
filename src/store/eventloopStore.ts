@@ -3,7 +3,7 @@ import { persist } from 'zustand/middleware'
 import {
   seedAttendees, seedInteractions, mainEvent, plannedEvent, seedProspects,
 } from '../data/eventloop'
-import type { EventAttendee, Interaction, RecruitingEvent, Prospect, ProspectInviteStatus, ProspectRsvp } from '../data/eventloop'
+import type { EventAttendee, Interaction, RecruitingEvent, Prospect, ProspectInviteStatus, ProspectRsvp, TalentSignalLabel } from '../data/eventloop'
 
 interface EventLoopStore {
   events: RecruitingEvent[]
@@ -69,15 +69,16 @@ export const useEventLoopStore = create<EventLoopStore>()(
               journey.push('High Engagement')
             return {
               ...a,
-              engagement:
+              engagement: (
                 interaction.engagement === 'Strong' ? 'High'
                 : interaction.engagement === 'Good' ? 'Medium'
-                : 'Low',
+                : 'Low'
+              ) as import('../data/eventloop').EngagementLevel,
               recruitingInterest: interaction.recruitingInterest,
-              talentSignal: interaction.talentSignal === 'Strong Potential' ? 'Strong Potential'
+              talentSignal: (interaction.talentSignal === 'Strong Potential' ? 'Strong Potential'
                 : interaction.talentSignal === 'Worth Nurturing' ? 'Worth Nurturing'
                 : interaction.talentSignal === 'Not Enough Information' ? 'Not Enough Info'
-                : 'Not Relevant',
+                : 'Not Relevant') as TalentSignalLabel,
               journey,
             }
           })
