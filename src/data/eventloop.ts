@@ -885,3 +885,156 @@ export const eventFormatOptions = [
     tag: null,
   },
 ]
+
+// ─── Prospect / Invite Types ──────────────────────────────────────────────────
+
+export type ProspectSource =
+  | 'ATS Database'
+  | 'Previous Event'
+  | 'Silver Medalist'
+  | 'Employee Referral'
+  | 'Employee Network'
+  | 'Target Company Research'
+  | 'LinkedIn Recruiter'
+  | 'GitHub / Technical Community'
+  | 'Conference / Industry Event'
+
+export type InviteChannel =
+  | 'Recruiter Email'
+  | 'LinkedIn Outreach'
+  | 'Employee Introduction'
+  | 'Founder Invitation'
+  | 'Technical Leader Invitation'
+  | 'Referral Introduction'
+  | 'Nurture Campaign'
+  | 'ATS Relationship Follow-Up'
+
+export type ProspectInviteStatus = 'Not Sent' | 'Sent' | 'Opened' | 'Replied' | 'Declined'
+export type ProspectRsvp = 'Yes' | 'No' | 'Pending' | null
+export type RelationshipType = 'Warm ATS' | 'Silver Medalist' | 'Previous Event' | 'Employee Network' | 'Warm Referral' | 'Cold'
+
+export interface Prospect {
+  id: string
+  eventId: string
+  name: string
+  company: string
+  title: string
+  targetRole: 'FDE' | 'Infra' | 'Community' | 'Other'
+  priority: 'A' | 'B' | 'C'
+  seniority: 'Mid' | 'Senior' | 'Staff' | 'Principal' | 'N/A'
+  location: string
+  archetype: string
+  source: ProspectSource
+  relationshipType: RelationshipType
+  inviteOwner: string
+  inviteChannel: InviteChannel
+  inviteStatus: ProspectInviteStatus
+  rsvp: ProspectRsvp
+  note?: string
+}
+
+export interface DiscoveredProspect {
+  id: string
+  name: string
+  company: string
+  title: string
+  seniority: string
+  archetype: string
+  source: ProspectSource
+  why: string
+}
+
+// ─── Channel RSVP Rates ───────────────────────────────────────────────────────
+
+export const channelRsvpRates: { channel: InviteChannel; rate: number; color: string }[] = [
+  { channel: 'Founder Invitation',           rate: 63, color: 'bg-success' },
+  { channel: 'Referral Introduction',        rate: 61, color: 'bg-success' },
+  { channel: 'Technical Leader Invitation',  rate: 57, color: 'bg-accent' },
+  { channel: 'ATS Relationship Follow-Up',   rate: 54, color: 'bg-accent' },
+  { channel: 'Employee Introduction',        rate: 51, color: 'bg-accent/70' },
+  { channel: 'Recruiter Email',              rate: 42, color: 'bg-warning' },
+  { channel: 'LinkedIn Outreach',            rate: 28, color: 'bg-warning/60' },
+  { channel: 'Nurture Campaign',             rate: 18, color: 'bg-text-muted' },
+]
+
+// ─── FDE Archetypes ───────────────────────────────────────────────────────────
+
+export const fdeArchetypes = [
+  'Existing FDE',
+  'Solutions Engineer who codes',
+  'Customer-facing SWE',
+  'Product-oriented engineer',
+  'Founding engineer',
+  'Technical consultant',
+]
+
+// ─── Seed Prospects ───────────────────────────────────────────────────────────
+
+export const seedProspects: Prospect[] = [
+  // ── Priority A ──────────────────────────────────────────────────────────────
+  { id: 'p01', eventId: 'evt-001', name: 'Sarah Chen',      company: 'Stripe',     title: 'Staff Engineer',           targetRole: 'FDE',       priority: 'A', seniority: 'Staff',     location: 'NYC', archetype: 'Customer-facing SWE',          source: 'ATS Database',                  relationshipType: 'Warm ATS',        inviteOwner: 'Luis Avila',        inviteChannel: 'ATS Relationship Follow-Up',  inviteStatus: 'Sent',     rsvp: 'Yes', note: 'Previously contacted by Luis. Strong ATS relationship.' },
+  { id: 'p02', eventId: 'evt-001', name: 'Alex Rivera',     company: 'Datadog',    title: 'Staff Engineer',           targetRole: 'FDE',       priority: 'A', seniority: 'Staff',     location: 'NYC', archetype: 'Customer-facing SWE',          source: 'Target Company Research',       relationshipType: 'Cold',            inviteOwner: 'Engineering Leader', inviteChannel: 'Technical Leader Invitation', inviteStatus: 'Sent',     rsvp: 'Yes', note: 'Cold prospect. Senior passive candidate — technical leader intro recommended.' },
+  { id: 'p03', eventId: 'evt-001', name: 'Maya Patel',      company: 'Palantir',   title: 'Senior FDE',               targetRole: 'FDE',       priority: 'A', seniority: 'Senior',    location: 'NYC', archetype: 'Existing FDE',                  source: 'Previous Event',                relationshipType: 'Previous Event',  inviteOwner: 'Alyssa Placa',       inviteChannel: 'Founder Invitation',          inviteStatus: 'Sent',     rsvp: 'Yes', note: 'Attended Spring Dinner. Warm relationship.' },
+  { id: 'p04', eventId: 'evt-001', name: 'Jordan Kim',      company: 'Google',     title: 'Senior SWE',               targetRole: 'FDE',       priority: 'A', seniority: 'Senior',    location: 'SF',  archetype: 'Product-oriented engineer',     source: 'LinkedIn Recruiter',            relationshipType: 'Cold',            inviteOwner: 'Alyssa Placa',       inviteChannel: 'LinkedIn Outreach',           inviteStatus: 'Sent',     rsvp: 'Yes' },
+  { id: 'p05', eventId: 'evt-001', name: 'Priya Mehta',     company: 'Twilio',     title: 'Principal Engineer',       targetRole: 'FDE',       priority: 'A', seniority: 'Principal', location: 'NYC', archetype: 'Customer-facing SWE',          source: 'Employee Referral',             relationshipType: 'Warm Referral',   inviteOwner: 'Employee Referrer',  inviteChannel: 'Referral Introduction',       inviteStatus: 'Sent',     rsvp: 'Yes', note: 'Referred by Luis. Warm intro via mutual connection.' },
+  { id: 'p06', eventId: 'evt-001', name: 'Marcus Webb',     company: 'Cloudflare', title: 'Staff SRE',                targetRole: 'Infra',     priority: 'A', seniority: 'Staff',     location: 'NYC', archetype: 'Technical consultant',          source: 'Target Company Research',       relationshipType: 'Cold',            inviteOwner: 'Engineering Leader', inviteChannel: 'Technical Leader Invitation', inviteStatus: 'Sent',     rsvp: 'Yes' },
+  { id: 'p07', eventId: 'evt-001', name: 'Emily Zhang',     company: 'Meta',       title: 'Senior SWE',               targetRole: 'FDE',       priority: 'A', seniority: 'Senior',    location: 'NYC', archetype: 'Product-oriented engineer',     source: 'Employee Network',              relationshipType: 'Employee Network', inviteOwner: 'Alyssa Placa',      inviteChannel: 'Employee Introduction',       inviteStatus: 'Sent',     rsvp: 'Yes' },
+  { id: 'p08', eventId: 'evt-001', name: "Ryan O'Brien",    company: 'Linear',     title: 'Staff Engineer',           targetRole: 'FDE',       priority: 'A', seniority: 'Staff',     location: 'NYC', archetype: 'Founding engineer',             source: 'Silver Medalist',               relationshipType: 'Silver Medalist', inviteOwner: 'Luis Avila',        inviteChannel: 'ATS Relationship Follow-Up',  inviteStatus: 'Sent',     rsvp: 'Yes', note: 'Silver medalist from FDE search Q1. Strong candidate.' },
+  { id: 'p09', eventId: 'evt-001', name: 'Ava Santiago',    company: 'Salesforce', title: 'Sr. Solutions Engineer',   targetRole: 'FDE',       priority: 'A', seniority: 'Senior',    location: 'NYC', archetype: 'Solutions Engineer who codes',  source: 'ATS Database',                  relationshipType: 'Warm ATS',        inviteOwner: 'Luis Avila',        inviteChannel: 'ATS Relationship Follow-Up',  inviteStatus: 'Sent',     rsvp: 'Yes' },
+  { id: 'p10', eventId: 'evt-001', name: 'David Park',      company: 'Figma',      title: 'Staff Engineer',           targetRole: 'FDE',       priority: 'A', seniority: 'Staff',     location: 'NYC', archetype: 'Product-oriented engineer',     source: 'Employee Referral',             relationshipType: 'Warm Referral',   inviteOwner: 'Employee Referrer',  inviteChannel: 'Referral Introduction',       inviteStatus: 'Sent',     rsvp: 'Yes' },
+  { id: 'p11', eventId: 'evt-001', name: 'Sofia Andrade',   company: 'Scale AI',   title: 'Forward Deployed Eng.',    targetRole: 'FDE',       priority: 'A', seniority: 'Senior',    location: 'SF',  archetype: 'Existing FDE',                  source: 'Previous Event',                relationshipType: 'Previous Event',  inviteOwner: 'Alyssa Placa',       inviteChannel: 'Recruiter Email',             inviteStatus: 'Sent',     rsvp: 'Yes' },
+  { id: 'p12', eventId: 'evt-001', name: 'Natalie Ross',    company: 'Notion',     title: 'Senior SWE',               targetRole: 'FDE',       priority: 'A', seniority: 'Senior',    location: 'NYC', archetype: 'Product-oriented engineer',     source: 'ATS Database',                  relationshipType: 'Warm ATS',        inviteOwner: 'Luis Avila',        inviteChannel: 'ATS Relationship Follow-Up',  inviteStatus: 'Sent',     rsvp: 'Yes' },
+  { id: 'p13', eventId: 'evt-001', name: 'Amir Khoury',     company: 'Vercel',     title: 'Staff Engineer',           targetRole: 'FDE',       priority: 'A', seniority: 'Staff',     location: 'NYC', archetype: 'Founding engineer',             source: 'Target Company Research',       relationshipType: 'Cold',            inviteOwner: 'Engineering Leader', inviteChannel: 'Technical Leader Invitation', inviteStatus: 'Sent',     rsvp: 'No' },
+  { id: 'p14', eventId: 'evt-001', name: 'Keanu Torres',    company: 'Databricks', title: 'Senior SWE',               targetRole: 'FDE',       priority: 'A', seniority: 'Senior',    location: 'NYC', archetype: 'Customer-facing SWE',          source: 'LinkedIn Recruiter',            relationshipType: 'Cold',            inviteOwner: 'KJ Shah',           inviteChannel: 'LinkedIn Outreach',           inviteStatus: 'Sent',     rsvp: 'Pending' },
+  { id: 'p15', eventId: 'evt-001', name: 'Lila Nguyen',     company: 'Ramp',       title: 'Staff FDE',                targetRole: 'FDE',       priority: 'A', seniority: 'Staff',     location: 'NYC', archetype: 'Existing FDE',                  source: 'Silver Medalist',               relationshipType: 'Silver Medalist', inviteOwner: 'Luis Avila',        inviteChannel: 'ATS Relationship Follow-Up',  inviteStatus: 'Sent',     rsvp: 'Yes' },
+  { id: 'p16', eventId: 'evt-001', name: 'Owen Fitzgerald', company: 'Retool',     title: 'Founding Engineer',        targetRole: 'FDE',       priority: 'A', seniority: 'Senior',    location: 'NYC', archetype: 'Founding engineer',             source: 'Employee Network',              relationshipType: 'Employee Network', inviteOwner: 'Employee Referrer', inviteChannel: 'Employee Introduction',       inviteStatus: 'Sent',     rsvp: 'Yes' },
+  { id: 'p17', eventId: 'evt-001', name: 'Zoe Park',        company: 'Anduril',    title: 'Senior SWE',               targetRole: 'FDE',       priority: 'A', seniority: 'Senior',    location: 'NYC', archetype: 'Customer-facing SWE',          source: 'GitHub / Technical Community',  relationshipType: 'Cold',            inviteOwner: 'KJ Shah',           inviteChannel: 'LinkedIn Outreach',           inviteStatus: 'Sent',     rsvp: 'No' },
+  { id: 'p18', eventId: 'evt-001', name: 'Chris Sato',      company: 'Stripe',     title: 'Solutions Engineer',       targetRole: 'FDE',       priority: 'A', seniority: 'Senior',    location: 'NYC', archetype: 'Solutions Engineer who codes',  source: 'Target Company Research',       relationshipType: 'Cold',            inviteOwner: 'Engineering Leader', inviteChannel: 'Technical Leader Invitation', inviteStatus: 'Opened',   rsvp: 'Pending' },
+  { id: 'p19', eventId: 'evt-001', name: 'Tanya Morris',    company: 'Palantir',   title: 'Staff FDE',                targetRole: 'FDE',       priority: 'A', seniority: 'Staff',     location: 'NYC', archetype: 'Existing FDE',                  source: 'Previous Event',                relationshipType: 'Previous Event',  inviteOwner: 'Engineering Leader', inviteChannel: 'Founder Invitation',          inviteStatus: 'Sent',     rsvp: 'Yes' },
+  { id: 'p20', eventId: 'evt-001', name: 'Ben Liu',         company: 'Brex',       title: 'Senior Engineer',          targetRole: 'FDE',       priority: 'A', seniority: 'Senior',    location: 'NYC', archetype: 'Customer-facing SWE',          source: 'Employee Referral',             relationshipType: 'Warm Referral',   inviteOwner: 'Employee Referrer',  inviteChannel: 'Referral Introduction',       inviteStatus: 'Sent',     rsvp: 'Pending' },
+  { id: 'p21', eventId: 'evt-001', name: 'Hannah Kim',      company: 'MongoDB',    title: 'Staff SRE',                targetRole: 'Infra',     priority: 'A', seniority: 'Staff',     location: 'NYC', archetype: 'Technical consultant',          source: 'Target Company Research',       relationshipType: 'Cold',            inviteOwner: 'Engineering Leader', inviteChannel: 'Technical Leader Invitation', inviteStatus: 'Opened',   rsvp: 'Pending' },
+  { id: 'p22', eventId: 'evt-001', name: 'James Wu',        company: 'Temporal',   title: 'Staff Engineer',           targetRole: 'FDE',       priority: 'A', seniority: 'Staff',     location: 'SF',  archetype: 'Founding engineer',             source: 'LinkedIn Recruiter',            relationshipType: 'Cold',            inviteOwner: 'KJ Shah',           inviteChannel: 'LinkedIn Outreach',           inviteStatus: 'Replied',  rsvp: 'No' },
+  // ── Priority B ──────────────────────────────────────────────────────────────
+  { id: 'p23', eventId: 'evt-001', name: 'Rachel Green',    company: 'Apple',      title: 'Senior SWE',               targetRole: 'FDE',       priority: 'B', seniority: 'Senior',    location: 'NYC', archetype: 'Product-oriented engineer',     source: 'LinkedIn Recruiter',            relationshipType: 'Cold',            inviteOwner: 'Alyssa Placa',       inviteChannel: 'LinkedIn Outreach',           inviteStatus: 'Sent',     rsvp: 'Pending' },
+  { id: 'p24', eventId: 'evt-001', name: 'Marco Santos',    company: 'Coinbase',   title: 'Staff Engineer',           targetRole: 'FDE',       priority: 'B', seniority: 'Staff',     location: 'NYC', archetype: 'Customer-facing SWE',          source: 'Employee Network',              relationshipType: 'Employee Network', inviteOwner: 'Employee Referrer', inviteChannel: 'Employee Introduction',       inviteStatus: 'Sent',     rsvp: 'Yes' },
+  { id: 'p25', eventId: 'evt-001', name: 'Nadia Ahmed',     company: 'Twitch',     title: 'Senior SWE',               targetRole: 'FDE',       priority: 'B', seniority: 'Senior',    location: 'NYC', archetype: 'Product-oriented engineer',     source: 'ATS Database',                  relationshipType: 'Warm ATS',        inviteOwner: 'Automated Campaign', inviteChannel: 'Nurture Campaign',            inviteStatus: 'Sent',     rsvp: 'No' },
+  { id: 'p26', eventId: 'evt-001', name: 'Tom Wilson',      company: 'HubSpot',    title: 'Sr. Solutions Engineer',   targetRole: 'FDE',       priority: 'B', seniority: 'Senior',    location: 'NYC', archetype: 'Solutions Engineer who codes',  source: 'ATS Database',                  relationshipType: 'Warm ATS',        inviteOwner: 'Luis Avila',        inviteChannel: 'Recruiter Email',             inviteStatus: 'Sent',     rsvp: 'Pending' },
+  { id: 'p27', eventId: 'evt-001', name: 'Elena Petrova',   company: 'Elastic',    title: 'Senior Platform Engineer', targetRole: 'Infra',     priority: 'B', seniority: 'Senior',    location: 'NYC', archetype: 'Customer-facing SWE',          source: 'LinkedIn Recruiter',            relationshipType: 'Cold',            inviteOwner: 'KJ Shah',           inviteChannel: 'LinkedIn Outreach',           inviteStatus: 'Opened',   rsvp: 'Pending' },
+  { id: 'p28', eventId: 'evt-001', name: 'Jake Moreno',     company: 'Rippling',   title: 'Staff Engineer',           targetRole: 'FDE',       priority: 'B', seniority: 'Staff',     location: 'NYC', archetype: 'Product-oriented engineer',     source: 'Employee Referral',             relationshipType: 'Warm Referral',   inviteOwner: 'Employee Referrer',  inviteChannel: 'Referral Introduction',       inviteStatus: 'Sent',     rsvp: 'Yes' },
+  { id: 'p29', eventId: 'evt-001', name: 'Victor Obi',      company: 'Segment',    title: 'Staff Engineer',           targetRole: 'FDE',       priority: 'B', seniority: 'Staff',     location: 'NYC', archetype: 'Customer-facing SWE',          source: 'Silver Medalist',               relationshipType: 'Silver Medalist', inviteOwner: 'Luis Avila',        inviteChannel: 'ATS Relationship Follow-Up',  inviteStatus: 'Sent',     rsvp: 'Yes' },
+  { id: 'p30', eventId: 'evt-001', name: 'Kyle Reyes',      company: 'Amplitude',  title: 'Staff Engineer',           targetRole: 'FDE',       priority: 'B', seniority: 'Staff',     location: 'NYC', archetype: 'Product-oriented engineer',     source: 'ATS Database',                  relationshipType: 'Warm ATS',        inviteOwner: 'Automated Campaign', inviteChannel: 'Nurture Campaign',            inviteStatus: 'Sent',     rsvp: 'Pending' },
+  { id: 'p31', eventId: 'evt-001', name: 'Diana Foster',    company: 'Plaid',      title: 'Senior SWE',               targetRole: 'FDE',       priority: 'B', seniority: 'Senior',    location: 'NYC', archetype: 'Customer-facing SWE',          source: 'Employee Network',              relationshipType: 'Employee Network', inviteOwner: 'Employee Referrer', inviteChannel: 'Employee Introduction',       inviteStatus: 'Not Sent', rsvp: null },
+  { id: 'p32', eventId: 'evt-001', name: 'Raj Patel',       company: 'Twilio',     title: 'Sr. Dev Advocate',         targetRole: 'FDE',       priority: 'B', seniority: 'Senior',    location: 'NYC', archetype: 'Technical consultant',          source: 'ATS Database',                  relationshipType: 'Warm ATS',        inviteOwner: 'Luis Avila',        inviteChannel: 'Recruiter Email',             inviteStatus: 'Sent',     rsvp: 'No' },
+  { id: 'p33', eventId: 'evt-001', name: 'Mia Thompson',    company: 'Asana',      title: 'Senior SWE',               targetRole: 'FDE',       priority: 'B', seniority: 'Senior',    location: 'NYC', archetype: 'Product-oriented engineer',     source: 'Employee Network',              relationshipType: 'Employee Network', inviteOwner: 'Alyssa Placa',      inviteChannel: 'Employee Introduction',       inviteStatus: 'Not Sent', rsvp: null },
+  { id: 'p34', eventId: 'evt-001', name: 'Connor Walsh',    company: 'Datadog',    title: 'Mid Engineer',             targetRole: 'FDE',       priority: 'B', seniority: 'Mid',       location: 'NYC', archetype: 'Customer-facing SWE',          source: 'GitHub / Technical Community',  relationshipType: 'Cold',            inviteOwner: 'KJ Shah',           inviteChannel: 'LinkedIn Outreach',           inviteStatus: 'Not Sent', rsvp: null },
+  { id: 'p35', eventId: 'evt-001', name: 'Layla Hassan',    company: 'Stripe',     title: 'Solutions Engineer',       targetRole: 'FDE',       priority: 'B', seniority: 'Senior',    location: 'NYC', archetype: 'Solutions Engineer who codes',  source: 'ATS Database',                  relationshipType: 'Warm ATS',        inviteOwner: 'Luis Avila',        inviteChannel: 'ATS Relationship Follow-Up',  inviteStatus: 'Sent',     rsvp: 'Pending' },
+  { id: 'p36', eventId: 'evt-001', name: 'Felix Kim',       company: 'GitHub',     title: 'Staff Engineer',           targetRole: 'Infra',     priority: 'B', seniority: 'Staff',     location: 'NYC', archetype: 'Technical consultant',          source: 'Target Company Research',       relationshipType: 'Cold',            inviteOwner: 'Engineering Leader', inviteChannel: 'Technical Leader Invitation', inviteStatus: 'Not Sent', rsvp: null },
+  { id: 'p37', eventId: 'evt-001', name: 'Sara Johansson',  company: 'Klarna',     title: 'Senior Technical Lead',    targetRole: 'FDE',       priority: 'B', seniority: 'Senior',    location: 'NYC', archetype: 'Existing FDE',                  source: 'Target Company Research',       relationshipType: 'Cold',            inviteOwner: 'Engineering Leader', inviteChannel: 'Technical Leader Invitation', inviteStatus: 'Not Sent', rsvp: null },
+  { id: 'p38', eventId: 'evt-001', name: 'Amy Chen',        company: 'Figma',      title: 'Senior Frontend Engineer', targetRole: 'FDE',       priority: 'B', seniority: 'Senior',    location: 'NYC', archetype: 'Product-oriented engineer',     source: 'LinkedIn Recruiter',            relationshipType: 'Cold',            inviteOwner: 'Alyssa Placa',       inviteChannel: 'LinkedIn Outreach',           inviteStatus: 'Not Sent', rsvp: null },
+  { id: 'p39', eventId: 'evt-001', name: 'Oscar Ruiz',      company: 'Shopify',    title: 'Staff SWE',                targetRole: 'FDE',       priority: 'B', seniority: 'Staff',     location: 'NYC', archetype: 'Customer-facing SWE',          source: 'Target Company Research',       relationshipType: 'Cold',            inviteOwner: 'Engineering Leader', inviteChannel: 'Technical Leader Invitation', inviteStatus: 'Not Sent', rsvp: null },
+  { id: 'p40', eventId: 'evt-001', name: 'Preethi Nair',    company: 'CockroachDB', title: 'Senior Infra Engineer',  targetRole: 'Infra',     priority: 'B', seniority: 'Senior',    location: 'NYC', archetype: 'Technical consultant',          source: 'LinkedIn Recruiter',            relationshipType: 'Cold',            inviteOwner: 'KJ Shah',           inviteChannel: 'LinkedIn Outreach',           inviteStatus: 'Not Sent', rsvp: null },
+  // ── Priority C ──────────────────────────────────────────────────────────────
+  { id: 'p41', eventId: 'evt-001', name: 'Carlos Mendez',   company: 'a16z',       title: 'Talent Partner',           targetRole: 'Community', priority: 'C', seniority: 'N/A',       location: 'NYC', archetype: 'Technical consultant',          source: 'Employee Network',              relationshipType: 'Employee Network', inviteOwner: 'Alyssa Placa',      inviteChannel: 'Recruiter Email',             inviteStatus: 'Sent',     rsvp: 'Yes', note: 'Strong connector. May refer senior FDEs from portfolio companies.' },
+  { id: 'p42', eventId: 'evt-001', name: 'Jennifer Park',   company: 'Sequoia',    title: 'Portfolio Talent Lead',    targetRole: 'Community', priority: 'C', seniority: 'N/A',       location: 'NYC', archetype: 'Technical consultant',          source: 'Employee Referral',             relationshipType: 'Warm Referral',   inviteOwner: 'Employee Referrer',  inviteChannel: 'Referral Introduction',       inviteStatus: 'Sent',     rsvp: 'Yes', note: 'Referred by CEO. High-quality connector to senior engineering talent.' },
+  { id: 'p43', eventId: 'evt-001', name: 'Mark Sullivan',   company: 'Y Combinator', title: 'Community Lead',        targetRole: 'Community', priority: 'C', seniority: 'N/A',       location: 'NYC', archetype: 'Technical consultant',          source: 'Employee Network',              relationshipType: 'Employee Network', inviteOwner: 'Alyssa Placa',      inviteChannel: 'Recruiter Email',             inviteStatus: 'Not Sent', rsvp: null },
+  { id: 'p44', eventId: 'evt-001', name: 'Lisa Wang',       company: 'Operator Collective', title: 'Advisor',         targetRole: 'Community', priority: 'C', seniority: 'N/A',       location: 'NYC', archetype: 'Technical consultant',          source: 'Employee Network',              relationshipType: 'Employee Network', inviteOwner: 'KJ Shah',           inviteChannel: 'Recruiter Email',             inviteStatus: 'Not Sent', rsvp: null },
+  { id: 'p45', eventId: 'evt-001', name: 'Sam Chen',        company: 'Independent', title: 'DevRel Community Lead',  targetRole: 'Community', priority: 'C', seniority: 'N/A',       location: 'NYC', archetype: 'Technical consultant',          source: 'Previous Event',                relationshipType: 'Previous Event',  inviteOwner: 'Luis Avila',        inviteChannel: 'Recruiter Email',             inviteStatus: 'Sent',     rsvp: 'Pending' },
+  { id: 'p46', eventId: 'evt-001', name: 'Noah Kim',        company: 'Community',  title: 'Engineering Community Lead', targetRole: 'Community', priority: 'C', seniority: 'N/A',    location: 'NYC', archetype: 'Technical consultant',          source: 'GitHub / Technical Community',  relationshipType: 'Cold',            inviteOwner: 'KJ Shah',           inviteChannel: 'LinkedIn Outreach',           inviteStatus: 'Not Sent', rsvp: null },
+  { id: 'p47', eventId: 'evt-001', name: 'Amber Rodriguez', company: 'Independent', title: 'Women in Tech Organizer', targetRole: 'Community', priority: 'C', seniority: 'N/A',      location: 'NYC', archetype: 'Technical consultant',          source: 'Employee Network',              relationshipType: 'Employee Network', inviteOwner: 'Alyssa Placa',      inviteChannel: 'LinkedIn Outreach',           inviteStatus: 'Not Sent', rsvp: null },
+  { id: 'p48', eventId: 'evt-001', name: 'Paul Thompson',   company: 'Community',  title: 'SWE Community Writer',     targetRole: 'Community', priority: 'C', seniority: 'N/A',       location: 'NYC', archetype: 'Technical consultant',          source: 'GitHub / Technical Community',  relationshipType: 'Cold',            inviteOwner: 'KJ Shah',           inviteChannel: 'LinkedIn Outreach',           inviteStatus: 'Not Sent', rsvp: null },
+  { id: 'p49', eventId: 'evt-001', name: 'Grace Lee',       company: 'Community',  title: 'Tech Blog Curator',        targetRole: 'Community', priority: 'C', seniority: 'N/A',       location: 'NYC', archetype: 'Technical consultant',          source: 'GitHub / Technical Community',  relationshipType: 'Cold',            inviteOwner: 'Alyssa Placa',      inviteChannel: 'LinkedIn Outreach',           inviteStatus: 'Not Sent', rsvp: null },
+  { id: 'p50', eventId: 'evt-001', name: 'Michael Chen',    company: 'Community',  title: 'Product Community Builder', targetRole: 'Community', priority: 'C', seniority: 'N/A',      location: 'NYC', archetype: 'Technical consultant',          source: 'Employee Network',              relationshipType: 'Employee Network', inviteOwner: 'Employee Referrer', inviteChannel: 'Employee Introduction',       inviteStatus: 'Sent',     rsvp: 'Yes' },
+]
+
+// ─── Simulated Discovery Results ──────────────────────────────────────────────
+
+export const discoveryResults: DiscoveredProspect[] = [
+  { id: 'disc-01', name: 'Wei Zhang',       company: 'Palantir',   title: 'Senior FDE',            seniority: 'Senior',    archetype: 'Existing FDE',                 source: 'Target Company Research',  why: 'FDE at Palantir for 3 years. Strong deployment track record. In NYC.' },
+  { id: 'disc-02', name: 'Tariq Hassan',    company: 'Scale AI',   title: 'Staff Engineer',         seniority: 'Staff',     archetype: 'Customer-facing SWE',          source: 'LinkedIn Recruiter',       why: 'Staff Engineer with customer-facing SWE background. Previously at Stripe.' },
+  { id: 'disc-03', name: 'Mei Lin',         company: 'Datadog',    title: 'Sr. Solutions Engineer', seniority: 'Senior',    archetype: 'Solutions Engineer who codes', source: 'Target Company Research',  why: 'Sr. SE with strong coding background. Known for deep technical knowledge.' },
+  { id: 'disc-04', name: 'Daniel Reyes',    company: 'Twilio',     title: 'Principal Engineer',     seniority: 'Principal', archetype: 'Technical consultant',         source: 'Employee Network',         why: 'Referred via engineering team. Principal engineer with consulting background.' },
+  { id: 'disc-05', name: 'Ayasha Morales',  company: 'Retool',     title: 'Founding Engineer',      seniority: 'Senior',    archetype: 'Founding engineer',            source: 'GitHub / Technical Community', why: 'Active open source contributor. Founding engineer experience at two startups.' },
+  { id: 'disc-06', name: 'Jonas Weber',     company: 'Vercel',     title: 'Staff Engineer',         seniority: 'Staff',     archetype: 'Product-oriented engineer',    source: 'Target Company Research',  why: 'Staff engineer at Vercel. Product-minded with strong deployment focus.' },
+  { id: 'disc-07', name: 'Priya Krishnan',  company: 'Figma',      title: 'Senior SWE',             seniority: 'Senior',    archetype: 'Product-oriented engineer',    source: 'ATS Database',             why: 'Warm ATS contact from Q3 outreach. Now at Figma. Worth re-engaging.' },
+  { id: 'disc-08', name: 'Tyler Brooks',    company: 'Shopify',    title: 'Staff FDE',              seniority: 'Staff',     archetype: 'Existing FDE',                 source: 'Silver Medalist',          why: 'Silver medalist from Infrastructure search. Pivoted to FDE role at Shopify.' },
+]

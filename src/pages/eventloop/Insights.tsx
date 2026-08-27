@@ -1,7 +1,17 @@
 import { useState } from 'react'
-import { BarChart3, TrendingUp, AlertCircle, Sparkles, CheckCircle2, Calendar, Users, Building2, Target, Info, ChevronRight } from 'lucide-react'
-import { historicalEvents, insights, nextEventRecommendation } from '../../data/eventloop'
+import { BarChart3, TrendingUp, AlertCircle, Sparkles, CheckCircle2, Calendar, Users, Building2, Target, Info, ChevronRight, Send, Mail } from 'lucide-react'
+import { historicalEvents, insights, nextEventRecommendation, channelRsvpRates } from '../../data/eventloop'
 import { useNavigate } from 'react-router-dom'
+
+// Simulated audience performance data keyed by relationship type
+const audiencePerf = [
+  { label: 'Warm ATS',        rsvp: 54, showRate: 89, yield: 34, hires: 1.2, color: 'bg-success' },
+  { label: 'Silver Medalist', rsvp: 57, showRate: 86, yield: 38, hires: 1.4, color: 'bg-success' },
+  { label: 'Employee Referral', rsvp: 61, showRate: 92, yield: 41, hires: 1.8, color: 'bg-accent' },
+  { label: 'Previous Event',  rsvp: 58, showRate: 84, yield: 29, hires: 0.9, color: 'bg-accent/70' },
+  { label: 'Employee Network', rsvp: 51, showRate: 78, yield: 22, hires: 0.7, color: 'bg-warning' },
+  { label: 'Cold',            rsvp: 26, showRate: 62, yield: 14, hires: 0.3, color: 'bg-text-muted/40' },
+]
 
 const confidenceColor = { High: 'text-success', Medium: 'text-warning', Low: 'text-text-muted' }
 const categoryIcon: Record<string, typeof BarChart3> = {
@@ -365,6 +375,64 @@ export function Insights() {
                   </div>
                 ))}
               </div>
+            </div>
+          </div>
+
+          {/* Audience & Outreach Performance */}
+          <div className="rounded-card border border-border bg-surface p-5">
+            <div className="flex items-center justify-between mb-5">
+              <h2 className="text-body font-semibold text-text-primary">Audience &amp; Outreach Performance</h2>
+              <span className="text-caption text-text-muted">simulated · demo data only</span>
+            </div>
+            <div className="grid gap-6 md:grid-cols-2">
+              {/* By relationship type */}
+              <div>
+                <div className="text-caption text-text-muted font-medium mb-3 uppercase tracking-wide">RSVP Rate by Relationship Type</div>
+                <div className="space-y-2.5">
+                  {audiencePerf.map(({ label, rsvp, color }) => (
+                    <div key={label} className="flex items-center gap-3">
+                      <span className="w-36 shrink-0 text-meta text-text-secondary text-right">{label}</span>
+                      <div className="flex-1 h-5 rounded bg-surface-elevated overflow-hidden relative">
+                        <div className={`h-full rounded ${color} transition-all`} style={{ width: `${rsvp}%` }} />
+                        <span className="absolute inset-y-0 left-2 flex items-center text-caption font-semibold text-white mix-blend-luminosity">{rsvp}%</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              {/* By channel */}
+              <div>
+                <div className="text-caption text-text-muted font-medium mb-3 uppercase tracking-wide">RSVP Rate by Invite Channel</div>
+                <div className="space-y-2.5">
+                  {channelRsvpRates.slice(0, 6).map(({ channel, rate, color }) => (
+                    <div key={channel} className="flex items-center gap-3">
+                      <span className="w-36 shrink-0 text-meta text-text-secondary text-right leading-tight">{channel}</span>
+                      <div className="flex-1 h-5 rounded bg-surface-elevated overflow-hidden relative">
+                        <div className={`h-full rounded ${color} transition-all`} style={{ width: `${rate}%` }} />
+                        <span className="absolute inset-y-0 left-2 flex items-center text-caption font-semibold text-white mix-blend-luminosity">{rate}%</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Outreach observations */}
+            <div className="mt-6 grid gap-3 md:grid-cols-3">
+              {[
+                { icon: Users, label: 'Employee referrals had the highest qualified-pipeline yield across all relationship types.' },
+                { icon: Send, label: 'Founder-led outreach generated the highest RSVP rate among Priority-A Staff+ prospects.' },
+                { icon: Mail, label: 'Cold LinkedIn prospects had lower RSVP, but contributed the most net-new pipeline when they converted.' },
+              ].map(({ icon: Icon, label }) => (
+                <div key={label} className="rounded-card border border-border bg-surface-elevated p-3 flex items-start gap-2">
+                  <Icon className="h-3.5 w-3.5 text-accent shrink-0 mt-0.5" />
+                  <p className="text-meta text-text-secondary">{label}</p>
+                </div>
+              ))}
+            </div>
+            <div className="mt-3 flex items-center gap-1 text-caption text-text-muted">
+              <AlertCircle className="h-3 w-3" />
+              Observed associations in demo data — small sample, not causal
             </div>
           </div>
 

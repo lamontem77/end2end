@@ -1,14 +1,15 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import {
-  seedAttendees, seedInteractions, mainEvent, plannedEvent,
+  seedAttendees, seedInteractions, mainEvent, plannedEvent, seedProspects,
 } from '../data/eventloop'
-import type { EventAttendee, Interaction, RecruitingEvent } from '../data/eventloop'
+import type { EventAttendee, Interaction, RecruitingEvent, Prospect, ProspectInviteStatus, ProspectRsvp } from '../data/eventloop'
 
 interface EventLoopStore {
   events: RecruitingEvent[]
   attendees: EventAttendee[]
   interactions: Interaction[]
+  prospects: Prospect[]
   selectedAttendeeId: string | null
   activeEventId: string
 
@@ -19,6 +20,8 @@ interface EventLoopStore {
   moveToAts: (attendeeId: string, role: string, stage: string) => void
   updateFollowUp: (interactionId: string, status: string) => void
   updateAttendeeInterest: (attendeeId: string, interest: EventAttendee['recruitingInterest']) => void
+  addProspect: (prospect: Prospect) => void
+  updateProspectStatus: (id: string, inviteStatus: ProspectInviteStatus, rsvp?: ProspectRsvp) => void
   resetToSeed: () => void
 }
 
@@ -26,6 +29,7 @@ const seedState = () => ({
   events: [mainEvent, plannedEvent],
   attendees: seedAttendees.map((a) => ({ ...a })),
   interactions: seedInteractions.map((i) => ({ ...i })),
+  prospects: seedProspects.map((p) => ({ ...p })),
   selectedAttendeeId: null,
   activeEventId: 'evt-001',
 })
@@ -106,14 +110,25 @@ export const useEventLoopStore = create<EventLoopStore>()(
           ),
         })),
 
+      addProspect: (prospect) =>
+        set((state) => ({ prospects: [...state.prospects, prospect] })),
+
+      updateProspectStatus: (id, inviteStatus, rsvp) =>
+        set((state) => ({
+          prospects: state.prospects.map((p) =>
+            p.id === id ? { ...p, inviteStatus, ...(rsvp !== undefined ? { rsvp } : {}) } : p
+          ),
+        })),
+
       resetToSeed: () => set(seedState()),
     }),
     {
-      name: 'eventloop-store-v1',
+      name: 'eventloop-store-v2',
       partialize: (state) => ({
         attendees: state.attendees,
         interactions: state.interactions,
         events: state.events,
+        prospects: state.prospects,
         activeEventId: state.activeEventId,
       }),
     }

@@ -3,15 +3,16 @@ import { useParams, useNavigate } from 'react-router-dom'
 import {
   ChevronLeft, Calendar, MapPin, Target, Users, Zap, BarChart3, TrendingUp,
   CheckCircle2, AlertTriangle, Filter, Search, Clock, QrCode, MessageSquare,
-  Info, ArrowDown, Building2, ChevronDown, Star,
+  Info, ArrowDown, Building2, ChevronDown, Star, Send,
 } from 'lucide-react'
 import { allEvents } from '../../data/eventloop'
 import { useEventLoopStore } from '../../store/eventloopStore'
 import { CheckInFlow } from '../../components/eventloop/CheckInFlow'
 import { InteractionLogger } from '../../components/eventloop/InteractionLogger'
 import { CandidateDrawer } from '../../components/eventloop/CandidateDrawer'
+import { InviteTab } from '../../components/eventloop/InviteTab'
 
-type Tab = 'overview' | 'audience' | 'live' | 'pipeline' | 'results'
+type Tab = 'overview' | 'invite' | 'audience' | 'live' | 'pipeline' | 'results'
 
 const priorityColor = {
   A: 'bg-danger/10 text-danger border-danger/30',
@@ -680,7 +681,8 @@ export function EventDetail() {
 
   const TABS: { key: Tab; label: string; icon: typeof BarChart3 }[] = [
     { key: 'overview', label: 'Overview', icon: BarChart3 },
-    { key: 'audience', label: 'Audience', icon: Users },
+    { key: 'invite', label: 'Invite', icon: Users },
+    { key: 'audience', label: 'Audience', icon: Filter },
     { key: 'live', label: 'Live Event', icon: Zap },
     { key: 'pipeline', label: 'Pipeline', icon: TrendingUp },
     { key: 'results', label: 'Results', icon: CheckCircle2 },
@@ -753,6 +755,7 @@ export function EventDetail() {
       <div className="flex-1 overflow-y-auto p-6">
         <div className="max-w-6xl">
           {tab === 'overview' && <OverviewTab event={event} />}
+          {tab === 'invite' && <InviteTab eventId={event.id} />}
           {tab === 'audience' && (
             <AudienceTab
               eventId={event.id}
