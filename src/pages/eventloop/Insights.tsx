@@ -24,6 +24,45 @@ function MetricBar({ value, max, color }: { value: number; max: number; color: s
   )
 }
 
+type FormatGroup = { label: string; color: string; bg: string; events: typeof historicalEvents }
+
+function avg(vals: number[]) {
+  return vals.length ? vals.reduce((a, b) => a + b, 0) / vals.length : 0
+}
+
+function FormatComparisonChart({ groups, metric, label, format, maxVal }: {
+  groups: FormatGroup[]
+  metric: (g: FormatGroup) => number
+  label: string
+  format: (v: number) => string
+  maxVal?: number
+}) {
+  const vals = groups.map((g) => metric(g))
+  const max = maxVal ?? (Math.max(...vals) * 1.15 || 1)
+  return (
+    <div>
+      <div className="text-caption text-text-muted font-medium mb-3 uppercase tracking-wide">{label}</div>
+      <div className="space-y-3">
+        {groups.map((g, i) => {
+          const val = vals[i]
+          const pct = Math.min((val / max) * 100, 100)
+          return (
+            <div key={g.label} className="flex items-center gap-3">
+              <span className="text-meta text-text-secondary w-36 shrink-0 text-right">{g.label}</span>
+              <div className="flex-1 h-5 rounded bg-surface-elevated overflow-hidden relative">
+                <div className={`h-full rounded ${g.bg} transition-all`} style={{ width: `${pct}%` }} />
+                <span className={`absolute inset-y-0 left-2 flex items-center text-caption font-semibold ${g.color}`}>
+                  {format(val)}
+                </span>
+              </div>
+            </div>
+          )
+        })}
+      </div>
+    </div>
+  )
+}
+
 function HistoricalEventRow({ event, maxAttended }: { event: typeof historicalEvents[0]; maxAttended: number }) {
   const yield_ = event.targetTalent > 0 ? Math.round((event.qualified / event.targetTalent) * 100) : 0
   const showRate = event.rsvp > 0 ? Math.round((event.attended / event.rsvp) * 100) : 0
@@ -108,6 +147,79 @@ export function Insights() {
               </div>
             ))}
           </div>
+
+          {/* Format comparison charts */}
+          {(() => {
+            const groups: FormatGroup[] = [
+              {
+                label: 'Curated Dinner',
+                color: 'text-accent',
+                bg: 'bg-accent/40',
+                events: historicalEvents.filter((e) => e.format === 'Curated Dinner'),
+              },
+              {
+                label: 'Roundtable / Workshop',
+                color: 'text-success',
+                bg: 'bg-success/40',
+                events: historicalEvents.filter((e) => e.format === 'Roundtable' || e.format === 'Workshop'),
+              },
+              {
+                label: 'Panel / Networking',
+                color: 'text-warning',
+                bg: 'bg-warning/30',
+                events: historicalEvents.filter((e) => e.format === 'Panel' || e.format === 'Networking'),
+              },
+              {
+                label: 'Open House',
+                color: 'text-text-secondary',
+                bg: 'bg-text-muted/20',
+                events: historicalEvents.filter((e) => e.format === 'Open House'),
+              },
+            ].filter((g) => g.events.length > 0)
+
+            const yieldMetric = (g: FormatGroup) =>
+              avg(g.events.map((e) => (e.targetTalent > 0 ? (e.qualified / e.targetTalent) * 100 : 0)))
+            const showMetric = (g: FormatGroup) =>
+              avg(g.events.map((e) => (e.rsvp > 0 ? (e.attended / e.rsvp) * 100 : 0)))
+            const costMetric = (g: FormatGroup) =>
+              avg(g.events.map((e) => (e.qualified > 0 ? e.cost / e.qualified : 0)))
+
+            return (
+              <div className="rounded-card border border-border bg-surface p-5">
+                <div className="flex items-center justify-between mb-5">
+                  <h2 className="text-body font-semibold text-text-primary">Format Comparison</h2>
+                  <span className="text-caption text-text-muted">avg across {historicalEvents.length} historical events</span>
+                </div>
+                <div className="grid gap-6 md:grid-cols-3">
+                  <FormatComparisonChart
+                    groups={groups}
+                    metric={yieldMetric}
+                    label="Qualified Yield (target → qualified)"
+                    format={(v) => `${Math.round(v)}%`}
+                    maxVal={60}
+                  />
+                  <FormatComparisonChart
+                    groups={groups}
+                    metric={showMetric}
+                    label="Show Rate (RSVP → attended)"
+                    format={(v) => `${Math.round(v)}%`}
+                    maxVal={100}
+                  />
+                  <FormatComparisonChart
+                    groups={groups}
+                    metric={costMetric}
+                    label="Cost / Qualified Prospect"
+                    format={(v) => `$${Math.round(v / 100) * 100 < 100 ? Math.round(v) : (Math.round(v / 100) * 100).toLocaleString()}`}
+                    maxVal={4000}
+                  />
+                </div>
+                <div className="mt-4 flex items-center gap-1 text-caption text-text-muted">
+                  <AlertCircle className="h-3 w-3" />
+                  Observed associations in demo data — small sample, not causal
+                </div>
+              </div>
+            )
+          })()}
 
           {/* Observations */}
           <div>

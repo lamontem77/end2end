@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { X, Search, QrCode, CheckCircle2, User, Building2 } from 'lucide-react'
+import { toast } from 'sonner'
 import type { EventAttendee } from '../../data/eventloop'
 import { useEventLoopStore } from '../../store/eventloopStore'
 
@@ -31,6 +32,7 @@ export function CheckInFlow({ attendees, onClose }: Props) {
     if (!scanned) return
     checkIn(scanned.id)
     setChecked(true)
+    toast.success(`${scanned.name} checked in`, { description: `${scanned.title} · ${scanned.company}` })
   }
 
   const priorityColor = { A: 'text-danger bg-danger/10', B: 'text-warning bg-warning/10', C: 'text-text-secondary bg-surface-elevated' }

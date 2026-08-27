@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { X, QrCode, Mic, CheckCircle2, ChevronDown, AlertCircle } from 'lucide-react'
+import { toast } from 'sonner'
 import { employees, sampleVoiceTranscript, sampleVoiceExtraction } from '../../data/eventloop'
 import type { EventAttendee, Interaction } from '../../data/eventloop'
 import { useEventLoopStore } from '../../store/eventloopStore'
@@ -161,6 +162,7 @@ export function InteractionLogger({ attendees, onClose, defaultAttendeeId }: Pro
     }
     addInteraction(interaction)
     setSaved(true)
+    toast.success('Interaction logged', { description: `${scanned.name} · ${signal}` })
   }
 
   const handleVoiceAccept = (data: typeof sampleVoiceExtraction & { note: string }) => {

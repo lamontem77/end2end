@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { X, ChevronRight, ExternalLink, CheckCircle2, Clock, ArrowRight, Zap, TrendingUp, MessageSquare } from 'lucide-react'
+import { X, ExternalLink, CheckCircle2, Clock, Zap, TrendingUp, MessageSquare, Mail, UserCheck, Star, ArrowUpRight, Users } from 'lucide-react'
 import type { EventAttendee } from '../../data/eventloop'
 import { useEventLoopStore } from '../../store/eventloopStore'
 
@@ -34,14 +34,6 @@ const ROLES = [
   { value: 'infra', label: 'Infrastructure Engineer' },
 ]
 
-function JourneyStep({ label, active }: { label: string; active: boolean }) {
-  return (
-    <div className={`flex items-center gap-1.5 text-caption ${active ? 'text-text-primary font-medium' : 'text-text-muted'}`}>
-      <div className={`h-2 w-2 rounded-full ${active ? 'bg-accent' : 'bg-text-muted'}`} />
-      {label}
-    </div>
-  )
-}
 
 export function CandidateDrawer({ attendeeId, onClose, onLogInteraction }: Props) {
   const attendees = useEventLoopStore((s) => s.attendees)
@@ -60,8 +52,18 @@ export function CandidateDrawer({ attendeeId, onClose, onLogInteraction }: Props
     setAtsMoved(true)
   }
 
-  const journeyAll = ['Invited', 'RSVP', 'Attended', 'High Engagement', 'Medium Engagement', 'Follow-Up', 'FDE Process', 'Infra Process', 'Technical Screen', 'Onsite']
-  const activeJourney = new Set(attendee.journey)
+    const journeyStepMeta: Record<string, { icon: typeof Mail; color: string }> = {
+    'Invited': { icon: Mail, color: 'bg-surface-elevated border-border text-text-muted' },
+    'RSVP': { icon: CheckCircle2, color: 'bg-accent/10 border-accent/30 text-accent' },
+    'Attended': { icon: Users, color: 'bg-accent/15 border-accent/40 text-accent' },
+    'High Engagement': { icon: Star, color: 'bg-success/10 border-success/30 text-success' },
+    'Medium Engagement': { icon: Star, color: 'bg-warning/10 border-warning/30 text-warning' },
+    'Follow-Up': { icon: Clock, color: 'bg-accent/10 border-accent/25 text-accent' },
+    'FDE Process': { icon: ArrowUpRight, color: 'bg-success/10 border-success/30 text-success' },
+    'Infra Process': { icon: ArrowUpRight, color: 'bg-success/10 border-success/30 text-success' },
+    'Technical Screen': { icon: UserCheck, color: 'bg-success/15 border-success/40 text-success' },
+    'Onsite': { icon: UserCheck, color: 'bg-success/20 border-success/50 text-success' },
+  }
 
   return (
     <div className="fixed inset-0 z-40 flex justify-end">
@@ -101,17 +103,25 @@ export function CandidateDrawer({ attendeeId, onClose, onLogInteraction }: Props
         </div>
 
         <div className="flex-1 overflow-y-auto p-5 space-y-5">
-          {/* Journey */}
+          {/* Journey timeline */}
           <div>
             <h3 className="text-caption text-text-muted font-medium mb-3 uppercase tracking-wide">Candidate Journey</h3>
-            <div className="relative">
-              <div className="flex flex-wrap gap-x-0 gap-y-0">
-                {attendee.journey.map((step, i) => (
-                  <div key={step} className="flex items-center">
-                    <span className="rounded-tag bg-accent/10 border border-accent/25 px-2.5 py-1 text-caption text-accent font-medium">{step}</span>
-                    {i < attendee.journey.length - 1 && <ArrowRight className="h-3 w-3 text-text-muted mx-1" />}
-                  </div>
-                ))}
+            <div className="relative pl-4">
+              {/* vertical connector line */}
+              <div className="absolute left-4 top-3 bottom-3 w-px bg-border" />
+              <div className="space-y-3">
+                {attendee.journey.map((step) => {
+                  const meta = journeyStepMeta[step] ?? { icon: CheckCircle2, color: 'bg-surface-elevated border-border text-text-muted' }
+                  const Icon = meta.icon
+                  return (
+                    <div key={step} className="relative flex items-center gap-3">
+                      <div className={`relative z-10 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border ${meta.color}`}>
+                        <Icon className="h-3 w-3" />
+                      </div>
+                      <span className="text-body text-text-primary">{step}</span>
+                    </div>
+                  )
+                })}
               </div>
             </div>
           </div>

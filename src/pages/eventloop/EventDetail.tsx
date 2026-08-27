@@ -32,8 +32,8 @@ const interestBg: Record<string, string> = {
 }
 
 // ─── Overview Tab ─────────────────────────────────────────────────────────────
-function OverviewTab({ event }: { event: ReturnType<typeof allEvents[0]['id']['toString']> & object }) {
-  const ev = event as typeof allEvents[0]
+function OverviewTab({ event }: { event: typeof allEvents[0] }) {
+  const ev = event
   const convRates = [
     { label: 'Invite → RSVP', actual: Math.round((ev.actualRsvp / ev.actualInvited) * 100), forecast: 54 },
     { label: 'RSVP → Attend', actual: Math.round((ev.actualAttended / ev.actualRsvp) * 100), forecast: 79 },
@@ -752,7 +752,7 @@ export function EventDetail() {
       {/* Content */}
       <div className="flex-1 overflow-y-auto p-6">
         <div className="max-w-6xl">
-          {tab === 'overview' && <OverviewTab event={event as unknown as object} />}
+          {tab === 'overview' && <OverviewTab event={event} />}
           {tab === 'audience' && (
             <AudienceTab
               eventId={event.id}
